@@ -495,7 +495,7 @@ body {
 .scrolled .nav__burger span { 
     background: var(--ink); 
 }
-.nav--open .nav__burger span {
+.nav--open .nav__burger span {  /*버거 버튼 열림 상태시 흰색 고정하기*/
     background: #FFFFFF;
 }
 
@@ -766,9 +766,12 @@ const nav = document.getElementById('nav');
 const burger = document.getElementById('navBurger');
 const backdrop = document.getElementById('navBackdrop');
 const toggleNav = (open) => {
-    document.body.classList.toggle('nav--open', open);   // @주의 backdrop/drawer가 nav 밖 형제 요소라 body에 토글해야 .nav--open .nav__drawer 선택자가 먹음
+    document.body.classList.toggle('nav--open', open);
     burger.setAttribute('aria-expanded', open);
-    document.body.style.overflow = open ? 'hidden' : '';   // @동작 드로어 열린 동안 배경 스크롤 잠금
+    // @주의 스크롤바 사라지면 폭이 늘어나서 버튼이 밀리는 현상 방지 → 우측 패딩으로 보정
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = open ? scrollbarWidth + 'px' : '';
+    document.body.style.overflow = open ? 'hidden' : '';
 };
 if (burger) burger.addEventListener('click', () => toggleNav(!document.body.classList.contains('nav--open')));
 if (backdrop) backdrop.addEventListener('click', () => toggleNav(false));   // @동작 어두운 배경 클릭 시 닫힘
