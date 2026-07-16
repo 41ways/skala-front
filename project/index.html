@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="한결의 SKALA-FRONT 개인 포털">
+    <meta name="author" content="한결">
+    <title>Hello, world! I'm 한결</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nanum+Brush+Script&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <a class="skip-link" href="#info">본문 바로가기</a>
+
+    <!-- @섹션 인트로: Hello,world!(기본 폰트) → 한 글자씩 모프 → I'm 한결 → 도넛 원형 메뉴 -->
+    <section class="intro" id="intro" aria-label="인트로">
+        <div class="intro__stage">
+            <div class="intro__text">
+                <p class="intro__hello" id="introHello">
+                    <span class="intro__hello-old" id="helloOld" aria-hidden="true"></span>
+                    <span class="intro__hello-new" id="helloNew" aria-hidden="true"></span>
+                    <span class="sr-only" style="position:absolute;left:-9999px;">Hello, world!</span>
+                </p>
+                <p class="intro__name" id="introName">I'm 한결</p>
+            </div>
+
+            <!-- @동작 도넛 그래프이자 원형 메뉴: hover하면 해당 방향 링이 굵어지고 항목이 커짐 -->
+            <nav class="hub-menu" id="hubMenu" aria-label="주요 메뉴">
+                <svg class="hub-menu__ring" viewBox="0 0 400 400" aria-hidden="true">
+                    <circle class="hub-ring__track" cx="200" cy="200" r="170"></circle>
+                    <circle class="hub-ring__fill" id="hubRingFill" cx="200" cy="200" r="170"></circle>
+                    <circle class="hub-ring__seg" data-seg="profile" cx="200" cy="200" r="170"></circle>
+                    <circle class="hub-ring__seg" data-seg="class" cx="200" cy="200" r="170"></circle>
+                    <circle class="hub-ring__seg" data-seg="holiday" cx="200" cy="200" r="170"></circle>
+                    <circle class="hub-ring__seg" data-seg="trip" cx="200" cy="200" r="170"></circle>
+                </svg>
+                <a class="hub-menu__item hub-menu__item--top" data-seg="profile" href="myProfile.html">소개</a>
+                <a class="hub-menu__item hub-menu__item--right" data-seg="class" href="myClass.html">시간표</a>
+                <a class="hub-menu__item hub-menu__item--bottom" data-seg="holiday" href="myHoliday.html">휴일계획</a>
+                <a class="hub-menu__item hub-menu__item--left" data-seg="trip" href="myTrip.html">여행앨범</a>
+            </nav>
+
+            <p class="intro__scroll" id="introScroll" aria-hidden="true">Scroll ↓</p>
+        </div>
+    </section>
+
+    <!-- @섹션 우상단 고정 회원가입 버튼 -->
+    <a class="signup-fab" id="signupFab" href="signUp.html">회원가입</a>
+
+    <!-- @섹션 추가 정보: 도넛 메뉴 등장 후 카드가 하나씩 나타남 -->
+    <!-- @확장 내용은 이후 script/weatherAPI.js, upDown.js, grade.js, bag.js 연결 예정. 지금은 자리만 마련 -->
+    <main id="info">
+        <section class="info" aria-label="추가 정보">
+            <div class="info__head" id="infoHead">
+                <p class="info__eyebrow">LIVE</p>
+                <h2 class="info__title">실시간 정보 &amp; 미니 게임</h2>
+            </div>
+            <div class="info__grid">
+                <article class="info-card" id="weatherCard">
+                    <h3 class="info-card__title">🌤 실시간 세계 날씨</h3>
+                    <select class="info-card__select" id="citySelect">
+                        <option value="" selected disabled>도시를 선택하세요</option>
+                        <option value="37.56,126.97">대한민국 서울 🇰🇷</option>
+                        <option value="35.67,139.65">일본 도쿄 🇯🇵</option>
+                        <option value="48.85,2.35">프랑스 파리 🇫🇷</option>
+                    </select>
+                    <div class="info-card__body" id="weatherBox">
+                        <p class="info-card__placeholder">도시를 선택하면 날씨가 표시됩니다.</p>
+                    </div>
+                </article>
+
+                <article class="info-card" id="upDownCard">
+                    <h3 class="info-card__title">🎯 업다운 숫자 맞추기</h3>
+                    <p class="info-card__desc">1~50 사이 숫자를 컴퓨터가 정하면 맞혀보세요.</p>
+                    <button type="button" class="info-card__btn" id="startUpDown">게임 시작</button>
+                </article>
+
+                <article class="info-card" id="gradeCard">
+                    <h3 class="info-card__title">📊 성적 계산기</h3>
+                    <p class="info-card__desc">3과목 점수를 입력해 평균과 합격 여부를 확인합니다.</p>
+                    <button type="button" class="info-card__btn" id="startGrade">계산 시작</button>
+                </article>
+
+                <article class="info-card" id="bagCard">
+                    <h3 class="info-card__title">🎒 내 가방 보기</h3>
+                    <p class="info-card__desc">가방 속 물품 목록을 확인합니다.</p>
+                    <button type="button" class="info-card__btn" id="showBag">가방 열기</button>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <address class="footer__meta">작성: 한결 · <time datetime="2026-07">2026년 7월</time></address>
+    </footer>
+
+    <a class="totop" href="#intro" id="totop" aria-label="맨 위로">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15 L12 8 L19 15"></path></svg>
+    </a>
+
+    <script>
+// ==========================================================================
+// index.html - 인트로 타임라인 (Hello,world! → 모프 → 이름 → 도넛메뉴 → 정보카드)
+// ==========================================================================
+
+// --- @동작 1. Hello, world! 글자를 한 글자씩 span으로 분리 (old=기본체 / new=필기체) ---
+const introText = "Hello, world!";
+const oldWrap = document.getElementById('helloOld');
+const newWrap = document.getElementById('helloNew');
+
+function buildLetters(wrap) {
+    introText.split('').forEach((ch, i) => {
+        const span = document.createElement('span');
+        span.textContent = ch === ' ' ? ' ' : ch;   // @주의 공백은 nbsp로 치환해 폭이 사라지지 않게 함
+        span.style.setProperty('--i', i);
+        wrap.appendChild(span);
+    });
+}
+buildLetters(oldWrap);
+buildLetters(newWrap);
+
+// --- @동작 2. 시퀀스 타이밍 정의 (숫자만 조정하면 속도 변경 가능) ---
+const introSection = document.getElementById('intro');
+const introName = document.getElementById('introName');
+const introScroll = document.getElementById('introScroll');
+const hubMenu = document.getElementById('hubMenu');
+const hubRingFill = document.getElementById('hubRingFill');
+const signupFab = document.getElementById('signupFab');
+const infoHead = document.getElementById('infoHead');
+const infoGrid = document.querySelector('.info__grid');
+const infoCards = [...document.querySelectorAll('.info-card')];
+
+const T_MORPH_START = 1700;              // @동작 기본 폰트 정지 시간 (기존 2000ms에서 15% 단축)
+const GLITCH_DURATION = 720;             // @동작 사라지기 직전 지지직 효과 길이 (기존 260ms → 더 길게)
+const WAIT_AFTER_GLITCH = 500;           // @동작 지지직이 끝난 뒤 0.5초 대기했다가 모프 시작
+const MORPH_START = T_MORPH_START + GLITCH_DURATION + WAIT_AFTER_GLITCH;
+const MORPH_DURATION = 1300;             // 13글자 모프 전체 소요 시간
+const T_NAME = MORPH_START + MORPH_DURATION;     // 모프 끝난 뒤 이름 등장 (=== '타이틀 전환' 완료 시점)
+const T_HUB  = T_NAME + 650;                     // 이름 등장 후 도넛 메뉴(네온 스피너) 등장
+const HUB_FILL_DURATION = 1100;                  // 네온 스피너가 반시계로 채워지는 시간
+const HUB_ITEM_STAGGER = Math.round(HUB_FILL_DURATION / 4);  // 스피너가 각 방향을 지날 때쯤 항목이 팝인
+const INFO_STAGGER = 160;
+
+// @동작 짧게 지지직(글리치) → 0.5초 대기 → 배경이 어두워지며 모프 시작
+setTimeout(() => oldWrap.classList.add('is-glitching'), T_MORPH_START);
+setTimeout(() => oldWrap.classList.remove('is-glitching'), T_MORPH_START + GLITCH_DURATION);
+setTimeout(() => introSection.classList.add('is-morphing'), MORPH_START);
+
+setTimeout(() => introName.classList.add('is-visible'), T_NAME);
+
+setTimeout(() => {
+    hubMenu.classList.add('is-visible');   // @동작 네온 스피너가 반시계 방향으로 채워지며 등장
+    signupFab.classList.add('is-visible');
+    introScroll.classList.add('is-visible');
+    // @동작 메뉴 항목: 12시(소개) → 9시(여행앨범) → 6시(휴일계획) → 3시(시간표) 반시계 순서로 하나씩 등장
+    const ccwOrder = ['profile', 'trip', 'holiday', 'class'];
+    ccwOrder.forEach((seg, i) => {
+        const el = hubMenu.querySelector(`.hub-menu__item[data-seg="${seg}"]`);
+        setTimeout(() => el.classList.add('is-visible'), i * HUB_ITEM_STAGGER);
+    });
+    // @동작 스피너가 한 바퀴 다 채워지면(HUB_FILL_DURATION 후) 최종 4구간 링으로 교체
+    setTimeout(() => {
+        hubMenu.classList.add('is-filled');
+        hubRingFill.classList.add('is-done');
+    }, HUB_FILL_DURATION);
+}, T_HUB);
+
+// --- @동작 3. 추가 정보 섹션: 타이틀 전환(T_NAME)이 끝난 뒤부터만 스크롤 관찰을 시작.
+//     그 전에는 스크롤을 내려도 보이지 않고, 전환 후 이 구간에 들어와야 순차 등장 ---
+let infoReady = false;
+let infoRevealed = false;
+function revealInfo() {
+    if (infoRevealed) return;
+    infoRevealed = true;
+    infoHead.classList.add('is-visible');
+    infoCards.forEach((card, i) => {
+        setTimeout(() => card.classList.add('is-visible'), i * INFO_STAGGER);
+    });
+}
+const infoObserver = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+        if (e.isIntersecting && infoReady) { revealInfo(); infoObserver.disconnect(); }
+    });
+}, { threshold: 0.15 });
+infoObserver.observe(infoGrid);
+
+setTimeout(() => {
+    infoReady = true;
+    // @주의 전환이 끝나기 전에 이미 스크롤해서 화면 안에 들어와 있었다면 바로 반영
+    const rect = infoGrid.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) revealInfo();
+}, T_NAME);
+
+// --- @동작 4. 스크롤 등장 (.reveal 요소들: 한 번 보이면 관찰 해제) ---
+const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+    });
+}, { threshold: 0.2 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+// --- @동작 5. 스크롤 시 맨 위로 버튼 표시 ---
+const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 40);
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+// --- @확장 미니 게임/날씨 버튼: 지금은 자리만 마련, 추후 script/*.js 연결 예정 ---
+// document.getElementById('startUpDown').addEventListener('click', startUpDown);
+// document.getElementById('startGrade').addEventListener('click', checkGrade);
+// document.getElementById('showBag').addEventListener('click', showMyBag);
+// document.getElementById('citySelect').addEventListener('change', onCityChange);
+    </script>
+</body>
+</html>

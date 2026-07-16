@@ -414,13 +414,7 @@ body {
     content:""; position:absolute; inset:0;
     background: linear-gradient(to top, #00000080, #0000001A);
 }*/
-.flip__hint {
-    position: relative; z-index:1;
-    font-size:12px; letter-spacing:0.15em;
-    color:#FFFFFFD9;
-    border:1px solid #FFFFFF66;
-    padding:6px 12px; border-radius:999px;
-}
+
 .flip__back {
     background: #2c2820fc;   /* 색감 수정 */
     border: 1px solid var(--line);
@@ -740,25 +734,25 @@ body {
             <div class="flip-grid reveal">
                 <div class="flip">
                     <div class="flip__inner">
-                        <div class="flip__front" style="background-image:url('media/word1.svg')">
-                            <span class="flip__hint">HOVER</span>
-                        </div>
-                        <div class="flip__back">
-                            <p class="flip__term">단어1</p>
-                            <p class="flip__desc">단어1에 대한 설명입니다. 나를 대표하는 첫 번째 키워드입니다.</p>
-                        </div>
-                    </div>
+    <div class="flip__front" style="background-image:url('media/word1.svg')">
+        <!-- <span class="flip__hint">HOVER</span> 삭제 -->
+    </div>
+    <div class="flip__back">
+        <p class="flip__term">단어1</p>
+        <p class="flip__desc">단어1에 대한 설명입니다. 나를 대표하는 첫 번째 키워드입니다.</p>
+    </div>
+</div>
                 </div>
                 <div class="flip">
                     <div class="flip__inner">
-                        <div class="flip__front" style="background-image:url('media/word2.svg')">
-                            <span class="flip__hint">HOVER</span>
-                        </div>
-                        <div class="flip__back">
-                            <p class="flip__term">단어2</p>
-                            <p class="flip__desc">단어2에 대한 설명입니다. 나를 대표하는 두 번째 키워드입니다.</p>
-                        </div>
-                    </div>
+    <div class="flip__front" style="background-image:url('media/word1.svg')">
+        <!-- <span class="flip__hint">HOVER</span> 삭제 -->
+    </div>
+    <div class="flip__back">
+        <p class="flip__term">단어2</p>
+        <p class="flip__desc">단어2에 대한 설명입니다. 나를 대표하는 두 번째 키워드입니다.</p>
+    </div>
+</div>
                 </div>
             </div>
         </section>
