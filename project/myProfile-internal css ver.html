@@ -18,7 +18,7 @@
     --ink: #f2f0ec;
     --muted: #9a958c;
     --line: #FFFFFF1F;
-    --bg: #131210;
+    --bg: #1c1a16;
     --accent: #c6a582;
     --accent-soft: #8d7752;
     --maxw: 1100px;
@@ -173,7 +173,8 @@ body {
     width: 72%;
     height: 92vh;
     transform: translateY(-50%);
-    object-fit: cover;          /* @주의 영상 어두운 배경째 채움(투명화 안 함) */
+    object-fit: cover;       
+       /* @주의 영상 어두운 배경째 채움(투명화 안 함) */
     /* @스타일 가장자리 페이드: 네 방향 끝을 투명하게 → 배경색에 자연스럽게 녹음 */
     -webkit-mask:
         linear-gradient(to right,  #00000000, #000 12%, #000 88%, #00000000) ,
@@ -184,6 +185,8 @@ body {
         linear-gradient(to bottom, #00000000, #000 12%, #000 88%, #00000000);
     mask-composite: intersect;   /* @주의 두 그라데이션 교집합 → 네 모서리 다 페이드 */
 }
+
+#food1 .seq__media { filter: saturate(1.5); } /*2번 영상 채도 올릭기*/
 /* @스타일 정지 이미지 변형(figure): 배경이미지로 채움 */
 .seq__media--img {
     background-size: cover;
@@ -404,8 +407,13 @@ body {
 }
 .flip__front::after {
     content:""; position:absolute; inset:0;
+    background: linear-gradient(to top, #000000D9, #B8924A40);
+} /* 글씨 색 조금 화려하게 */
+
+/*.flip__front::after {
+    content:""; position:absolute; inset:0;
     background: linear-gradient(to top, #00000080, #0000001A);
-}
+}*/
 .flip__hint {
     position: relative; z-index:1;
     font-size:12px; letter-spacing:0.15em;
@@ -414,7 +422,7 @@ body {
     padding:6px 12px; border-radius:999px;
 }
 .flip__back {
-    background: #17140f;
+    background: #2c2820fc;   /* 색감 수정 */
     border: 1px solid var(--line);
     transform: rotateY(180deg);
     display: flex;
@@ -422,8 +430,18 @@ body {
     justify-content: center;
     padding: 32px;
 }
+/*.flip__back {
+    background: #17140f;
+    border: 1px solid var(--line);
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 32px;
+} */
 .flip__term { font-size:26px; font-weight:700; color:var(--accent); margin-bottom:14px; letter-spacing:-0.01em; }
 .flip__desc { font-size:16px; color:#F2F0ECD9; line-height:1.7; }
+
 
 /* ==========================================================================
    푸터 & 맨 위로 버튼
@@ -561,15 +579,17 @@ body {
     max-width: 320px;
     background: #211e18;      /* @주의 --bg(#0d0c0a)보다 밝게 → 어두워진 배경과 경계가 뚜렷이 보임 */
     border-left: 1px solid var(--line);
-    box-shadow: -20px 0 60px #00000080;
+    /*box-shadow: -20px 0 60px #00000080;*/ /*그림자효과인데 닫았을 때도 유지됨 수정 전까지 주석처리해야댐*/
     transform: translateX(100%);
     transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 45;               /* @주의 nav(50)보다 낮게 → 헤더의 버거 아이콘이 드로어 위에 계속 보임 */
     padding: 110px 32px;
     border:none;
 }
-.nav--open .nav__drawer { transform: translateX(0); }
-
+.nav--open .nav__drawer {
+    transform: translateX(0);
+    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);   /* 열렸을 때만 그림자 표시 */
+}
 .nav__drawer-list {
     list-style: none;
     display: grid;
