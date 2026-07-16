@@ -26,6 +26,7 @@
             <li><a class="nav__link" href="myClass.html">시간표</a></li>
             <li><a class="nav__link" href="myHoliday.html">휴일계획</a></li>
             <li><a class="nav__link" href="myTrip.html">여행앨범</a></li>
+            <li><a class="nav__link" href="login.html">로그인</a></li>
             <li><a class="nav__link" href="signUp.html">회원가입</a></li>
         </ul>
         <!-- @동작 768px 이하: 가로 메뉴가 모여들며 사라지고 이 삼선 버튼이 나타남 -->
@@ -41,6 +42,7 @@
             <li><a href="myClass.html">시간표</a></li>
             <li><a href="myHoliday.html">휴일계획</a></li>
             <li><a href="myTrip.html">여행앨범</a></li>
+            <li><a href="login.html">로그인</a></li>
             <li><a href="signUp.html">회원가입</a></li>
         </ul>
     </aside>
@@ -92,8 +94,9 @@
                 <p class="goals__eyebrow">03 · 올해 할 일</p>
                 <!-- @동작 track: JS가 스크롤 구간에 따라 위로 밀어 다음 카드 표시 -->
                 <!-- @확장 할 일 추가: goal-card 블록 복사 + data-pct 지정 + JS goals 배열에 항목 추가 -->
-                <div class="goals__track" data-track>
-                    <article class="goal-card" data-card data-pct="60">
+                <!-- @주의 과제 필수 요소: 올해 할 일 <ol> -->
+                <ol class="goals__track" data-track>
+                    <li class="goal-card" data-card data-pct="60">
                         <figure class="goal-card__donut">
                             <svg class="donut__svg" viewBox="0 0 200 200" aria-hidden="true">
                                 <circle class="donut__track" cx="100" cy="100" r="92"></circle>
@@ -113,9 +116,9 @@
                                 <li>세부 내용 3 — 다음 단계</li>
                             </ul>
                         </div>
-                    </article>
+                    </li>
 
-                    <article class="goal-card" data-card data-pct="25">
+                    <li class="goal-card" data-card data-pct="25">
                         <figure class="goal-card__donut">
                             <svg class="donut__svg" viewBox="0 0 200 200" aria-hidden="true">
                                 <circle class="donut__track" cx="100" cy="100" r="92"></circle>
@@ -133,8 +136,8 @@
                                 <li>세부 내용 2 — 진행 상황 메모</li>
                             </ul>
                         </div>
-                    </article>
-                </div>
+                    </li>
+                </ol>
             </div>
         </section>
 
@@ -149,8 +152,11 @@
                     <div class="flip__inner">
                         <div class="flip__front" style="background-image:url('media/word1.svg')"></div>
                         <div class="flip__back">
-                            <p class="flip__term">단어1</p>
-                            <p class="flip__desc">단어1에 대한 설명입니다. 나를 대표하는 첫 번째 키워드입니다.</p>
+                            <!-- @주의 과제 필수 요소: 용어-설명 <dl> -->
+                            <dl>
+                                <dt class="flip__term">단어1</dt>
+                                <dd class="flip__desc">단어1에 대한 설명입니다. 나를 대표하는 첫 번째 키워드입니다.</dd>
+                            </dl>
                         </div>
                     </div>
                 </div>
@@ -158,8 +164,10 @@
                     <div class="flip__inner">
                         <div class="flip__front" style="background-image:url('media/word1.svg')"></div>
                         <div class="flip__back">
-                            <p class="flip__term">단어2</p>
-                            <p class="flip__desc">단어2에 대한 설명입니다. 나를 대표하는 두 번째 키워드입니다.</p>
+                            <dl>
+                                <dt class="flip__term">단어2</dt>
+                                <dd class="flip__desc">단어2에 대한 설명입니다. 나를 대표하는 두 번째 키워드입니다.</dd>
+                            </dl>
                         </div>
                     </div>
                 </div>

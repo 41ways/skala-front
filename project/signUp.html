@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="한결의 회원가입 페이지">
+    <meta name="author" content="한결">
+    <title>Hello, world! I'm 한결</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-signup">
+    <a class="skip-link" href="#main">본문 바로가기</a>
+
+    <!-- @동작 좌상단 타이틀: 클릭하면 index.html로 이동. 스크롤 내리면 얇아지며 'I'm 한결'만 남음 -->
+    <a class="brand" id="brand" href="index.html" aria-label="처음 화면으로">
+        <span class="brand__hello">Hello, world!&nbsp;</span><span class="brand__name"> I'm 한결</span>
+    </a>
+
+    <!-- 타이틀 아래 sticky 메뉴바: 이 페이지(회원가입) 외 나머지 페이지로 이동 -->
+    <nav class="nav" id="nav" aria-label="주요 메뉴">
+        <ul class="nav__list" id="navList">
+            <li><a class="nav__link" href="myProfile.html">소개</a></li>
+            <li><a class="nav__link" href="myClass.html">시간표</a></li>
+            <li><a class="nav__link" href="myHoliday.html">휴일계획</a></li>
+            <li><a class="nav__link" href="myTrip.html">여행앨범</a></li>
+            <li><a class="nav__link" href="login.html">로그인</a></li>
+            <li><a class="nav__link is-current" href="signUp.html" aria-current="page">회원가입</a></li>
+        </ul>
+        <!-- @동작 768px 이하: 가로 메뉴가 모여들며 사라지고 이 삼선 버튼이 나타남 -->
+        <button class="nav__burger" id="navBurger" aria-label="메뉴 열기" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- @섹션 모바일 드로어: nav__list와 별개 요소 → 열고 닫아도 위 collapse 애니메이션과 무관 -->
+    <div class="nav__backdrop" id="navBackdrop"></div>
+    <aside class="nav__drawer" id="navDrawer" aria-label="모바일 메뉴">
+        <ul class="nav__drawer-list">
+            <li><a href="myProfile.html">소개</a></li>
+            <li><a href="myClass.html">시간표</a></li>
+            <li><a href="myHoliday.html">휴일계획</a></li>
+            <li><a href="myTrip.html">여행앨범</a></li>
+            <li><a href="login.html">로그인</a></li>
+            <li><a href="signUp.html" aria-current="page">회원가입</a></li>
+        </ul>
+    </aside>
+
+    <main id="main">
+        <!-- 히어로 -->
+        <header class="hero">
+            <p class="hero__eyebrow">SIGN UP</p>
+            <h1 class="hero__title">회원가입</h1>
+            <p class="hero__scroll" aria-hidden="true">Scroll ↓</p>
+        </header>
+
+        <!-- @섹션 회원가입 폼: action=signUpResult.html, method=get (과제 필수 스펙) -->
+        <!-- @동작 배경(그라데이션)은 스크롤과 무관하게 고정, 카드(fieldset)들만 스크롤에 따라 떠오름 -->
+        <section class="signup" id="signup" aria-label="회원가입 폼">
+            <form class="signup-form" action="signUpResult.html" method="get">
+
+                <fieldset class="signup-form__group reveal">
+                    <legend>계정 정보</legend>
+
+                    <div class="signup-form__row signup-form__row--id">
+                        <label for="userId">아이디 <span class="signup-form__req">*</span></label>
+                        <input type="text" id="userId" name="userId" placeholder="4~15자 영문/숫자"
+                               pattern="[A-Za-z0-9]{4,15}" minlength="4" maxlength="15" required>
+                        <button type="button" class="btn btn--check" id="checkIdBtn">중복확인</button>
+                    </div>
+                    <p class="signup-form__status" id="checkIdStatus" role="status" aria-live="polite"></p>
+
+                    <div class="signup-form__row">
+                        <label for="userPw">비밀번호 <span class="signup-form__req">*</span></label>
+                        <input type="password" id="userPw" name="userPw" placeholder="8자 이상 입력"
+                               minlength="8" required>
+                    </div>
+
+                    <div class="signup-form__row signup-form__row--id">
+                        <label for="userPwConfirm">비밀번호 확인 <span class="signup-form__req">*</span></label>
+                        <input type="password" id="userPwConfirm" name="userPwConfirm" placeholder="비밀번호를 다시 입력하세요"
+                               minlength="8" required>
+                        <button type="button" class="btn btn--check" id="checkPwBtn">확인</button>
+                    </div>
+                    <p class="signup-form__status" id="checkPwStatus" role="status" aria-live="polite"></p>
+
+                    <div class="signup-form__row signup-form__row--email">
+                        <label for="emailId">이메일 <span class="signup-form__req">*</span></label>
+                        <!-- @동작 2줄 구성: 1줄=아이디+@ / 2줄=도메인 입력+프리셋 select(고르면 도메인 칸에 채워짐) -->
+                        <div class="signup-form__email-fields">
+                            <div class="signup-form__email-line">
+                                <input type="text" id="emailId" name="emailId" placeholder="이메일 아이디" required>
+                                <span class="signup-form__at">@</span>
+                            </div>
+                            <div class="signup-form__email-line">
+                                <input type="text" id="emailDomain" name="emailDomain" placeholder="직접 입력 또는 오른쪽에서 선택" required>
+                                <select id="emailDomainSelect" aria-label="이메일 도메인 선택">
+                                    <option value="" selected disabled>직접입력</option>
+                                    <option value="gmail.com">gmail.com</option>
+                                    <option value="naver.com">naver.com</option>
+                                    <option value="daum.net">daum.net</option>
+                                    <option value="kakao.com">kakao.com</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="signup-form__group reveal">
+                    <legend>개인 프로필 정보</legend>
+
+                    <div class="signup-form__row">
+                        <label for="fullName">이름 <span class="signup-form__req">*</span></label>
+                        <input type="text" id="fullName" name="fullName" placeholder="이름을 입력하세요" required>
+                    </div>
+
+                    <!-- @동작 주소: Daum 우편번호 서비스 팝업으로 검색 → 우편번호/기본주소 자동 입력, 상세주소만 직접 입력 -->
+                    <div class="signup-form__row signup-form__row--id">
+                        <label for="zipCode">주소</label>
+                        <input type="text" id="zipCode" name="zipCode" placeholder="우편번호" readonly>
+                        <button type="button" class="btn btn--check" id="searchAddrBtn">우편번호 검색</button>
+                    </div>
+                    <div class="signup-form__row">
+                        <label for="addr1">기본 주소</label>
+                        <input type="text" id="addr1" name="addr1" placeholder="주소를 입력해주세요." readonly>
+                    </div>
+                    <div class="signup-form__row">
+                        <label for="addr2">상세 주소</label>
+                        <input type="text" id="addr2" name="addr2" placeholder="나머지 주소를 입력해주세요.">
+                    </div>
+
+                    <div class="signup-form__row">
+                        <label for="birthYear">생년월일</label>
+                        <!-- @동작 연/월/일을 각각 select로 분리 → 클릭 또는 스크롤로 값 선택 가능 -->
+                        <div class="signup-form__date-fields">
+                            <select id="birthYear" name="birthYear" aria-label="출생 연도"></select>
+                            <select id="birthMonth" name="birthMonth" aria-label="출생 월"></select>
+                            <select id="birthDay" name="birthDay" aria-label="출생 일"></select>
+                        </div>
+                        <input type="hidden" id="birthDate" name="birthDate">
+                    </div>
+
+                    <div class="signup-form__row">
+                        <label for="joinDate">가입일</label>
+                        <!-- @동작 오늘 날짜로 고정 표시(읽기 전용) + 마우스 오버 시 안내 문구(title 툴팁) -->
+                        <input type="text" id="joinDate" name="joinDate" class="signup-form__readonly" readonly
+                               title="가입일은 자동으로 오늘 날짜가 기록되며 변경할 수 없습니다.">
+                    </div>
+
+                    <div class="signup-form__row signup-form__row--choice">
+                        <span class="signup-form__label">성별 <span class="signup-form__req">*</span></span>
+                        <label class="signup-form__inline"><input type="radio" name="gender" value="male" checked> 남성</label>
+                        <label class="signup-form__inline"><input type="radio" name="gender" value="female"> 여성</label>
+                        <label class="signup-form__inline"><input type="radio" name="gender" value="none"> 선택안함</label>
+                    </div>
+
+                    <div class="signup-form__row signup-form__row--block">
+                        <span class="signup-form__label">관심 분야 (중복 선택 가능)</span>
+                        <label class="signup-form__inline"><input type="checkbox" name="interest" value="frontend"> 웹 프론트엔드 (Vue.js/HTML)</label>
+                        <label class="signup-form__inline"><input type="checkbox" name="interest" value="uiux"> UI/UX 디자인 표준</label>
+                        <label class="signup-form__inline"><input type="checkbox" name="interest" value="backend"> 백엔드 &amp; 데이터베이스</label>
+                        <label class="signup-form__inline"><input type="checkbox" name="interest" value="cloud"> 클라우드 &amp; 인프라</label>
+                    </div>
+
+                    <div class="signup-form__row">
+                        <label for="joinPath">가입 경로</label>
+                        <select id="joinPath" name="joinPath">
+                            <option value="" selected disabled>-- 선택해 주세요 --</option>
+                            <option value="search">검색 엔진</option>
+                            <option value="sns">SNS</option>
+                            <option value="friend">지인 추천</option>
+                            <option value="etc">기타</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+                <fieldset class="signup-form__group reveal">
+                    <legend>자기소개</legend>
+                    <label for="introduce" class="signup-form__label">나를 표현하는 한 줄 소개 또는 가입 인사 <span class="signup-form__req">*</span></label>
+                    <textarea id="introduce" name="introduce" maxlength="200" rows="4" required
+                              placeholder="여기에 내용을 입력하세요 (최대 200자)"></textarea>
+                    <p class="signup-form__hint">* 필수 입력란입니다.</p>
+                </fieldset>
+
+                <div class="signup-form__actions reveal">
+                    <button type="submit" class="btn btn--primary">동의하고 회원가입</button>
+                    <button type="reset" class="btn btn--ghost">다시 작성</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <address class="footer__meta">작성: 한결 · <time datetime="2026-07">2026년 7월</time></address>
+    </footer>
+
+    <!-- 우하단 fixed 맨 위로 버튼 -->
+    <a class="totop" href="#main" id="totop" aria-label="맨 위로">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15 L12 8 L19 15"></path></svg>
+    </a>
+
+    <!-- @동작 Daum 우편번호 서비스 (무료, 키 불필요) — 주소 검색 팝업용 -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+// ==========================================================================
+// 회원가입 페이지 - 헤더/스크롤 인터랙션 (myProfile.html과 동일 로직 재사용)
+// ==========================================================================
+
+const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 40);
+
+const nav = document.getElementById('nav');
+const burger = document.getElementById('navBurger');
+const backdrop = document.getElementById('navBackdrop');
+const toggleNav = (open) => {
+    document.body.classList.toggle('nav--open', open);
+    burger.setAttribute('aria-expanded', open);
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = open ? scrollbarWidth + 'px' : '';
+    document.body.style.overflow = open ? 'hidden' : '';
+};
+if (burger) burger.addEventListener('click', () => toggleNav(!document.body.classList.contains('nav--open')));
+if (backdrop) backdrop.addEventListener('click', () => toggleNav(false));
+
+// --- @동작 아이디 중복확인: 백엔드가 없는 정적 페이지라 형식만 검사하는 프론트엔드 목업 ---
+const userId = document.getElementById('userId');
+const checkIdBtn = document.getElementById('checkIdBtn');
+const checkIdStatus = document.getElementById('checkIdStatus');
+if (checkIdBtn) {
+    checkIdBtn.addEventListener('click', () => {
+        const ok = /^[A-Za-z0-9]{4,15}$/.test(userId.value);
+        checkIdStatus.textContent = ok ? '사용 가능한 아이디입니다. ✅' : '4~15자 영문/숫자로 입력해주세요. ⚠️';
+        checkIdStatus.classList.toggle('is-ok', ok);
+        checkIdStatus.classList.toggle('is-bad', !ok);
+    });
+    userId.addEventListener('input', () => {
+        checkIdStatus.textContent = '';
+        checkIdStatus.classList.remove('is-ok', 'is-bad');
+    });
+}
+
+// --- @동작 비밀번호 확인: 버튼을 눌러야 일치 여부를 검사(아이디 중복확인과 동일한 패턴) ---
+const userPw = document.getElementById('userPw');
+const userPwConfirm = document.getElementById('userPwConfirm');
+const checkPwBtn = document.getElementById('checkPwBtn');
+const checkPwStatus = document.getElementById('checkPwStatus');
+if (checkPwBtn) {
+    checkPwBtn.addEventListener('click', () => {
+        const match = userPw.value.length > 0 && userPw.value === userPwConfirm.value;
+        checkPwStatus.textContent = match ? '비밀번호가 일치합니다. ✅' : '비밀번호가 일치하지 않습니다. ⚠️';
+        checkPwStatus.classList.toggle('is-ok', match);
+        checkPwStatus.classList.toggle('is-bad', !match);
+        userPwConfirm.setCustomValidity(match ? '' : '비밀번호가 일치하지 않습니다.');
+    });
+    [userPw, userPwConfirm].forEach((el) => el.addEventListener('input', () => {
+        checkPwStatus.textContent = '';
+        checkPwStatus.classList.remove('is-ok', 'is-bad');
+        userPwConfirm.setCustomValidity('');
+    }));
+}
+
+// --- @동작 주소 검색: Daum 우편번호 팝업 → 우편번호/기본주소 자동 채움, 스크립트 로드 실패 시 직접 입력으로 전환 ---
+const zipCode = document.getElementById('zipCode');
+const addr1 = document.getElementById('addr1');
+const addr2 = document.getElementById('addr2');
+const searchAddrBtn = document.getElementById('searchAddrBtn');
+if (searchAddrBtn) {
+    searchAddrBtn.addEventListener('click', () => {
+        if (window.daum && window.daum.Postcode) {
+            new daum.Postcode({
+                oncomplete: (data) => {
+                    zipCode.value = data.zonecode;
+                    addr1.value = data.roadAddress || data.jibunAddress;
+                    addr2.focus();
+                }
+            }).open();
+        } else {
+            // @주의 오프라인 등으로 외부 스크립트를 못 불러온 경우: 읽기 전용을 풀어 직접 입력 허용
+            zipCode.readOnly = false;
+            addr1.readOnly = false;
+            alert('주소 검색 서비스를 불러오지 못했어요. 우편번호와 주소를 직접 입력해주세요.');
+            zipCode.focus();
+        }
+    });
+}
+
+// --- @동작 이메일 도메인: select에서 고르면 그 값이 오른쪽 도메인 입력창에 채워짐(직접 수정도 가능) ---
+const emailDomain = document.getElementById('emailDomain');
+const emailDomainSelect = document.getElementById('emailDomainSelect');
+if (emailDomainSelect && emailDomain) {
+    emailDomainSelect.addEventListener('change', () => {
+        if (emailDomainSelect.value) emailDomain.value = emailDomainSelect.value;
+    });
+}
+
+// --- @동작 생년월일: 연/월/일 select를 채우고(스크롤/클릭으로 선택), 값이 바뀔 때마다 hidden birthDate 동기화 ---
+const birthYear = document.getElementById('birthYear');
+const birthMonth = document.getElementById('birthMonth');
+const birthDay = document.getElementById('birthDay');
+const birthDate = document.getElementById('birthDate');
+function addPlaceholder(select, text) {
+    const opt = document.createElement('option');
+    opt.value = '';
+    opt.textContent = text;
+    opt.disabled = true;
+    opt.selected = true;
+    select.appendChild(opt);
+}
+if (birthYear && birthMonth && birthDay) {
+    const thisYear = new Date().getFullYear();
+    addPlaceholder(birthYear, '연도');
+    for (let y = thisYear; y >= thisYear - 100; y--) birthYear.appendChild(new Option(y + '년', y));
+    addPlaceholder(birthMonth, '월');
+    for (let m = 1; m <= 12; m++) birthMonth.appendChild(new Option(m + '월', m));
+
+    function fillDays() {
+        const prev = birthDay.value;
+        birthDay.innerHTML = '';
+        addPlaceholder(birthDay, '일');
+        if (!birthYear.value || !birthMonth.value) return;
+        const days = new Date(Number(birthYear.value), Number(birthMonth.value), 0).getDate();
+        for (let d = 1; d <= days; d++) birthDay.appendChild(new Option(d + '일', d));
+        if (prev && Number(prev) <= days) birthDay.value = prev;
+    }
+    function syncBirthDate() {
+        if (birthYear.value && birthMonth.value && birthDay.value) {
+            birthDate.value = `${birthYear.value}-${String(birthMonth.value).padStart(2, '0')}-${String(birthDay.value).padStart(2, '0')}`;
+        } else {
+            birthDate.value = '';
+        }
+    }
+    fillDays();
+    birthYear.addEventListener('change', () => { fillDays(); syncBirthDate(); });
+    birthMonth.addEventListener('change', () => { fillDays(); syncBirthDate(); });
+    birthDay.addEventListener('change', syncBirthDate);
+}
+
+// --- @동작 가입일: 오늘 날짜로 고정 표시 ---
+const joinDate = document.getElementById('joinDate');
+if (joinDate) {
+    joinDate.value = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+    });
+}, { threshold: 0.2 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+    </script>
+</body>
+</html>

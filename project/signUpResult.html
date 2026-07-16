@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="한결의 회원가입 결과 페이지">
+    <meta name="author" content="한결">
+    <title>Hello, world! I'm 한결</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">본문 바로가기</a>
+
+    <a class="brand" id="brand" href="index.html" aria-label="처음 화면으로">
+        <span class="brand__hello">Hello, world!&nbsp;</span><span class="brand__name"> I'm 한결</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="주요 메뉴">
+        <ul class="nav__list" id="navList">
+            <li><a class="nav__link" href="myProfile.html">소개</a></li>
+            <li><a class="nav__link" href="myClass.html">시간표</a></li>
+            <li><a class="nav__link" href="myHoliday.html">휴일계획</a></li>
+            <li><a class="nav__link" href="myTrip.html">여행앨범</a></li>
+            <li><a class="nav__link" href="login.html">로그인</a></li>
+            <li><a class="nav__link" href="signUp.html">회원가입</a></li>
+        </ul>
+        <button class="nav__burger" id="navBurger" aria-label="메뉴 열기" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="nav__backdrop" id="navBackdrop"></div>
+    <aside class="nav__drawer" id="navDrawer" aria-label="모바일 메뉴">
+        <ul class="nav__drawer-list">
+            <li><a href="myProfile.html">소개</a></li>
+            <li><a href="myClass.html">시간표</a></li>
+            <li><a href="myHoliday.html">휴일계획</a></li>
+            <li><a href="myTrip.html">여행앨범</a></li>
+            <li><a href="login.html">로그인</a></li>
+            <li><a href="signUp.html">회원가입</a></li>
+        </ul>
+    </aside>
+
+    <main id="main">
+        <header class="hero">
+            <p class="hero__eyebrow">WELCOME</p>
+            <h1 class="hero__title">🎉 회원가입을 진심으로 축하합니다!</h1>
+            <p class="hero__lead">SKALA-FRONT 회원이 되신 것을 환영합니다.</p>
+        </header>
+
+        <section class="result reveal" aria-label="회원가입 결과">
+            <div class="result__block">
+                <h2 class="result__title">안내 사항</h2>
+                <ul class="result__list">
+                    <li>입력하신 이메일 주소로 가입 확인 메일이 발송되었습니다.</li>
+                    <li>보안을 위해 첫 로그인 후 비밀번호를 다시 한번 확인해 주세요.</li>
+                    <li>작성하신 프로필 정보는 마이페이지에서 언제든지 수정이 가능합니다.</li>
+                </ul>
+            </div>
+
+            <div class="result__block">
+                <h2 class="result__title">이동하기</h2>
+                <p class="result__desc">아래 링크를 클릭하면 이전에 작성한 다른 페이지로 이동할 수 있습니다.</p>
+                <ul class="result__links">
+                    <li><a href="myProfile.html">👤 나의 프로필 보기</a></li>
+                    <li><a href="myClass.html">🗓️ 나의 수업 시간표 보기</a></li>
+                    <li><a href="myHoliday.html">🏖️ 나의 휴일 계획 보기</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <address class="footer__meta">작성: 한결 · <time datetime="2026-07">2026년 7월</time></address>
+    </footer>
+
+    <a class="totop" href="#main" id="totop" aria-label="맨 위로">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15 L12 8 L19 15"></path></svg>
+    </a>
+
+    <script>
+// ==========================================================================
+// 회원가입결과 페이지 - 헤더/스크롤 인터랙션 (signUp.html과 동일 로직 재사용)
+// ==========================================================================
+
+const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 40);
+
+const nav = document.getElementById('nav');
+const burger = document.getElementById('navBurger');
+const backdrop = document.getElementById('navBackdrop');
+const toggleNav = (open) => {
+    document.body.classList.toggle('nav--open', open);
+    burger.setAttribute('aria-expanded', open);
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = open ? scrollbarWidth + 'px' : '';
+    document.body.style.overflow = open ? 'hidden' : '';
+};
+if (burger) burger.addEventListener('click', () => toggleNav(!document.body.classList.contains('nav--open')));
+if (backdrop) backdrop.addEventListener('click', () => toggleNav(false));
+
+const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+    });
+}, { threshold: 0.2 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+    </script>
+</body>
+</html>

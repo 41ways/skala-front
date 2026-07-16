@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SKALA 4반 주차별 시간표">
+    <meta name="author" content="한결">
+    <title>시간표 · 4반 | 한결</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-class">
+    <a class="skip-link" href="#main">본문 바로가기</a>
+
+    <a class="brand" id="brand" href="index.html" aria-label="처음 화면으로">
+        <span class="brand__hello">Hello, world!&nbsp;</span><span class="brand__name"> I'm 한결</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="주요 메뉴">
+        <ul class="nav__list" id="navList">
+            <li><a class="nav__link" href="myProfile.html">소개</a></li>
+            <li><a class="nav__link" href="myHoliday.html">휴일계획</a></li>
+            <li><a class="nav__link" href="myTrip.html">여행앨범</a></li>
+            <li><a class="nav__link" href="login.html">로그인</a></li>
+            <li><a class="nav__link" href="signUp.html">회원가입</a></li>
+        </ul>
+        <button class="nav__burger" id="navBurger" aria-label="메뉴 열기" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="nav__backdrop" id="navBackdrop"></div>
+    <aside class="nav__drawer" id="navDrawer" aria-label="모바일 메뉴">
+        <ul class="nav__drawer-list">
+            <li><a href="myProfile.html">소개</a></li>
+            <li><a href="myHoliday.html">휴일계획</a></li>
+            <li><a href="myTrip.html">여행앨범</a></li>
+            <li><a href="login.html">로그인</a></li>
+            <li><a href="signUp.html">회원가입</a></li>
+        </ul>
+    </aside>
+
+    <main id="main">
+        <header class="cl-hero">
+            <p class="cl-hero__eyebrow">SCHEDULE</p>
+            <h1 class="cl-hero__title">시간표</h1>
+            <p class="cl-hero__lead">SKALA · <strong>4반</strong> 주차별 시간표 (2026.07 – 12)</p>
+            <ul class="cl-legend" aria-label="표 범례">
+                <li><span class="cl-badge cl-badge--special">특강</span></li>
+                <li><span class="cl-badge cl-badge--eval">평가</span></li>
+                <li><span class="cl-badge cl-badge--off">휴일 · 휴강</span></li>
+            </ul>
+            <p class="cl-hero__note">정규 09:00–18:00 · 점심 12:00–13:00 · 특강/평가일은 종료 시간이 다를 수 있어요</p>
+        </header>
+
+        <section class="cl-section" aria-label="4반 주차별 시간표">
+            <!-- @동작 주차 이동 컨트롤: 양옆 화살표 + 가운데 라벨을 누르면 주차 목록 드롭다운 -->
+            <div class="cl-nav">
+                <button class="cl-nav__btn" id="wkPrev" type="button" aria-label="이전 주차">&lsaquo;</button>
+                <div class="cl-nav__picker">
+                    <button class="cl-nav__toggle" id="wkToggle" type="button" aria-haspopup="listbox" aria-expanded="false">
+                        <span class="cl-nav__toglabel"><strong id="wkLabel">1주차</strong><span id="wkSpan">7/13 – 7/17</span></span>
+                        <span class="cl-nav__caret" aria-hidden="true">▾</span>
+                    </button>
+                    <ul class="cl-nav__menu" id="wkMenu" role="listbox" aria-label="주차 선택" hidden></ul>
+                </div>
+                <button class="cl-nav__btn" id="wkNext" type="button" aria-label="다음 주차">&rsaquo;</button>
+            </div>
+
+            <div class="cl-gwrap" tabindex="0" role="region" aria-label="주차 시간표 (좌우 스크롤 가능)">
+                <table class="cl-g" id="clGrid">
+                    <caption class="cl-cap">SKALA 4반 주차별 시간표 &middot; 정규 09:00–18:00 (점심 12:00–13:00)</caption>
+                    <thead id="clHead">
+        <tr>
+          <th scope="col" class="cl-g__timehead">시간</th>
+          <th scope="col" class="cl-g__dhead">월<span class="cl-g__date">7/13</span></th>
+          <th scope="col" class="cl-g__dhead">화<span class="cl-g__date">7/14</span></th>
+          <th scope="col" class="cl-g__dhead">수<span class="cl-g__date">7/15</span></th>
+          <th scope="col" class="cl-g__dhead cl-g__th--today">목<span class="cl-g__date">7/16</span><span class="cl-g__todaytag">오늘</span></th>
+          <th scope="col" class="cl-g__dhead">금<span class="cl-g__date">7/17</span></th>
+        </tr>
+                    </thead>
+                    <tbody id="clBody">
+        <tr>
+          <th scope="row" class="cl-g__time">09:00 – 10:00</th>
+          <td class="cl-g__empty" rowspan="3">—</td>
+          <td class="cl-g__subj" rowspan="3"><span class="cl-g__name">팀빌딩(심요한), Git 이해/활용 (5h)</span><span class="cl-g__prof">엄진영</span></td>
+          <td class="cl-g__subj" rowspan="3"><span class="cl-g__name">HTML, CSS, JavaScript</span><span class="cl-g__prof">엄진영</span></td>
+          <td class="cl-g__subj" rowspan="3"><span class="cl-g__name">HTML, CSS, JavaScript</span><span class="cl-g__prof">엄진영</span></td>
+          <td class="cl-g__off" rowspan="3">🇰🇷 대체휴일(개천절)</td>
+        </tr>
+        <tr>
+          <th scope="row" class="cl-g__time">10:00 – 11:00</th>
+        </tr>
+        <tr>
+          <th scope="row" class="cl-g__time">11:00 – 12:00</th>
+        </tr>
+        <tr class="cl-g__lunchrow">
+          <th scope="row" class="cl-g__time">12:00 – 13:00</th>
+          <td class="cl-g__lunch" colspan="5">🍱 점심시간</td>
+        </tr>
+        <tr>
+          <th scope="row" class="cl-g__time">13:00 – 14:00</th>
+          <td class="cl-g__empty" rowspan="5">—</td>
+          <td class="cl-g__subj" rowspan="5"><span class="cl-g__name">팀빌딩(심요한), Git 이해/활용 (5h)</span><span class="cl-g__prof">엄진영</span></td>
+          <td class="cl-g__subj" rowspan="5"><span class="cl-g__name">HTML, CSS, JavaScript</span><span class="cl-g__prof">엄진영</span></td>
+          <td class="cl-g__subj" rowspan="5"><span class="cl-g__name">HTML, CSS, JavaScript</span><span class="cl-g__prof">엄진영</span></td>
+          <td class="cl-g__off" rowspan="5">🇰🇷 대체휴일(개천절)</td>
+        </tr>
+        <tr>
+          <th scope="row" class="cl-g__time">14:00 – 15:00</th>
+        </tr>
+        <tr>
+          <th scope="row" class="cl-g__time">15:00 – 16:00</th>
+        </tr>
+        <tr>
+          <th scope="row" class="cl-g__time">16:00 – 17:00</th>
+        </tr>
+        <tr>
+          <th scope="row" class="cl-g__time">17:00 – 18:00</th>
+        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <address class="footer__meta">작성: 한결 · <time datetime="2026-07">2026년 7월</time> · 출처: SKALA 교육과정표</address>
+    </footer>
+
+    <a class="totop" href="#main" id="totop" aria-label="맨 위로">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15 L12 8 L19 15"></path></svg>
+    </a>
+
+    <script>
+// ==========================================================================
+// 시간표 페이지 - 헤더 축소 / 햄버거 / 주차 그리드 렌더
+// ==========================================================================
+const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 40);
+window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+const burger = document.getElementById('navBurger');
+const backdrop = document.getElementById('navBackdrop');
+const toggleNav = (open) => {
+    document.body.classList.toggle('nav--open', open);
+    burger.setAttribute('aria-expanded', open);
+    const sw = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = open ? sw + 'px' : '';
+    document.body.style.overflow = open ? 'hidden' : '';
+};
+if (burger) burger.addEventListener('click', () => toggleNav(!document.body.classList.contains('nav--open')));
+if (backdrop) backdrop.addEventListener('click', () => toggleNav(false));
+
+// --- 주차 데이터 & 그리드 렌더 ---
+const WEEKS = [{"label": "1주차", "wk": "1", "span": "7/13 – 7/17", "monday": "2026-07-13", "days": [{"date": "7/13", "subj": "", "prof": "", "holiday": false, "endHour": 18, "badge": "", "empty": true, "dow": "월"}, {"date": "7/14", "subj": "팀빌딩(심요한), Git 이해/활용 (5h)", "prof": "엄진영", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "7/15", "subj": "HTML, CSS, JavaScript", "prof": "엄진영", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "7/16", "subj": "HTML, CSS, JavaScript", "prof": "엄진영", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "7/17", "subj": "대체휴일(개천절)", "prof": "", "holiday": true, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "2주차", "wk": "2", "span": "7/20 – 7/24", "monday": "2026-07-20", "days": [{"date": "7/20", "subj": "데이터 분석을 위한 Python 이해", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "7/21", "subj": "데이터 분석을 위한 Python 이해", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "7/22", "subj": "스마트 데이터 이해 및 활용", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "7/23", "subj": "스마트 데이터 이해 및 활용", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "7/24", "subj": "스마트 데이터 이해 및 활용", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "3주차", "wk": "3", "span": "7/27 – 7/31", "monday": "2026-07-27", "days": [{"date": "7/27", "subj": "데이터 분석 개요 및 기초통계", "prof": "박병선", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "7/28", "subj": "데이터 분석 개요 및 기초통계", "prof": "박병선", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "7/29", "subj": "Prompt 설계와 Context", "prof": "한성훈", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "7/30", "subj": "LLM과 Transformer 아키텍처", "prof": "한성훈", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "7/31", "subj": "LLM과 Transformer 아키텍처", "prof": "한성훈", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "4주차", "wk": "4", "span": "8/3 – 8/7", "monday": "2026-08-03", "days": [{"date": "8/3", "subj": "Java, SpringBoot, Rest API 구현", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "8/4", "subj": "Java, SpringBoot, Rest API 구현", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "8/5", "subj": "Java, SpringBoot, Rest API 구현", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "8/6", "subj": "Java, SpringBoot, Rest API 구현", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "8/7", "subj": "Java, SpringBoot, Rest API 구현", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "5주차", "wk": "5", "span": "8/10 – 8/14", "monday": "2026-08-10", "days": [{"date": "8/10", "subj": "Agile 방법론 및 MSA 개발", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "8/11", "subj": "Agile 방법론 및 MSA 개발", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "8/12", "subj": "sLLM 구현 및 Fine Tunning", "prof": "임성열", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "8/13", "subj": "sLLM 구현 및 Fine Tunning", "prof": "임성열", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "8/14", "subj": "실전 Feature Engineering", "prof": "이은호", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "6주차", "wk": "6", "span": "8/17 – 8/21", "monday": "2026-08-17", "days": [{"date": "8/17", "subj": "대체휴일 (광복절)", "prof": "", "holiday": true, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "8/18", "subj": "Front-framework: Vue.js", "prof": "김일한", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "8/19", "subj": "Front-framework: Vue.js", "prof": "김일한", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "8/20", "subj": "Front-framework: Vue.js", "prof": "김일한", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "8/21", "subj": "Front-framework: Vue.js", "prof": "김일한", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "7주차", "wk": "7", "span": "8/24 – 8/28", "monday": "2026-08-24", "days": [{"date": "8/24", "subj": "컨테이너 이해 및 애플리케이션 컨테이너화", "prof": "신인철", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "8/25", "subj": "컨테이너 이해 및 애플리케이션 컨테이너화", "prof": "신인철", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "8/26", "subj": "쿠버네티스 이해 및 애플리케이션 배포", "prof": "신인철", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "8/27", "subj": "쿠버네티스 이해 및 애플리케이션 배포", "prof": "신인철", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "8/28", "subj": "특강(취업특강)", "prof": "—", "holiday": false, "endHour": 18, "badge": "special", "empty": false, "dow": "금"}]}, {"label": "8주차", "wk": "8", "span": "8/31 – 9/4", "monday": "2026-08-31", "days": [{"date": "8/31", "subj": "Spring AI", "prof": "정윤석", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "9/1", "subj": "Spring AI", "prof": "정윤석", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "9/2", "subj": "웹 서비스 개발 mini-Project", "prof": "윤재성", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "9/3", "subj": "웹 서비스 개발 mini-Project", "prof": "윤재성", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "9/4", "subj": "웹 서비스 개발 mini-Project", "prof": "윤재성", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "9주차", "wk": "9", "span": "9/7 – 9/11", "monday": "2026-09-07", "days": [{"date": "9/7", "subj": "머신러닝 및 딥러닝 이해", "prof": "김준범", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "9/8", "subj": "머신러닝 및 딥러닝 이해", "prof": "김준범", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "9/9", "subj": "머신러닝 및 딥러닝 이해", "prof": "김준범", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "9/10", "subj": "모델 개발 및 최적화", "prof": "김준범", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "9/11", "subj": "모델 개발 및 최적화", "prof": "김준범", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "10주차", "wk": "10", "span": "9/14 – 9/18", "monday": "2026-09-14", "days": [{"date": "9/14", "subj": "쿠버네티스 실무 심화", "prof": "박보경", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "9/15", "subj": "쿠버네티스 실무 심화", "prof": "박보경", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "9/16", "subj": "쿠버네티스 실무 심화", "prof": "박보경", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "9/17", "subj": "특강 (도메인특강, 프로젝트 현장 사례)", "prof": "—", "holiday": false, "endHour": 18, "badge": "special", "empty": false, "dow": "목"}, {"date": "9/18", "subj": "생성형 AI 서비스 개발의 이해/활용 (LangChain)", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "11주차", "wk": "11", "span": "9/21 – 9/25", "monday": "2026-09-21", "days": [{"date": "9/21", "subj": "생성형 AI 서비스 개발의 이해/활용 (LangChain)", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "9/22", "subj": "생성형 AI 서비스 개발의 이해/활용 (LangChain)", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "9/23", "subj": "자체휴강", "prof": "", "holiday": true, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "9/24", "subj": "추석연휴", "prof": "", "holiday": true, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "9/25", "subj": "추석연휴", "prof": "", "holiday": true, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "12주차", "wk": "12", "span": "9/28 – 10/2", "monday": "2026-09-28", "days": [{"date": "9/28", "subj": "RAG Pipeline 설계 및 구축", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "9/29", "subj": "RAG Pipeline 설계 및 구축", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "9/30", "subj": "RAG Pipeline 설계 및 구축", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "10/1", "subj": "데이터 분석 mini-Project", "prof": "박보경", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "10/2", "subj": "데이터 분석 mini-Project", "prof": "박보경", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "13주차", "wk": "13", "span": "10/5 – 10/9", "monday": "2026-10-05", "days": [{"date": "10/5", "subj": "대체휴일(개천절)", "prof": "", "holiday": true, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "10/6", "subj": "모델 서빙 및 AIOps 구성", "prof": "임성열", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "10/7", "subj": "모델 서빙 및 AIOps 구성", "prof": "임성열", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "10/8", "subj": "모델 서빙 및 AIOps 구성", "prof": "임성열", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "10/9", "subj": "한글날", "prof": "", "holiday": true, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "14주차", "wk": "14", "span": "10/12 – 10/16", "monday": "2026-10-12", "days": [{"date": "10/12", "subj": "AI Agent 설계 및 구축", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "10/13", "subj": "AI Agent 설계 및 구축", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "10/14", "subj": "Vector DB", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "10/15", "subj": "AI Agent Capstone", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "10/16", "subj": "AI Agent Capstone", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "15주차", "wk": "15", "span": "10/19 – 10/23", "monday": "2026-10-19", "days": [{"date": "10/19", "subj": "AI Agent Capstone", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "10/20", "subj": "AI 서비스 개발 Mini-project", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "10/21", "subj": "AI 서비스 개발 Mini-project", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "10/22", "subj": "AI 서비스 개발 Mini-project", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "10/23", "subj": "DevOps 이해 및 활용", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "16주차", "wk": "16", "span": "10/26 – 10/30", "monday": "2026-10-26", "days": [{"date": "10/26", "subj": "DevOps 이해 및 활용", "prof": "김경난", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "10/27", "subj": "AI 프로젝트 방법론", "prof": "—", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "10/28", "subj": "팀프로젝트", "prof": "백정열", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "10/29", "subj": "팀프로젝트", "prof": "박병선", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "10/30", "subj": "팀프로젝트", "prof": "박병선", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "17주차", "wk": "17", "span": "11/2 – 11/6", "monday": "2026-11-02", "days": [{"date": "11/2", "subj": "팀프로젝트", "prof": "이용우", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "11/3", "subj": "팀프로젝트", "prof": "이용우", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "11/4", "subj": "팀프로젝트", "prof": "이용우", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "11/5", "subj": "팀프로젝트", "prof": "박창렴", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "11/6", "subj": "팀프로젝트", "prof": "박창렴", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "18주차", "wk": "18", "span": "11/9 – 11/13", "monday": "2026-11-09", "days": [{"date": "11/9", "subj": "팀프로젝트", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "11/10", "subj": "팀프로젝트", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "11/11", "subj": "팀프로젝트", "prof": "임성열", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "11/12", "subj": "팀프로젝트 (중간점검)", "prof": "임성열", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "11/13", "subj": "팀프로젝트", "prof": "임성열", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "19주차", "wk": "19", "span": "11/16 – 11/20", "monday": "2026-11-16", "days": [{"date": "11/16", "subj": "팀프로젝트", "prof": "강병호", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "11/17", "subj": "팀프로젝트", "prof": "강병호", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "11/18", "subj": "팀프로젝트", "prof": "강병호", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "11/19", "subj": "팀프로젝트", "prof": "강병호", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "11/20", "subj": "팀프로젝트", "prof": "강병호", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "20주차", "wk": "20", "span": "11/23 – 11/27", "monday": "2026-11-23", "days": [{"date": "11/23", "subj": "팀프로젝트", "prof": "이현민", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "11/24", "subj": "팀프로젝트", "prof": "이현민", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "11/25", "subj": "팀프로젝트", "prof": "임성열", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "11/26", "subj": "팀프로젝트", "prof": "임성열", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "11/27", "subj": "팀프로젝트", "prof": "임성열", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "21주차", "wk": "21", "span": "11/30 – 12/4", "monday": "2026-11-30", "days": [{"date": "11/30", "subj": "팀프로젝트", "prof": "강병호", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "12/1", "subj": "팀프로젝트", "prof": "강병호", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "12/2", "subj": "팀프로젝트", "prof": "강병호", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "12/3", "subj": "팀프로젝트", "prof": "강병호", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "목"}, {"date": "12/4", "subj": "팀프로젝트", "prof": "강병호", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "금"}]}, {"label": "22주차", "wk": "22", "span": "12/7 – 12/11", "monday": "2026-12-07", "days": [{"date": "12/7", "subj": "팀프로젝트", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "월"}, {"date": "12/8", "subj": "팀프로젝트", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "화"}, {"date": "12/9", "subj": "팀프로젝트", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "", "empty": false, "dow": "수"}, {"date": "12/10", "subj": "최종평가(예선)", "prof": "류홍걸", "holiday": false, "endHour": 18, "badge": "eval", "empty": false, "dow": "목"}, {"date": "12/11", "subj": "최종평가(본선) / 수료식", "prof": "류홍걸", "holiday": false, "endHour": 16, "badge": "eval", "empty": false, "dow": "금"}]}];
+const MORNING = ["09:00 – 10:00","10:00 – 11:00","11:00 – 12:00"];
+const LUNCH = "12:00 – 13:00";
+const AFTERNOON = ["13:00 – 14:00","14:00 – 15:00","15:00 – 16:00","16:00 – 17:00","17:00 – 18:00"];
+const BADGE_LABEL = { eval:"평가", special:"특강" };
+const esc = (s) => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function todayMD() { const d = new Date(); return (d.getMonth()+1) + "/" + d.getDate(); }
+
+function same(a,b){ return a.t===b.t && (a.text||"")===(b.text||""); }
+function cellHTML(e, day) {
+    if (e.t==="empty") return ["cl-g__empty","—"];
+    if (e.t==="off")   return ["cl-g__off",`${e.text.includes("휴강")?"📌":"🇰🇷"} ${esc(e.text)}`];
+    if (e.t==="end")   return ["cl-g__end", day.subj.includes("수료식") ? "교육과정 종료" : "수업 종료"];
+    const badge = day.badge ? ` <span class="cl-badge cl-badge--${day.badge}">${BADGE_LABEL[day.badge]}</span>` : "";
+    const prof = day.prof ? `<span class="cl-g__prof">${esc(day.prof)}</span>` : "";
+    return ["cl-g__subj", `<span class="cl-g__name">${esc(day.subj)}</span>${badge}${prof}`];
+}
+function dayCells(day) {
+    const cells = new Array(8).fill(null);
+    const mor = [], aft = [];
+    for (let i=0;i<3;i++) mor.push(day.empty?{t:"empty"}:day.holiday?{t:"off",text:day.subj}:{t:"subj"});
+    for (let i=0;i<5;i++){ const h=13+i; aft.push(day.empty?{t:"empty"}:day.holiday?{t:"off",text:day.subj}:(h>=day.endHour?{t:"end"}:{t:"subj"})); }
+    [[0,mor],[3,aft]].forEach(([off,arr]) => {
+        let i=0;
+        while(i<arr.length){ let j=i+1; while(j<arr.length && same(arr[i],arr[j])) j++; cells[off+i]={rowspan:j-i,cell:cellHTML(arr[i],day)}; i=j; }
+    });
+    return cells;
+}
+function renderWeek(idx) {
+    const w = WEEKS[idx], tmd = todayMD();
+    // thead
+    let head = '<tr><th scope="col" class="cl-g__timehead">시간</th>';
+    w.days.forEach(d => {
+        const t = (d.date===tmd);
+        head += `<th scope="col" class="cl-g__dhead${t?' cl-g__th--today':''}">${d.dow}<span class="cl-g__date">${d.date}</span>${t?'<span class="cl-g__todaytag">오늘</span>':''}</th>`;
+    });
+    head += '</tr>';
+    document.getElementById('clHead').innerHTML = head;
+    // tbody
+    const all = w.days.map(dayCells);
+    let body = "";
+    const emitRow = (timeLabel, r) => {
+        let tr = `<tr><th scope="row" class="cl-g__time">${timeLabel}</th>`;
+        w.days.forEach((d,di) => {
+            const c = all[di][r];
+            if (c){ const [cls,inner]=c.cell; tr += `<td class="${cls}"${c.rowspan>1?` rowspan="${c.rowspan}"`:''}>${inner}</td>`; }
+        });
+        return tr + '</tr>';
+    };
+    for (let r=0;r<3;r++) body += emitRow(MORNING[r], r);
+    body += `<tr class="cl-g__lunchrow"><th scope="row" class="cl-g__time">${LUNCH}</th><td class="cl-g__lunch" colspan="5">🍱 점심시간</td></tr>`;
+    for (let r=3;r<8;r++) body += emitRow(AFTERNOON[r-3], r);
+    document.getElementById('clBody').innerHTML = body;
+    // 라벨/셀렉트 동기화
+    document.getElementById('wkLabel').textContent = w.label;
+    document.getElementById('wkSpan').textContent = w.span;
+    document.getElementById('wkPrev').disabled = (idx===0);
+    document.getElementById('wkNext').disabled = (idx===WEEKS.length-1);
+    [...menu.children].forEach(li => { const on = (+li.dataset.idx===idx); li.classList.toggle('is-sel', on); li.setAttribute('aria-selected', on ? 'true' : 'false'); });
+    current = idx;
+}
+
+// --- 커스텀 주차 드롭다운(양옆 화살표 사이 라벨 클릭 시 목록) ---
+const menu = document.getElementById('wkMenu');
+const toggle = document.getElementById('wkToggle');
+WEEKS.forEach((w,i) => {
+    const li = document.createElement('li');
+    li.className = 'cl-nav__opt'; li.setAttribute('role','option'); li.dataset.idx = i;
+    li.innerHTML = `<strong>${w.label}</strong><span>${w.span}</span>`;
+    li.addEventListener('click', () => { renderWeek(i); closeMenu(); toggle.focus(); });
+    menu.appendChild(li);
+});
+function openMenu(){ menu.hidden=false; toggle.setAttribute('aria-expanded','true'); const s=menu.querySelector('.is-sel'); if(s) s.scrollIntoView({block:'nearest'}); }
+function closeMenu(){ menu.hidden=true; toggle.setAttribute('aria-expanded','false'); }
+toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.hidden ? openMenu() : closeMenu(); });
+document.addEventListener('click', (e) => { if(!menu.hidden && !e.target.closest('.cl-nav__picker')) closeMenu(); });
+document.addEventListener('keydown', (e) => { if(e.key==='Escape') closeMenu(); });
+
+// 기본 주차: 오늘 포함 주 → 없으면 첫 주
+let current = 0;
+(function(){ const tmd = todayMD(); for (let i=0;i<WEEKS.length;i++){ if (WEEKS[i].days.some(d=>d.date===tmd)){ current=i; break; } } })();
+
+document.getElementById('wkPrev').addEventListener('click', () => { if (current>0) renderWeek(current-1); });
+document.getElementById('wkNext').addEventListener('click', () => { if (current<WEEKS.length-1) renderWeek(current+1); });
+renderWeek(current);
+    </script>
+</body>
+</html>

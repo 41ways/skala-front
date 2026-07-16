@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="한결의 여행 앨범">
+    <meta name="author" content="한결">
+    <title>Hello, world! I'm 한결</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">본문 바로가기</a>
+
+    <!-- @동작 좌상단 타이틀: 클릭하면 index.html로 이동 -->
+    <a class="brand" id="brand" href="index.html" aria-label="처음 화면으로">
+        <span class="brand__hello">Hello, world!&nbsp;</span><span class="brand__name"> I'm 한결</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="주요 메뉴">
+        <ul class="nav__list" id="navList">
+            <li><a class="nav__link" href="myProfile.html">소개</a></li>
+            <li><a class="nav__link" href="myClass.html">시간표</a></li>
+            <li><a class="nav__link" href="myHoliday.html">휴일계획</a></li>
+            <li><a class="nav__link is-current" href="myTrip.html" aria-current="page">여행앨범</a></li>
+            <li><a class="nav__link" href="login.html">로그인</a></li>
+            <li><a class="nav__link" href="signUp.html">회원가입</a></li>
+        </ul>
+        <button class="nav__burger" id="navBurger" aria-label="메뉴 열기" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="nav__backdrop" id="navBackdrop"></div>
+    <aside class="nav__drawer" id="navDrawer" aria-label="모바일 메뉴">
+        <ul class="nav__drawer-list">
+            <li><a href="myProfile.html">소개</a></li>
+            <li><a href="myClass.html">시간표</a></li>
+            <li><a href="myHoliday.html">휴일계획</a></li>
+            <li><a href="myTrip.html" aria-current="page">여행앨범</a></li>
+            <li><a href="login.html">로그인</a></li>
+            <li><a href="signUp.html">회원가입</a></li>
+        </ul>
+    </aside>
+
+    <main id="main">
+        <!-- 히어로 -->
+        <header class="hero">
+            <p class="hero__eyebrow">TRIP ALBUM</p>
+            <h1 class="hero__title">나의 여행 앨범</h1>
+            <p class="hero__lead">폴더를 넘겨 여행지를 고르고, 커버플로우로 추억을 넘겨보세요.</p>
+            <p class="hero__scroll" aria-hidden="true">Scroll ↓</p>
+        </header>
+
+        <!-- @섹션 커버플로우: 아이팟 터치 음악 앱 스타일.
+             1단계=여행지 폴더 넘기기 → 폴더 선택 → 2단계=그 폴더의 사진/음악/영상 넘기기
+             사진 클릭=뒤집혀 상세정보 / 음악·영상=모서리 배지 + 중앙 재생 버튼 -->
+        <section class="trip" id="trip" aria-label="여행 앨범 커버플로우">
+            <div class="trip__topbar">
+                <button type="button" class="trip__back" id="tripBack" hidden>‹ 폴더</button>
+                <p class="trip__crumb" id="tripCrumb">여행지 폴더</p>
+            </div>
+
+            <div class="coverflow" id="coverflow">
+                <div class="coverflow__stage" id="cfStage"></div>
+            </div>
+
+            <!-- @섹션 아이팟의 곡 제목 영역: 가운데 항목의 이름/부제 표시 -->
+            <div class="trip-now">
+                <p class="trip-now__title" id="nowTitle">&nbsp;</p>
+                <p class="trip-now__sub" id="nowSub">&nbsp;</p>
+                <p class="trip-now__pos" id="nowPos">&nbsp;</p>
+            </div>
+
+            <div class="trip__controls">
+                <button type="button" class="trip__arrow" id="cfPrev" aria-label="이전">‹</button>
+                <button type="button" class="trip__arrow" id="cfNext" aria-label="다음">›</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- @주의 과제 필수 요소 <audio><source>: 커버플로우의 음악 항목이 이 플레이어로 재생됨 -->
+    <audio id="tripAudio">
+        <source id="tripAudioSrc" src="media/trip-song-lijiang.wav" type="audio/wav">
+    </audio>
+
+    <footer class="footer">
+        <address class="footer__meta">작성: 한결 · <time datetime="2026-07">2026년 7월</time></address>
+    </footer>
+
+    <a class="totop" href="#main" id="totop" aria-label="맨 위로">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15 L12 8 L19 15"></path></svg>
+    </a>
+
+    <script>
+// ==========================================================================
+// 여행 앨범 - 아이팟 커버플로우
+// @섹션 구성: (1)헤더 공통 (2)앨범 데이터 (3)커버플로우 렌더/배치 (4)조작(클릭/키보드/휠)
+// ==========================================================================
+
+// --- @동작 1. 헤더/드로어 공통 (다른 페이지와 동일 로직) ---
+const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 40);
+const burger = document.getElementById('navBurger');
+const backdrop = document.getElementById('navBackdrop');
+const toggleNav = (open) => {
+    document.body.classList.toggle('nav--open', open);
+    burger.setAttribute('aria-expanded', open);
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = open ? scrollbarWidth + 'px' : '';
+    document.body.style.overflow = open ? 'hidden' : '';
+};
+if (burger) burger.addEventListener('click', () => toggleNav(!document.body.classList.contains('nav--open')));
+if (backdrop) backdrop.addEventListener('click', () => toggleNav(false));
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+// --- @섹션 2. 앨범 데이터 -----------------------------------------------
+// @확장 여행지/사진 추가: albums 배열에 항목만 추가하면 자동 반영
+const albums = [
+    {
+        name: '리장 호도협', year: '2025년 3월',
+        items: [
+            { type: 'photo', src: 'media/trip-lijiang-1.jpg', title: '호도협 협곡의 아침', date: '2025-03-14', place: '중국 윈난성 리장', camera: 'iPhone 15 Pro', desc: '협곡 사이로 해가 떠오르던 순간. 걷다가 멈춰서 한참을 봤다.' },
+            { type: 'photo', src: 'media/trip-lijiang-2.jpg', title: '차마고도 옛길', date: '2025-03-15', place: '중국 윈난성 리장', camera: 'iPhone 15 Pro', desc: '말이 다니던 옛 교역로. 흙먼지 냄새까지 기억난다.' },
+            { type: 'music', src: 'media/trip-song-lijiang.wav', art: 'media/trip-lijiang-2.jpg', title: '리장의 아름다운 음악', sub: '여행 중 광장에서 녹음' },
+            { type: 'photo', src: 'media/trip-lijiang-3.jpg', title: '금빛 노을의 협곡', date: '2025-03-16', place: '중국 윈난성 리장', camera: 'iPhone 15 Pro', desc: '마지막 날 노을. 강물이 금색으로 물들었다.' },
+            { type: 'video', src: 'media/food2.webm', poster: 'media/trip-lijiang-1.jpg', title: '리장 여행 브이로그', sub: '00:21 · 협곡 트레킹' }
+        ]
+    },
+    {
+        name: '세부 탑스힐', year: '2024년 12월',
+        items: [
+            { type: 'photo', src: 'media/trip-cebu-1.jpg', title: '탑스힐의 밤', date: '2024-12-30', place: '필리핀 세부', camera: 'iPhone 15 Pro', desc: '도시 전체가 불빛으로 반짝이던 연말의 밤.' },
+            { type: 'music', src: 'media/trip-song-cebu.wav', art: 'media/trip-cebu-2.jpg', title: '세부의 밤바람', sub: '전망대에서 듣던 곡' },
+            { type: 'photo', src: 'media/trip-cebu-2.jpg', title: '별이 쏟아지는 전망대', date: '2024-12-31', place: '필리핀 세부', camera: 'iPhone 15 Pro', desc: '한 해의 마지막 밤, 별과 도시 불빛이 겹쳤다.' },
+            { type: 'video', src: 'media/burger.webm', poster: 'media/trip-cebu-3.jpg', title: '세부 야시장 브이로그', sub: '00:18 · 길거리 음식 투어' },
+            { type: 'photo', src: 'media/trip-cebu-3.jpg', title: '새해 첫 새벽', date: '2025-01-01', place: '필리핀 세부', camera: 'iPhone 15 Pro', desc: '새해 첫 하늘. 아직 도시는 잠들어 있었다.' }
+        ]
+    },
+    {
+        name: '홋카이도 대설산', year: '2025년 1월',
+        items: [
+            { type: 'photo', src: 'media/trip-hokkaido-1.jpg', title: '대설산의 은세계', date: '2025-01-20', place: '일본 홋카이도', camera: 'iPhone 15 Pro', desc: '눈밖에 없는 세상. 발자국 소리만 들렸다.' },
+            { type: 'photo', src: 'media/trip-hokkaido-2.jpg', title: '설원의 오후', date: '2025-01-21', place: '일본 홋카이도', camera: 'iPhone 15 Pro', desc: '해가 낮게 깔리며 눈이 파랗게 빛났다.' },
+            { type: 'music', src: 'media/trip-song-hokkaido.wav', art: 'media/trip-hokkaido-3.jpg', title: '눈 내리는 소리', sub: '료칸에서 만든 멜로디' },
+            { type: 'photo', src: 'media/trip-hokkaido-3.jpg', title: '수묵화 같은 능선', date: '2025-01-22', place: '일본 홋카이도', camera: 'iPhone 15 Pro', desc: '구름과 능선이 번갈아 겹치던 마지막 날.' }
+        ]
+    }
+];
+
+// --- @섹션 3. 커버플로우 렌더 -------------------------------------------
+const stage = document.getElementById('cfStage');
+const nowTitle = document.getElementById('nowTitle');
+const nowSub = document.getElementById('nowSub');
+const nowPos = document.getElementById('nowPos');
+const crumb = document.getElementById('tripCrumb');
+const backBtn = document.getElementById('tripBack');
+const tripAudio = document.getElementById('tripAudio');
+const tripAudioSrc = document.getElementById('tripAudioSrc');
+
+let level = 'folders';    // 'folders' | 'items'
+let folderIdx = 0;        // 선택된 폴더
+let cur = 0;              // 현재 가운데 인덱스
+let els = [];             // 현재 레벨의 카드 요소들
+let playingBtn = null;    // 재생 중인 음악 버튼(아이콘 복원용)
+
+// @동작 배지/재생버튼 마크업 (음악=♪, 영상=필름 표시)
+const playBtnHTML = (kind) => `<button type="button" class="cf-play" data-kind="${kind}" aria-label="재생">▶</button>`;
+const badgeHTML = (kind) => kind === 'music'
+    ? `<span class="cf-badge cf-badge--music" aria-hidden="true">♪</span>`
+    : `<span class="cf-badge cf-badge--video" aria-hidden="true">🎬</span>`;
+
+function buildFolderCard(album) {
+    const cover = album.items.find(i => i.type === 'photo');
+    return `
+        <div class="cf-card">
+            <div class="cf-card__front">
+                <img src="${cover.src}" alt="${album.name} 대표 사진">
+                <span class="cf-folder__label">${album.name}</span>
+                <span class="cf-folder__count">${album.items.length}개 항목</span>
+            </div>
+        </div>`;
+}
+
+function buildItemCard(item) {
+    if (item.type === 'photo') {
+        // @동작 사진: 클릭하면 뒤집혀 상세정보(뒷면)
+        return `
+            <div class="cf-card cf-card--flippable">
+                <div class="cf-card__front">
+                    <img src="${item.src}" alt="${item.title}">
+                </div>
+                <div class="cf-card__back">
+                    <h3>${item.title}</h3>
+                    <dl>
+                        <dt>촬영일</dt><dd>${item.date}</dd>
+                        <dt>위치</dt><dd>${item.place}</dd>
+                        <dt>카메라</dt><dd>${item.camera}</dd>
+                    </dl>
+                    <p>${item.desc}</p>
+                    <span class="cf-card__hint">다시 누르면 사진으로</span>
+                </div>
+            </div>`;
+    }
+    if (item.type === 'music') {
+        return `
+            <div class="cf-card">
+                <div class="cf-card__front">
+                    <img src="${item.art}" alt="${item.title} 앨범아트">
+                    ${badgeHTML('music')}
+                    ${playBtnHTML('music')}
+                </div>
+            </div>`;
+    }
+    // video — @주의 과제 필수 요소 <video><source>
+    return `
+        <div class="cf-card">
+            <div class="cf-card__front">
+                <video preload="metadata" poster="${item.poster}" playsinline>
+                    <source src="${item.src}" type="video/webm">
+                </video>
+                ${badgeHTML('video')}
+                ${playBtnHTML('video')}
+            </div>
+        </div>`;
+}
+
+function render() {
+    stopAllMedia();
+    stage.innerHTML = '';
+    const list = level === 'folders' ? albums : albums[folderIdx].items;
+    els = list.map((data, i) => {
+        const el = document.createElement('div');
+        el.className = 'cf-item';
+        el.innerHTML = level === 'folders' ? buildFolderCard(data) : buildItemCard(data);
+        el.addEventListener('click', (e) => onItemClick(e, i));
+        stage.appendChild(el);
+        return el;
+    });
+    backBtn.hidden = level === 'folders';
+    crumb.textContent = level === 'folders' ? '여행지 폴더' : `${albums[folderIdx].name} · ${albums[folderIdx].year}`;
+    layout();
+}
+
+// @동작 커버플로우 배치: 가운데는 정면, 양옆은 밀리면서 45도 회전 (아이팟 스타일)
+function layout() {
+    const list = level === 'folders' ? albums : albums[folderIdx].items;
+    els.forEach((el, i) => {
+        const off = i - cur;
+        const abs = Math.abs(off);
+        let tf;
+        if (off === 0) {
+            tf = 'translate(-50%, -50%) translateZ(150px)';
+        } else {
+            const x = off * 34 + (off < 0 ? -120 : 120);
+            tf = `translate(-50%, -50%) translateX(${x}%) translateZ(${-60 - abs * 26}px) rotateY(${off < 0 ? 52 : -52}deg)`;
+        }
+        el.style.transform = tf;
+        el.style.zIndex = 100 - abs;
+        el.style.opacity = abs > 3 ? 0 : 1;
+        el.style.pointerEvents = abs > 3 ? 'none' : 'auto';
+        el.classList.toggle('is-center', off === 0);
+        // @주의 가운데를 벗어나면 뒤집힌 카드 원상복구
+        if (off !== 0) el.querySelector('.cf-card').classList.remove('is-flipped');
+    });
+
+    // 하단 제목 영역 (아이팟의 곡 제목 자리)
+    const data = list[cur];
+    if (level === 'folders') {
+        nowTitle.textContent = data.name;
+        nowSub.textContent = `${data.year} · ${data.items.length}개 항목 — 클릭해서 열기`;
+    } else {
+        nowTitle.textContent = data.title;
+        nowSub.textContent = data.type === 'photo' ? `${data.date} · ${data.place}`
+                          : data.type === 'music' ? `♪ ${data.sub}`
+                          : `🎬 ${data.sub}`;
+    }
+    nowPos.textContent = `${cur + 1} / ${list.length}`;
+}
+
+// --- @섹션 4. 조작 --------------------------------------------------------
+function stopAllMedia() {
+    tripAudio.pause();
+    if (playingBtn) { playingBtn.textContent = '▶'; playingBtn = null; }
+    stage.querySelectorAll('video').forEach(v => { v.pause(); v.controls = false; });
+}
+
+function goTo(i) {
+    const len = level === 'folders' ? albums.length : albums[folderIdx].items.length;
+    cur = Math.max(0, Math.min(len - 1, i));
+    stopAllMedia();
+    layout();
+}
+
+function onItemClick(e, i) {
+    if (i !== cur) { goTo(i); return; }   // 옆 카드 클릭 → 그 카드로 이동
+
+    // 가운데 카드 클릭
+    if (level === 'folders') {            // 폴더 열기
+        folderIdx = cur;
+        level = 'items';
+        cur = 0;
+        render();
+        return;
+    }
+    const item = albums[folderIdx].items[i];
+    const card = els[i].querySelector('.cf-card');
+
+    if (e.target.closest('.cf-play')) {   // @동작 음악/영상 재생 버튼
+        const btn = e.target.closest('.cf-play');
+        if (item.type === 'music') {
+            if (playingBtn === btn && !tripAudio.paused) {
+                tripAudio.pause(); btn.textContent = '▶'; playingBtn = null;
+            } else {
+                stopAllMedia();
+                tripAudioSrc.src = item.src;
+                tripAudio.load();
+                tripAudio.play();
+                btn.textContent = '❚❚';
+                playingBtn = btn;
+            }
+        } else {
+            const video = card.querySelector('video');
+            if (video.paused) { stopAllMedia(); video.controls = true; video.play(); }
+            else video.pause();
+        }
+        return;
+    }
+    if (item.type === 'photo') card.classList.toggle('is-flipped');   // @동작 사진 뒤집기
+}
+
+tripAudio.addEventListener('ended', () => { if (playingBtn) { playingBtn.textContent = '▶'; playingBtn = null; } });
+
+backBtn.addEventListener('click', () => { level = 'folders'; cur = folderIdx; render(); });
+document.getElementById('cfPrev').addEventListener('click', () => goTo(cur - 1));
+document.getElementById('cfNext').addEventListener('click', () => goTo(cur + 1));
+
+// 키보드 ←/→, Esc=폴더로
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') goTo(cur - 1);
+    if (e.key === 'ArrowRight') goTo(cur + 1);
+    if (e.key === 'Escape' && level === 'items') { level = 'folders'; cur = folderIdx; render(); }
+});
+
+// 커버플로우 위에서 휠 → 좌우 넘기기 (페이지 스크롤 방지)
+document.getElementById('coverflow').addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (Math.abs(e.deltaY) < 8 && Math.abs(e.deltaX) < 8) return;
+    goTo(cur + ((e.deltaY || e.deltaX) > 0 ? 1 : -1));
+}, { passive: false });
+
+render();
+    </script>
+</body>
+</html>
