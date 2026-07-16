@@ -17,8 +17,8 @@
 :root {
     --ink: #f2f0ec;
     --muted: #9a958c;
-    --line: rgba(255,255,255,0.12);
-    --bg: #0d0c0a;
+    --line: #FFFFFF1F;
+    --bg: #131210;
     --accent: #c6a582;
     --accent-soft: #8d7752;
     --maxw: 1100px;
@@ -48,11 +48,11 @@ body {
     font-size: 46px;
     letter-spacing: 0;
     transition: font-size 0.4s ease, top 0.4s ease, color 0.4s ease;
-    text-shadow: 0 1px 16px rgba(0,0,0,0.15);
+    text-shadow: 0 1px 16px #00000026;
     line-height: 1;
     color: #1d1d1f;   /* 맨 위 밝은 배경 → 어두운 글씨 */
 }
-.scrolled .brand { color: var(--ink); text-shadow: 0 1px 16px rgba(0,0,0,0.4); }
+.scrolled .brand { color: var(--ink); text-shadow: 0 1px 16px #00000066; }
 .brand__hello {
     font-family: 'Dancing Script', cursive;
     font-weight: 700;
@@ -82,14 +82,14 @@ body {
     z-index: 50;
     padding: 30px 32px 24px;
     /* 맨 위: 완전 투명 (밝은 히어로 배경이 그대로 비침) */
-    background: transparent;
+    background: #00000000;
     transition: padding 0.4s ease, background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid #00000000;
 }
 .scrolled .nav {
     padding: 24px 32px;
     /* 축소 시: 살짝 투명한 다크바 → 뒤 본문이 얼핏 비침 */
-    background: rgba(13,12,10,0.62);
+    background: #0D0C0A9E;
     backdrop-filter: saturate(150%) blur(14px);
     border-bottom: 1px solid var(--line);
 }
@@ -176,12 +176,12 @@ body {
     object-fit: cover;          /* @주의 영상 어두운 배경째 채움(투명화 안 함) */
     /* @스타일 가장자리 페이드: 네 방향 끝을 투명하게 → 배경색에 자연스럽게 녹음 */
     -webkit-mask:
-        linear-gradient(to right,  transparent, #000 12%, #000 88%, transparent) ,
-        linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+        linear-gradient(to right,  #00000000, #000 12%, #000 88%, #00000000) ,
+        linear-gradient(to bottom, #00000000, #000 12%, #000 88%, #00000000);
     -webkit-mask-composite: source-in;
     mask:
-        linear-gradient(to right,  transparent, #000 12%, #000 88%, transparent),
-        linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+        linear-gradient(to right,  #00000000, #000 12%, #000 88%, #00000000),
+        linear-gradient(to bottom, #00000000, #000 12%, #000 88%, #00000000);
     mask-composite: intersect;   /* @주의 두 그라데이션 교집합 → 네 모서리 다 페이드 */
 }
 /* @스타일 정지 이미지 변형(figure): 배경이미지로 채움 */
@@ -221,7 +221,7 @@ body {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(13,12,10,0.92) 0%, rgba(13,12,10,0.35) 45%, rgba(13,12,10,0.15) 100%);
+    background: linear-gradient(to top, #0D0C0AEB 0%, #0D0C0A59 45%, #0D0C0A26 100%);
     z-index: 1;
 }
 .stage__inner {
@@ -234,7 +234,7 @@ body {
 }
 .stage__index { font-size:14px; font-weight:600; letter-spacing:0.12em; color:var(--accent); margin-bottom:16px; }
 .stage__title { font-size:clamp(40px,7vw,76px); font-weight:700; letter-spacing:-0.03em; line-height:1.05; margin-bottom:16px; }
-.stage__desc { font-size:clamp(16px,2.2vw,20px); color:rgba(242,240,236,0.85); max-width:560px; }
+.stage__desc { font-size:clamp(16px,2.2vw,20px); color:#F2F0ECD9; max-width:560px; }
 
 /* ==========================================================================
    @섹션 할 일: 도넛 카드 (할일마다 도넛 하나, 스크롤로 순차 등장 + hover 확장)
@@ -284,7 +284,7 @@ body {
     transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
 }
 .donut__svg { width:100%; height:100%; transform:rotate(-90deg); overflow:visible; }
-.donut__track { fill:none; stroke:rgba(255,255,255,0.08); stroke-width:1.5; }
+.donut__track { fill:none; stroke:#FFFFFF14; stroke-width:1.5; }
 .donut__ring {
     fill: none;
     stroke: var(--accent);
@@ -292,7 +292,7 @@ body {
     stroke-linecap: round;
     stroke-dasharray: 578;    /* @주의 2πr(r=92). r 바꾸면 재계산 */
     stroke-dashoffset: 578;   /* @동작 JS 제어: 578=빈 원, 0=꽉 참 */
-    filter: drop-shadow(0 0 6px rgba(198,165,130,0.5));
+    filter: drop-shadow(0 0 6px #C6A58280);
 }
 /* @동작 달성 순간 반짝: JS가 .is-hit 부여 */
 .donut__ring.is-hit { animation: donut-glow 1.2s ease; }
@@ -300,8 +300,8 @@ body {
     30% {
         stroke: #fff;
         stroke-width: 3.5;
-        filter: drop-shadow(0 0 10px rgba(255,240,210,1))
-                drop-shadow(0 0 26px rgba(198,165,130,0.9));
+        filter: drop-shadow(0 0 10px #FFF0D2)
+                drop-shadow(0 0 26px #C6A582E6);
     }
     100% { stroke: var(--accent); }
 }
@@ -330,8 +330,8 @@ body {
     transform: scale(1.08);
 }
 .goal-card.is-open .donut__ring {
-    filter: drop-shadow(0 0 14px rgba(255,240,210,0.9))
-            drop-shadow(0 0 30px rgba(198,165,130,0.7));
+    filter: drop-shadow(0 0 14px #FFF0D2E6)
+            drop-shadow(0 0 30px #C6A582B3);
 }
 .goal-card.is-open .goal-card__info {
     max-width: 380px;
@@ -404,13 +404,13 @@ body {
 }
 .flip__front::after {
     content:""; position:absolute; inset:0;
-    background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.1));
+    background: linear-gradient(to top, #00000080, #0000001A);
 }
 .flip__hint {
     position: relative; z-index:1;
     font-size:12px; letter-spacing:0.15em;
-    color:rgba(255,255,255,0.85);
-    border:1px solid rgba(255,255,255,0.4);
+    color:#FFFFFFD9;
+    border:1px solid #FFFFFF66;
     padding:6px 12px; border-radius:999px;
 }
 .flip__back {
@@ -423,7 +423,7 @@ body {
     padding: 32px;
 }
 .flip__term { font-size:26px; font-weight:700; color:var(--accent); margin-bottom:14px; letter-spacing:-0.01em; }
-.flip__desc { font-size:16px; color:rgba(242,240,236,0.85); line-height:1.7; }
+.flip__desc { font-size:16px; color:#F2F0ECD9; line-height:1.7; }
 
 /* ==========================================================================
    푸터 & 맨 위로 버튼
@@ -439,15 +439,15 @@ body {
     display: grid; place-items: center;
     border-radius: 50%;
     /* 위 → 아래로 투명해지는 그라데이션, 더 밝은 골드 */
-    background: linear-gradient(to bottom, rgba(230,200,160,1), rgba(230,200,160,0.05));
-    border: 1px solid rgba(230,200,160,0.4);
+    background: linear-gradient(to bottom, #E6C8A0, #E6C8A00D);
+    border: 1px solid #E6C8A066;
     opacity: 0;
     pointer-events: none;
     transform: translateY(12px);
     transition: opacity 0.4s ease, transform 0.4s ease, background 0.3s ease;
 }
 .scrolled .totop { opacity:1; pointer-events:auto; transform:translateY(0); }
-.totop:hover { background: linear-gradient(to bottom, rgba(240,215,180,1), rgba(240,215,180,0.15)); }
+.totop:hover { background: linear-gradient(to bottom, #F0D7B4, #F0D7B426); }
 .totop svg { width:22px; height:22px; }
 .totop path { fill:none; stroke:#0d0c0a; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
 
@@ -492,7 +492,12 @@ body {
     transition: background 0.4s ease;
     
 }
-.scrolled .nav__burger span { background: var(--ink); }
+.scrolled .nav__burger span { 
+    background: var(--ink); 
+}
+.nav--open .nav__burger span {
+    background: #FFFFFF;
+}
 
 @media (max-width: 768px) {
     /* @동작 가로 메뉴: 오른쪽으로 모여들며(압축) 사라짐. 이 상태는 화면폭 변화에만 반응하고
@@ -539,7 +544,7 @@ body {
 .nav__backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: #00000080;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.4s ease;
@@ -556,7 +561,7 @@ body {
     max-width: 320px;
     background: #211e18;      /* @주의 --bg(#0d0c0a)보다 밝게 → 어두워진 배경과 경계가 뚜렷이 보임 */
     border-left: 1px solid var(--line);
-    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
+    box-shadow: -20px 0 60px #00000080;
     transform: translateX(100%);
     transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 45;               /* @주의 nav(50)보다 낮게 → 헤더의 버거 아이콘이 드로어 위에 계속 보임 */
