@@ -472,7 +472,7 @@ body {
 /* @스타일 삼선 햄버거 버튼: 평소엔 숨김(모여들기 전) */
 .nav__burger {
     position: absolute;
-    right: 28px; top: 50%;
+    right: 20px; top: 50%;
     width: 44px; height: 40px;
     padding: 10px;
     display: grid;
@@ -490,6 +490,7 @@ body {
     border-radius: 2px;
     background: #1d1d1f;             /* 맨 위 밝은 배경에선 어두운 선 */
     transition: background 0.4s ease;
+    
 }
 .scrolled .nav__burger span { background: var(--ink); }
 
@@ -560,6 +561,7 @@ body {
     transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 45;               /* @주의 nav(50)보다 낮게 → 헤더의 버거 아이콘이 드로어 위에 계속 보임 */
     padding: 110px 32px;
+    border:none;
 }
 .nav--open .nav__drawer { transform: translateX(0); }
 
@@ -582,7 +584,7 @@ body {
 
     <!-- 좌상단 타이틀: 스크롤 내리면 얇아지며 'I'm 한결'만 남음 -->
     <div class="brand" id="brand">
-        <span class="brand__hello">Hello, world!&nbsp;</span><span class="brand__name">I'm 한결</span>
+        <span class="brand__hello">Hello, world!&nbsp;</span><span class="brand__name"> I'm 한결</span>
     </div>
 
     <!-- 타이틀 아래 sticky 메뉴바 (나중에 만들 페이지 링크 자리) -->
