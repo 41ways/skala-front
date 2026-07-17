@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="page-index">
+    <div class="scroll-progress" aria-hidden="true"></div>
     <a class="skip-link" href="#info">본문 바로가기</a>
 
     <!-- @섹션 인트로: Hello,world!(기본 폰트) → 한 글자씩 모프 → I'm 한결 → 도넛 원형 메뉴 -->
@@ -29,22 +30,31 @@
                 <p class="intro__scroll" id="introScroll" aria-hidden="true">Scroll ↓</p>
             </div>
 
-            <!-- @동작 도넛 그래프이자 원형 메뉴: hover하면 해당 방향 링이 굵어지고 항목이 커짐 -->
-            <nav class="hub-menu" id="hubMenu" aria-label="주요 메뉴">
-                <svg class="hub-menu__ring" viewBox="0 0 400 400" aria-hidden="true">
-                    <circle class="hub-ring__track" cx="200" cy="200" r="170"></circle>
-                    <circle class="hub-ring__fill" id="hubRingFill" cx="200" cy="200" r="170"></circle>
-                    <circle class="hub-ring__seg" data-seg="profile" cx="200" cy="200" r="170"></circle>
-                    <circle class="hub-ring__seg" data-seg="class" cx="200" cy="200" r="170"></circle>
-                    <circle class="hub-ring__seg" data-seg="holiday" cx="200" cy="200" r="170"></circle>
-                    <circle class="hub-ring__seg" data-seg="trip" cx="200" cy="200" r="170"></circle>
-                </svg>
-                <a class="hub-menu__item hub-menu__item--top" data-seg="profile" href="myProfile.html">소개</a>
-                <a class="hub-menu__item hub-menu__item--right" data-seg="class" href="myClass.html">시간표</a>
-                <a class="hub-menu__item hub-menu__item--bottom" data-seg="holiday" href="myHoliday.html">휴일계획</a>
-                <a class="hub-menu__item hub-menu__item--left" data-seg="trip" href="myTrip.html">여행앨범</a>
-            </nav>
         </div>
+
+        <!-- @동작 세로 4분할 구분선 메뉴: 타이틀 전환 후 왼쪽부터 순차 등장, hover 시 그 칸이 넓어지며 밝아짐 -->
+        <nav class="split-menu" id="splitMenu" aria-label="주요 메뉴">
+            <a class="split-panel" data-cat="profile" href="myProfile.html">
+                <img class="split-panel__bg" src="media/index/idx-profile.svg" alt="" aria-hidden="true">
+                <span class="split-panel__label">소개</span>
+                <span class="split-panel__en">PROFILE</span>
+            </a>
+            <a class="split-panel" data-cat="class" href="myClass.html">
+                <img class="split-panel__bg" src="media/index/idx-class.svg" alt="" aria-hidden="true">
+                <span class="split-panel__label">시간표</span>
+                <span class="split-panel__en">SCHEDULE</span>
+            </a>
+            <a class="split-panel" data-cat="album" href="myTrip.html">
+                <img class="split-panel__bg" src="media/index/idx-album.svg" alt="" aria-hidden="true">
+                <span class="split-panel__label">앨범</span>
+                <span class="split-panel__en">ALBUM</span>
+            </a>
+            <a class="split-panel" data-cat="holiday" href="myHoliday.html">
+                <img class="split-panel__bg" src="media/index/idx-holiday.svg" alt="" aria-hidden="true">
+                <span class="split-panel__label">계획</span>
+                <span class="split-panel__en">HOLIDAY</span>
+            </a>
+        </nav>
     </section>
     </main>
 
@@ -126,18 +136,32 @@ function buildLetters(wrap) {
 buildLetters(oldWrap);
 buildLetters(newWrap);
 
+// --- @동작 1-b. 첫 'Hello, world!'를 타자 치듯 한 글자씩 + 깜빡이는 텍스트 커서 ---
+const oldLetters = [...oldWrap.querySelectorAll('span')];   // @주의 커서 append 전에 '글자'만 수집
+const caret = document.createElement('span');
+caret.className = 'intro__caret';
+caret.setAttribute('aria-hidden', 'true');
+oldWrap.appendChild(caret);
+oldLetters.forEach((s) => { s.style.display = 'none'; });   // 처음엔 숨겼다가 타이핑으로 하나씩 표시
+
+const TYPE_START = 350;                     // 타이핑 시작 전 짧은 대기
+const TYPE_SPEED = 95;                      // 글자당 간격(ms)
+const TYPE_PAUSE = 700;                     // 다 친 뒤 커서 깜빡이며 대기
+oldLetters.forEach((s, i) => setTimeout(() => { s.style.display = ''; }, TYPE_START + i * TYPE_SPEED));
+const TYPE_END = TYPE_START + oldLetters.length * TYPE_SPEED;
+
 // --- @동작 2. 시퀀스 타이밍 정의 (숫자만 조정하면 속도 변경 가능) ---
 const introSection = document.getElementById('intro');
 const introName = document.getElementById('introName');
 const introScroll = document.getElementById('introScroll');
-const hubMenu = document.getElementById('hubMenu');
-const hubRingFill = document.getElementById('hubRingFill');
+const splitMenu = document.getElementById('splitMenu');
+const splitPanels = [...document.querySelectorAll('.split-panel')];
 const signupFab = document.getElementById('signupFab');
 const infoHead = document.getElementById('infoHead');
 const infoGrid = document.querySelector('.info__grid');
 const infoCards = [...document.querySelectorAll('.info-card')];
 
-const T_MORPH_START = 1200;               // @동작 기본 폰트 정지 시간 (요청대로 1200ms)
+const T_MORPH_START = TYPE_END + TYPE_PAUSE;   // @동작 타자가 끝나고 커서 깜빡이며 잠깐 대기한 뒤 지지직 시작
 const GLITCH1_DURATION = 180;             // 빠른 지직(1)
 const GLITCH_REST = 150;                  // 잠깐 쉼
 const GLITCH2_DURATION = 380;             // 더 긴 지지직(2)
@@ -146,11 +170,12 @@ const TV_OFF_DURATION = 320;              // TV 꺼지듯 수축하며 소멸
 const T_TRANSITION_START = T_MORPH_START + GLITCH_PHASE_TOTAL;   // @동작 지지직이 '끝난' 시점 = 타이틀 전환 시작(배경도 이때부터 어두워짐)
 const MORPH_DURATION = 1300;              // 새 텍스트가 한 글자씩 등장하는 전체 시간
 const T_NAME = T_TRANSITION_START + TV_OFF_DURATION + MORPH_DURATION;   // 모프 끝난 뒤 이름 등장
-const T_HUB  = T_NAME + 650;                       // 이름 등장 후 도넛 메뉴(네온 스피너) 등장
-const HUB_FILL_DURATION = 1100;                    // 네온 스피너가 반시계로 채워지는 시간
-const HUB_ITEM_STAGGER = Math.round(HUB_FILL_DURATION / 4);  // 스피너가 각 방향을 지날 때쯤 항목이 팝인
-const HUB_SETTLE_DELAY = 800;                      // 링이 다 채워진 뒤, 사라지기 전까지 잠깐 유지하는 시간
+const T_MENU = T_NAME + 650;                       // 이름 등장 후 4분할 패널 등장
+const PANEL_STAGGER = 150;                         // 패널이 옆에서부터 하나씩 쌓이는 간격
 const INFO_STAGGER = 160;
+
+// @동작 타자가 끝나 지지직이 시작되는 순간 커서 제거
+setTimeout(() => { caret.style.display = 'none'; }, T_MORPH_START);
 
 // @동작 1단계(지지직, 배경은 흰색 유지): 빠른 지직 → 쉼 → 긴 지지직
 setTimeout(() => oldWrap.classList.add('is-glitch-1'), T_MORPH_START);
@@ -171,23 +196,16 @@ setTimeout(() => introSection.classList.add('is-swapped'), T_TRANSITION_START + 
 setTimeout(() => introName.classList.add('is-visible'), T_NAME);
 
 setTimeout(() => {
-    hubMenu.classList.add('is-visible');   // @동작 네온 스피너가 반시계 방향으로 채워지며 등장
     signupFab.classList.add('is-visible');
     introScroll.classList.add('is-visible');
-    // @동작 메뉴 항목: 12시(소개) → 9시(여행앨범) → 6시(휴일계획) → 3시(시간표) 반시계 순서로 하나씩 등장
-    const ccwOrder = ['profile', 'trip', 'holiday', 'class'];
-    ccwOrder.forEach((seg, i) => {
-        const el = hubMenu.querySelector(`.hub-menu__item[data-seg="${seg}"]`);
-        setTimeout(() => el.classList.add('is-visible'), i * HUB_ITEM_STAGGER);
+    introSection.classList.add('is-menu');   // @동작 메뉴 등장과 함께 타이틀을 조금 위로
+    // @동작 패널이 소개→시간표→앨범→계획 순으로 옆(왼쪽)에서부터 하나씩 쌓이듯 등장
+    splitPanels.forEach((el, i) => {
+        setTimeout(() => el.classList.add('is-visible'), i * PANEL_STAGGER);
     });
-    // @동작 스피너가 한 바퀴 다 채워지면(HUB_FILL_DURATION 후) 최종 4구간 링으로 잠깐 교체됐다가,
-    //       조금 있으면 자연스럽게 사라지고 메뉴 버튼만 남음(hover 시에만 다시 빛남)
-    setTimeout(() => {
-        hubMenu.classList.add('is-filled');
-        hubRingFill.classList.add('is-done');
-        setTimeout(() => hubMenu.classList.add('is-settled'), HUB_SETTLE_DELAY);
-    }, HUB_FILL_DURATION);
-}, T_HUB);
+    // @동작 모든 칸이 다 뜬 뒤에야 hover/클릭 활성화 (그 전엔 hover 안 됨)
+    setTimeout(() => splitMenu.classList.add('is-ready'), (splitPanels.length - 1) * PANEL_STAGGER + 700);
+}, T_MENU);
 
 // --- @동작 3. 추가 정보 섹션: 타이틀 전환(T_NAME)이 끝난 뒤부터만 스크롤 관찰을 시작.
 //     그 전에는 스크롤을 내려도 보이지 않고, 전환 후 이 구간에 들어와야 순차 등장 ---
@@ -233,6 +251,63 @@ onScroll();
 // document.getElementById('startGrade').addEventListener('click', checkGrade);
 // document.getElementById('showBag').addEventListener('click', showMyBag);
 // document.getElementById('citySelect').addEventListener('change', onCityChange);
+    
+// ===== ATELIER 포팅킷: 커스텀 커서 + 오버레이 메뉴 + 스크롤 프로그레스 (IIFE, 기존 코드와 충돌 없음) =====
+(function () {
+    'use strict';
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var finePointer  = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    function initCursor() {
+        if (!finePointer || reduceMotion) return;
+        var dot = document.createElement('div'), ring = document.createElement('div');
+        dot.className = 'cursor-dot'; ring.className = 'cursor-ring';
+        document.body.append(dot, ring);
+        var mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
+        document.addEventListener('mousemove', function (e) {
+            mx = e.clientX; my = e.clientY;
+            dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+        });
+        (function loop() {
+            rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
+            ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
+            requestAnimationFrame(loop);
+        })();
+        var hoverSel = 'a, button, select, input, textarea, label, .split-panel, .tg-tile, .pass__ticket, .flip, .goal-card, .cl-nav__toggle';
+        document.addEventListener('mouseover', function (e) { if (e.target.closest(hoverSel)) ring.classList.add('is-hover'); });
+        document.addEventListener('mouseout', function (e) { if (e.target.closest(hoverSel)) ring.classList.remove('is-hover'); });
+    }
+
+    function initOverlayMenu() {
+        var menu = document.getElementById('overlayMenu');
+        var openBtn = document.getElementById('menuBtn');
+        var closeBtn = document.getElementById('overlayClose');
+        if (!menu || !openBtn) return;
+        var open = function () { menu.classList.add('is-open'); document.body.classList.add('menu-open'); openBtn.setAttribute('aria-expanded', 'true'); };
+        var close = function () { menu.classList.remove('is-open'); document.body.classList.remove('menu-open'); openBtn.setAttribute('aria-expanded', 'false'); };
+        openBtn.addEventListener('click', open);
+        if (closeBtn) closeBtn.addEventListener('click', close);
+        menu.querySelectorAll('.overlay-nav a').forEach(function (a) { a.addEventListener('click', close); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    }
+
+    function initProgress() {
+        var bar = document.querySelector('.scroll-progress');
+        if (!bar) return;
+        var onScroll = function () {
+            var h = document.documentElement;
+            var max = h.scrollHeight - h.clientHeight;
+            bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+        };
+        document.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    }
+
+    var boot = function () { initCursor(); initOverlayMenu(); initProgress(); };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+
     </script>
+    <script defer src="js/music-continue.js"></script>
 </body>
 </html>
