@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" preserveAspectRatio="xMidYMid slice">
+  <defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#1e3a52"/><stop offset="62%" stop-color="#8a6a52"/><stop offset="100%" stop-color="#c99a6a"/>
+  </linearGradient></defs>
+  <rect width="1600" height="1000" fill="url(#a)"/>
+  <circle cx="1120" cy="360" r="120" fill="#f4dcae" opacity="0.85"/>
+  <rect x="0" y="640" width="1600" height="360" fill="#0d0c0a" opacity="0.35"/>
+  <line x1="0" y1="640" x2="1600" y2="640" stroke="#f4dcae" stroke-width="2" opacity="0.4"/>
+  <text x="50%" y="52%" fill="#fff" font-family="Georgia, serif" font-size="140" font-weight="700" text-anchor="middle" opacity="0.12">앨범</text>
+</svg>

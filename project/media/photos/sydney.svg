@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" preserveAspectRatio="xMidYMid slice">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#1f4e6b"/><stop offset="100%" stop-color="#0b1e2a"/></linearGradient></defs>
+  <rect width="900" height="1200" fill="url(#g)"/><path d="M320 700 Q360 560 400 700" fill="none" stroke="#e6eef2" stroke-width="10" opacity="0.4"/><path d="M420 700 Q470 540 520 700" fill="none" stroke="#e6eef2" stroke-width="10" opacity="0.4"/>
+  <text x="50%" y="90%" fill="#ffffff" font-family="Georgia, serif" font-size="70" font-weight="700" text-anchor="middle" opacity="0.9">SYDNEY</text>
+</svg>

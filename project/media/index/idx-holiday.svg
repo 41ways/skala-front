@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" preserveAspectRatio="xMidYMid slice">
+  <defs><linearGradient id="h" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#3a2450"/><stop offset="45%" stop-color="#a5484e"/><stop offset="78%" stop-color="#e08a3c"/><stop offset="100%" stop-color="#2a1622"/>
+  </linearGradient></defs>
+  <rect width="1600" height="1000" fill="url(#h)"/>
+  <circle cx="800" cy="560" r="150" fill="#ffe0a8" opacity="0.9"/>
+  <rect x="500" y="760" width="600" height="6" rx="3" fill="#ffd9a0" opacity="0.22"/><rect x="520" y="794" width="560" height="6" rx="3" fill="#ffd9a0" opacity="0.19"/><rect x="540" y="828" width="520" height="6" rx="3" fill="#ffd9a0" opacity="0.16"/><rect x="560" y="862" width="480" height="6" rx="3" fill="#ffd9a0" opacity="0.13"/><rect x="580" y="896" width="440" height="6" rx="3" fill="#ffd9a0" opacity="0.10"/><rect x="600" y="930" width="400" height="6" rx="3" fill="#ffd9a0" opacity="0.07"/>
+  <text x="50%" y="30%" fill="#fff" font-family="Georgia, serif" font-size="140" font-weight="700" text-anchor="middle" opacity="0.12">계획</text>
+</svg>
