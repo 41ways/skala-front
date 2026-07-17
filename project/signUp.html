@@ -260,6 +260,19 @@ if (checkPwBtn) {
     }));
 }
 
+// --- @동작 제출 차단: 두 비밀번호가 다르면 확인 버튼을 안 눌렀어도 다음 화면으로 못 넘어감 ---
+const signupForm = document.querySelector('.signup-form');
+signupForm.addEventListener('submit', (e) => {
+    if (userPw.value !== userPwConfirm.value) {
+        e.preventDefault();
+        checkPwStatus.textContent = '비밀번호가 일치하지 않습니다. 다시 확인해주세요. ⚠️';
+        checkPwStatus.classList.add('is-bad');
+        checkPwStatus.classList.remove('is-ok');
+        userPwConfirm.focus();
+        userPwConfirm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+});
+
 // --- @동작 주소 검색: Daum 우편번호 팝업 → 우편번호/기본주소 자동 채움, 스크립트 로드 실패 시 직접 입력으로 전환 ---
 const zipCode = document.getElementById('zipCode');
 const addr1 = document.getElementById('addr1');
@@ -314,12 +327,23 @@ if (birthYear && birthMonth && birthDay) {
     addPlaceholder(birthMonth, '월');
     for (let m = 1; m <= 12; m++) birthMonth.appendChild(new Option(m + '월', m));
 
+    // @동작 월별 일수: 2월=29일, 4/6/9/11월=30일, 나머지=31일 (연도와 무관하게 월만으로 결정)
+    function dayCount(m) {
+        m = Number(m);
+        if (m === 2) return 29;
+        if (m === 4 || m === 6 || m === 9 || m === 11) return 30;
+        return 31;
+    }
     function fillDays() {
         const prev = birthDay.value;
         birthDay.innerHTML = '';
+        // @동작 월을 아직 안 골랐으면 일 대신 안내 문구 표시
+        if (!birthMonth.value) {
+            addPlaceholder(birthDay, '월을 먼저 선택해주세요');
+            return;
+        }
         addPlaceholder(birthDay, '일');
-        if (!birthYear.value || !birthMonth.value) return;
-        const days = new Date(Number(birthYear.value), Number(birthMonth.value), 0).getDate();
+        const days = dayCount(birthMonth.value);
         for (let d = 1; d <= days; d++) birthDay.appendChild(new Option(d + '일', d));
         if (prev && Number(prev) <= days) birthDay.value = prev;
     }
@@ -331,7 +355,7 @@ if (birthYear && birthMonth && birthDay) {
         }
     }
     fillDays();
-    birthYear.addEventListener('change', () => { fillDays(); syncBirthDate(); });
+    birthYear.addEventListener('change', syncBirthDate);   // @주의 일수는 월만으로 결정되므로 연도 변경 시 재생성 불필요
     birthMonth.addEventListener('change', () => { fillDays(); syncBirthDate(); });
     birthDay.addEventListener('change', syncBirthDate);
 }
@@ -352,5 +376,6 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
     </script>
+    <script defer src="js/music-continue.js"></script>
 </body>
 </html>

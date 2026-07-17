@@ -147,8 +147,8 @@ function selectTab(isMember) {
     tabGuest.classList.toggle('is-active', !isMember);
     tabMember.setAttribute('aria-selected', isMember);
     tabGuest.setAttribute('aria-selected', !isMember);
-    loginId.placeholder = isMember ? '아이디' : '예약자 이름';
-    loginPw.placeholder = isMember ? '비밀번호' : '예약번호';
+    loginId.placeholder = isMember ? '아이디' : '이름';
+    loginPw.placeholder = isMember ? '비밀번호' : '식별번호';
     loginSubmit.textContent = isMember ? '로그인' : '비회원 로그인';
 }
 tabMember.addEventListener('click', () => selectTab(true));
@@ -164,5 +164,6 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
     </script>
+    <script defer src="js/music-continue.js"></script>
 </body>
 </html>
