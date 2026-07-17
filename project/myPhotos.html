@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="한결의 여행 사진 — 지구본 & 사진첩">
+    <meta name="author" content="한결">
+    <title>사진 · 지구본 & 사진첩 | 한결</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nanum+Brush+Script&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-class has-overlay">
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">본문 바로가기</a>
+
+    <a class="brand" id="brand" href="index.html" aria-label="처음 화면으로">
+        <span class="brand__hello">Hello, world!&nbsp;</span><span class="brand__name"> I'm 한결</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="주요 메뉴">
+        <ul class="nav__list" id="navList">
+            <li><a class="nav__link" href="myProfile.html">소개</a></li>
+            <li><a class="nav__link" href="myClass.html">시간표</a></li>
+            <li><a class="nav__link" href="myHoliday.html">휴일계획</a></li>
+            <li><a class="nav__link" href="myTrip.html">여행앨범</a></li>
+            <li><a class="nav__link" href="login.html">로그인</a></li>
+        </ul>
+        <button class="nav__burger" id="navBurger" aria-label="메뉴 열기" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="메뉴 열기" aria-expanded="false">Menu <span class="bars" aria-hidden="true"><i></i><i></i></span></button>
+    </nav>
+
+    <div class="nav__backdrop" id="navBackdrop"></div>
+    <aside class="nav__drawer" id="navDrawer" aria-label="모바일 메뉴">
+        <button class="nav__drawer-close" id="navDrawerClose" type="button" aria-label="메뉴 닫기">&#10005;</button>
+        <ul class="nav__drawer-list">
+            <li><a href="myProfile.html">소개</a></li>
+            <li><a href="myClass.html">시간표</a></li>
+            <li><a href="myHoliday.html">휴일계획</a></li>
+            <li><a href="myTrip.html">여행앨범</a></li>
+            <li><a href="login.html">로그인</a></li>
+        </ul>
+    </aside>
+
+    <main class="ph" id="main">
+        <header class="ph-hero">
+            <p class="ph-hero__eyebrow">PHOTO ATLAS</p>
+            <h1 class="ph-hero__title">사진</h1>
+            <p class="ph-hero__lead">지구본에서 위치로, 사진첩에서 한 장씩 — 사진을 누르면 그날의 이야기가 나와요.</p>
+            <div class="ph-toggle" role="tablist" aria-label="보기 전환">
+                <button type="button" class="ph-toggle__btn is-active" data-view="globe" role="tab">🌐 지구본</button>
+                <button type="button" class="ph-toggle__btn" data-view="album" role="tab">📖 사진첩</button>
+            </div>
+        </header>
+
+        <!-- 지구본 뷰 -->
+        <section class="ph-globe" id="phGlobe" aria-label="지구본">
+            <div class="ph-globe__canvas" id="globeCanvas"></div>
+            <p class="ph-globe__hint" id="globeHint">드래그로 돌리고, 핀을 눌러보세요</p>
+        </section>
+
+        <!-- 사진첩 뷰 -->
+        <section class="ph-album" id="phAlbum" hidden aria-label="사진첩">
+            <button type="button" class="ph-album__nav ph-album__nav--prev" id="albPrev" aria-label="이전 사진">‹</button>
+            <div class="book" id="book">
+                <div class="book__page book__page--left">
+                    <img class="book__photo" id="bookPhoto" src="" alt="여행 사진">
+                </div>
+                <div class="book__page book__page--right">
+                    <div class="book__note">
+                        <span class="book__seal">한결</span>
+                        <h2 class="book__title" id="bookTitle"></h2>
+                        <p class="book__meta" id="bookMeta"></p>
+                        <p class="book__desc" id="bookDesc"></p>
+                        <span class="book__more">사진을 누르면 더 자세히 →</span>
+                    </div>
+                </div>
+                <span class="book__spine" aria-hidden="true"></span>
+            </div>
+            <button type="button" class="ph-album__nav ph-album__nav--next" id="albNext" aria-label="다음 사진">›</button>
+            <p class="ph-album__caption" id="albCaption"></p>
+        </section>
+    </main>
+
+    <!-- 사진 상세 모달 (지도/사진첩 공통) -->
+    <div class="ph-modal" id="phModal" hidden role="dialog" aria-modal="true" aria-label="사진 상세">
+        <div class="ph-modal__backdrop" data-close></div>
+        <div class="ph-modal__card">
+            <button type="button" class="ph-modal__close" id="modalClose" aria-label="닫기">&#10005;</button>
+            <div class="ph-modal__imgwrap"><img class="ph-modal__img" id="modalImg" src="" alt=""></div>
+            <div class="ph-modal__body">
+                <p class="ph-modal__loc" id="modalLoc"></p>
+                <h2 class="ph-modal__title" id="modalTitle"></h2>
+                <p class="ph-modal__meta" id="modalMeta"></p>
+                <p class="ph-modal__desc" id="modalDesc"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ATELIER 포팅킷: 풀스크린 오버레이 메뉴 (데스크톱 MENU 버튼으로 열림) -->
+    <div class="overlay-menu" id="overlayMenu" role="dialog" aria-modal="true" aria-label="사이트 메뉴">
+        <div class="overlay-top">
+            <span class="om-brand">Hangyeol</span>
+            <button class="overlay-close" id="overlayClose" type="button" aria-label="메뉴 닫기">Close <span aria-hidden="true">&#10005;</span></button>
+        </div>
+        <nav class="overlay-nav" aria-label="주요 메뉴">
+            <ol>
+                <li><a href="index.html"><span class="n">00</span> 홈 <span class="en">Hello, world!</span></a></li>
+                <li><a href="myProfile.html"><span class="n">01</span> 소개 <span class="en">Profile</span></a></li>
+                <li><a href="myClass.html"><span class="n">02</span> 시간표 <span class="en">Class</span></a></li>
+                <li><a href="myHoliday.html"><span class="n">03</span> 휴일계획 <span class="en">Holiday</span></a></li>
+                <li><a href="myTrip.html"><span class="n">04</span> 여행앨범 <span class="en">Trip</span></a></li>
+            </ol>
+        </nav>
+        <div class="overlay-foot">
+            <span><a href="login.html">로그인</a> &middot; <a href="signUp.html">회원가입</a></span>
+            <span>&copy; 2026 한결</span>
+        </div>
+    </div>
+
+    <a class="totop" href="#main" id="totop" aria-label="맨 위로">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15 L12 8 L19 15"></path></svg>
+    </a>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+// ==========================================================================
+// 사진 페이지 - 헤더/햄버거 + 지구본(three.js) + 사진첩 + 상세 모달
+// ==========================================================================
+const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 40);
+window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+const burger = document.getElementById('navBurger');
+const backdrop = document.getElementById('navBackdrop');
+const toggleNav = (open) => {
+    document.body.classList.toggle('nav--open', open);
+    burger.setAttribute('aria-expanded', open);
+    const sw = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = open ? sw + 'px' : '';
+    document.body.style.overflow = open ? 'hidden' : '';
+};
+if (burger) burger.addEventListener('click', () => toggleNav(!document.body.classList.contains('nav--open')));
+if (backdrop) backdrop.addEventListener('click', () => toggleNav(false));
+
+// --- @데이터 여행 사진 (위경도 + 이야기). 실제 사진/글로 교체 가능 ---
+const PHOTOS = [
+    { city: '도쿄', cityEn: 'TOKYO', lat: 35.68, lon: 139.65, date: '2026.03', title: '네온의 밤',
+      img: 'media/photos/tokyo.svg',
+      desc: '골목마다 <b>간판 불빛</b>이 쏟아지던 밤. 비 온 뒤라 바닥까지 <mark>네온이 번졌다</mark>.' },
+    { city: '파리', cityEn: 'PARIS', lat: 48.85, lon: 2.35, date: '2025.09', title: '센강의 오후',
+      img: 'media/photos/paris.svg',
+      desc: '강변에 앉아 <b>크루아상</b> 하나. <i>느리게 흐르는</i> 오후가 좋았다.' },
+    { city: '뉴욕', cityEn: 'NEW YORK', lat: 40.71, lon: -74.00, date: '2025.06', title: '마천루 사이',
+      img: 'media/photos/newyork.svg',
+      desc: '고개를 <b>한참</b> 젖혀야 하늘이 보였다. 도시가 <mark>수직으로</mark> 자란 곳.' },
+    { city: '제주', cityEn: 'JEJU', lat: 33.50, lon: 126.53, date: '2026.01', title: '겨울 바다',
+      img: 'media/photos/jeju.svg',
+      desc: '바람은 찼지만 <b>파도 소리</b>가 따뜻했다. <mark>귤</mark> 한 봉지와 함께.' },
+    { city: '시드니', cityEn: 'SYDNEY', lat: -33.87, lon: 151.21, date: '2025.12', title: '하버의 아침',
+      img: 'media/photos/sydney.svg',
+      desc: '한여름의 <b>크리스마스</b>. 하버 브리지 위로 해가 <i>일찍</i> 떴다.' },
+    { city: '카이로', cityEn: 'CAIRO', lat: 30.04, lon: 31.24, date: '2025.04', title: '사막의 끝',
+      img: 'media/photos/cairo.svg',
+      desc: '지평선 끝에 <b>피라미드</b>. 모래바람 너머로 <mark>수천 년</mark>이 서 있었다.' },
+];
+
+// --- @동작 상세 모달 (지도 핀·사진첩 공통) ---
+const phModal = document.getElementById('phModal');
+function openDetail(p) {
+    document.getElementById('modalImg').src = p.img;
+    document.getElementById('modalImg').alt = p.city + ' ' + p.title;
+    document.getElementById('modalLoc').textContent = p.city + ' · ' + p.cityEn;
+    document.getElementById('modalTitle').textContent = p.title;
+    document.getElementById('modalMeta').textContent = p.date;
+    document.getElementById('modalDesc').innerHTML = p.desc;
+    phModal.hidden = false;
+    document.body.style.overflow = 'hidden';
+}
+function closeDetail() { phModal.hidden = true; document.body.style.overflow = ''; }
+document.getElementById('modalClose').addEventListener('click', closeDetail);
+phModal.querySelector('[data-close]').addEventListener('click', closeDetail);
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDetail(); });
+
+// --- @동작 뷰 전환 (지구본 / 사진첩) ---
+const globeSec = document.getElementById('phGlobe');
+const albumSec = document.getElementById('phAlbum');
+let globeInited = false;
+document.querySelectorAll('.ph-toggle__btn').forEach((b) => {
+    b.addEventListener('click', () => {
+        const v = b.dataset.view;
+        document.querySelectorAll('.ph-toggle__btn').forEach((x) => x.classList.toggle('is-active', x === b));
+        globeSec.hidden = v !== 'globe';
+        albumSec.hidden = v !== 'album';
+        if (v === 'album') renderAlbum();
+        if (v === 'globe' && !globeInited && window.THREE) { initGlobe(); globeInited = true; }
+    });
+});
+
+// --- @동작 사진첩(책 펼침) ---
+let albIdx = 0;
+const bookEl = document.getElementById('book');
+function renderAlbum() {
+    const p = PHOTOS[albIdx];
+    document.getElementById('bookPhoto').src = p.img;
+    document.getElementById('bookPhoto').alt = p.city + ' ' + p.title;
+    document.getElementById('bookTitle').textContent = p.title;
+    document.getElementById('bookMeta').textContent = p.city + ' · ' + p.date;
+    document.getElementById('bookDesc').innerHTML = p.desc;
+    document.getElementById('albCaption').textContent = p.cityEn + '  ·  ' + (albIdx + 1) + ' / ' + PHOTOS.length;
+}
+function flipTo(next) {
+    bookEl.classList.add('is-turning');
+    setTimeout(() => { albIdx = (next + PHOTOS.length) % PHOTOS.length; renderAlbum(); bookEl.classList.remove('is-turning'); }, 220);
+}
+document.getElementById('albPrev').addEventListener('click', () => flipTo(albIdx - 1));
+document.getElementById('albNext').addEventListener('click', () => flipTo(albIdx + 1));
+document.getElementById('bookPhoto').addEventListener('click', () => openDetail(PHOTOS[albIdx]));
+
+// --- @동작 지구본 (three.js): 펼쳐지며 등장 → 위치 핀 → 드래그/자동회전 → 핀 클릭 상세 ---
+function latLonToVec3(lat, lon, r) {
+    const phi = (90 - lat) * Math.PI / 180;
+    const theta = (lon + 180) * Math.PI / 180;
+    return new THREE.Vector3(
+        -r * Math.sin(phi) * Math.cos(theta),
+        r * Math.cos(phi),
+        r * Math.sin(phi) * Math.sin(theta)
+    );
+}
+function initGlobe() {
+    const container = document.getElementById('globeCanvas');
+    const hint = document.getElementById('globeHint');
+    if (!window.THREE) { hint.textContent = '지구본을 불러오지 못했어요 (인터넷 연결 필요)'; return; }
+
+    let w = container.clientWidth, h = container.clientHeight;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
+    camera.position.z = 3.2;
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(w, h);
+    container.appendChild(renderer.domElement);
+
+    const group = new THREE.Group();
+    scene.add(group);
+    const R = 1;
+    group.add(new THREE.Mesh(new THREE.SphereGeometry(R, 48, 48), new THREE.MeshBasicMaterial({ color: 0x17140f })));
+    group.add(new THREE.Mesh(new THREE.SphereGeometry(R * 1.002, 36, 24), new THREE.MeshBasicMaterial({ color: 0xc6a582, wireframe: true, transparent: true, opacity: 0.16 })));
+    group.add(new THREE.Mesh(new THREE.SphereGeometry(R * 1.08, 48, 48), new THREE.MeshBasicMaterial({ color: 0xc6a582, transparent: true, opacity: 0.05, side: THREE.BackSide })));
+
+    const pins = [];
+    PHOTOS.forEach((p) => {
+        const pin = new THREE.Mesh(new THREE.SphereGeometry(0.03, 16, 16), new THREE.MeshBasicMaterial({ color: 0xf0d9ae }));
+        pin.position.copy(latLonToVec3(p.lat, p.lon, R * 1.02));
+        pin.userData = { photo: p };
+        pin.scale.set(0, 0, 0);
+        group.add(pin);
+        pins.push(pin);
+    });
+
+    // 상호작용: 드래그 회전 / 클릭(핀) 상세
+    const el = renderer.domElement;
+    let dragging = false, moved = false, lastX = 0, lastY = 0;
+    el.style.touchAction = 'none';
+    el.addEventListener('pointerdown', (e) => { dragging = true; moved = false; lastX = e.clientX; lastY = e.clientY; el.setPointerCapture(e.pointerId); });
+    el.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        const dx = e.clientX - lastX, dy = e.clientY - lastY;
+        if (Math.abs(dx) + Math.abs(dy) > 4) moved = true;
+        lastX = e.clientX; lastY = e.clientY;
+        group.rotation.y += dx * 0.005;
+        group.rotation.x = Math.max(-1.2, Math.min(1.2, group.rotation.x + dy * 0.005));
+    });
+    el.addEventListener('pointerup', (e) => {
+        dragging = false;
+        if (moved) return;
+        const rect = el.getBoundingClientRect();
+        const mouse = new THREE.Vector2(((e.clientX - rect.left) / rect.width) * 2 - 1, -((e.clientY - rect.top) / rect.height) * 2 + 1);
+        const ray = new THREE.Raycaster();
+        ray.setFromCamera(mouse, camera);
+        const hit = ray.intersectObjects(pins)[0];
+        if (hit) openDetail(hit.object.userData.photo);
+    });
+
+    // 등장(펼쳐지며) + 핀 팝인
+    const t0 = performance.now();
+    function animate(now) {
+        requestAnimationFrame(animate);
+        const t = Math.min((now - t0) / 1200, 1);
+        const e = 1 - Math.pow(1 - t, 3);
+        group.scale.setScalar(Math.max(0.0001, e));
+        pins.forEach((pin, i) => {
+            const pt = Math.min(Math.max((t - 0.55 - i * 0.05) / 0.3, 0), 1);
+            pin.scale.setScalar(pt);
+        });
+        if (!dragging) group.rotation.y += 0.0016;
+        renderer.render(scene, camera);
+    }
+    requestAnimationFrame(animate);
+
+    window.addEventListener('resize', () => {
+        w = container.clientWidth; h = container.clientHeight;
+        camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h);
+    });
+}
+
+// 기본 뷰(지구본) 초기화
+window.addEventListener('load', () => { if (window.THREE) { initGlobe(); globeInited = true; }
+    else { document.getElementById('globeHint').textContent = '지구본을 불러오지 못했어요 (인터넷 연결 필요)'; } });
+    
+// ===== ATELIER 포팅킷: 커스텀 커서 + 오버레이 메뉴 + 스크롤 프로그레스 (IIFE, 기존 코드와 충돌 없음) =====
+(function () {
+    'use strict';
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var finePointer  = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    function initCursor() {
+        if (!finePointer || reduceMotion) return;
+        var dot = document.createElement('div'), ring = document.createElement('div');
+        dot.className = 'cursor-dot'; ring.className = 'cursor-ring';
+        document.body.append(dot, ring);
+        var mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
+        document.addEventListener('mousemove', function (e) {
+            mx = e.clientX; my = e.clientY;
+            dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+        });
+        (function loop() {
+            rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
+            ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
+            requestAnimationFrame(loop);
+        })();
+        var hoverSel = 'a, button, select, input, textarea, label, .split-panel, .tg-tile, .pass__ticket, .flip, .goal-card, .cl-nav__toggle';
+        document.addEventListener('mouseover', function (e) { if (e.target.closest(hoverSel)) ring.classList.add('is-hover'); });
+        document.addEventListener('mouseout', function (e) { if (e.target.closest(hoverSel)) ring.classList.remove('is-hover'); });
+    }
+
+    function initOverlayMenu() {
+        var menu = document.getElementById('overlayMenu');
+        var openBtn = document.getElementById('menuBtn');
+        var closeBtn = document.getElementById('overlayClose');
+        if (!menu || !openBtn) return;
+        var open = function () { menu.classList.add('is-open'); document.body.classList.add('menu-open'); openBtn.setAttribute('aria-expanded', 'true'); };
+        var close = function () { menu.classList.remove('is-open'); document.body.classList.remove('menu-open'); openBtn.setAttribute('aria-expanded', 'false'); };
+        openBtn.addEventListener('click', open);
+        if (closeBtn) closeBtn.addEventListener('click', close);
+        menu.querySelectorAll('.overlay-nav a').forEach(function (a) { a.addEventListener('click', close); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    }
+
+    function initProgress() {
+        var bar = document.querySelector('.scroll-progress');
+        if (!bar) return;
+        var onScroll = function () {
+            var h = document.documentElement;
+            var max = h.scrollHeight - h.clientHeight;
+            bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+        };
+        document.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    }
+
+    var boot = function () { initCursor(); initOverlayMenu(); initProgress(); };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+
+    
+// ===== 드로어 닫기(X) 버튼 → 배경 클릭과 동일하게 닫힘 =====
+(function () {
+    var c = document.getElementById('navDrawerClose'), b = document.getElementById('navBackdrop');
+    if (c && b) c.addEventListener('click', function () { b.click(); });
+})();
+
+    </script>
+    <script defer src="js/music-continue.js"></script>
+</body>
+</html>

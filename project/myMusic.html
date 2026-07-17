@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="한결의 음악 앨범 — 커버플로우">
+    <meta name="author" content="한결">
+    <title>음악 앨범 | 한결</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nanum+Brush+Script&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-class page-music has-overlay">
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">본문 바로가기</a>
+
+    <a class="brand" id="brand" href="index.html" aria-label="처음 화면으로">
+        <span class="brand__hello">Hello, world!&nbsp;</span><span class="brand__name"> I'm 한결</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="주요 메뉴">
+        <ul class="nav__list" id="navList">
+            <li><a class="nav__link" href="myProfile.html">소개</a></li>
+            <li><a class="nav__link" href="myClass.html">시간표</a></li>
+            <li><a class="nav__link" href="myTrip.html">여행앨범</a></li>
+            <li><a class="nav__link" href="login.html">로그인</a></li>
+            <li><a class="nav__link" href="signUp.html">회원가입</a></li>
+        </ul>
+        <button class="nav__burger" id="navBurger" aria-label="메뉴 열기" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="메뉴 열기" aria-expanded="false">Menu <span class="bars" aria-hidden="true"><i></i><i></i></span></button>
+    </nav>
+
+    <div class="nav__backdrop" id="navBackdrop"></div>
+    <aside class="nav__drawer" id="navDrawer" aria-label="모바일 메뉴">
+        <button class="nav__drawer-close" id="navDrawerClose" type="button" aria-label="메뉴 닫기">&#10005;</button>
+        <ul class="nav__drawer-list">
+            <li><a href="myProfile.html">소개</a></li>
+            <li><a href="myClass.html">시간표</a></li>
+            <li><a href="myTrip.html">여행앨범</a></li>
+            <li><a href="login.html">로그인</a></li>
+            <li><a href="signUp.html">회원가입</a></li>
+        </ul>
+    </aside>
+
+    <main id="main" class="mus">
+        <!-- @섹션 커버플로우 뷰: 앨범들을 좌우로 넘김 -->
+        <section class="mus-flow" id="musFlow" aria-label="앨범 커버플로우">
+            <header class="mus-head">
+                <p class="mus-head__eyebrow">MUSIC · ALBUMS</p>
+                <h1 class="mus-head__title" id="flowTitle">음악 앨범</h1>
+                <p class="mus-head__sub" id="flowSub">LP를 넘기듯 앨범을 고르세요. 앞 앨범을 누르면 트랙 상세가 열려요.</p>
+            </header>
+
+            <div class="cf" id="cf">
+                <div class="cf__stage" id="cfStage"></div>
+            </div>
+        </section>
+
+        <!-- @섹션 상세 뷰: 큰 커버 + 트랙리스트 -->
+        <section class="mus-detail" id="musDetail" aria-label="앨범 상세" aria-hidden="true">
+            <button type="button" class="detail__back" id="detailBack" aria-label="앨범으로 돌아가기" title="앨범으로">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 L8 12 L15 19"/></svg>
+            </button>
+            <div class="detail__grid">
+                <div class="detail__left">
+                    <img class="detail__cover" id="detailCover" src="" alt="앨범 커버">
+                    <h2 class="detail__title" id="detailTitle">—</h2>
+                    <p class="detail__artist" id="detailArtist">—</p>
+                    <!-- @동작 상세에서 느낌있게 자리잡는 재생 버튼 -->
+                    <button type="button" class="detail__play" id="detailPlay">
+                        <span class="detail__play-ic" id="detailPlayIcon"></span> <span id="detailPlayLabel">전체 재생</span>
+                    </button>
+                </div>
+                <ol class="detail__tracks" id="detailTracks"></ol>
+            </div>
+        </section>
+    </main>
+
+    <!-- @섹션 하단 고정 플레이어: 항상 표시. 뷰를 바꿔도 재생 유지 -->
+    <div class="mus-player is-active" id="musPlayer">
+        <img class="player__cover" id="playerCover" src="" alt="">
+        <div class="player__meta">
+            <p class="player__track" id="playerTrack">—</p>
+            <p class="player__album" id="playerAlbum">—</p>
+        </div>
+        <div class="player__ctrl">
+            <!-- @동작 셔플 / 이전 / 재생·일시정지 / 다음 / 반복재생 — 통일된 라인 아이콘(SVG) -->
+            <button type="button" class="player__btn" id="playerShuffle" aria-label="셔플" title="셔플">
+                <svg viewBox="0 0 24 24"><path d="M16 3h5v5"/><path d="M4 20 21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>
+            </button>
+            <button type="button" class="player__btn" id="playerPrev" aria-label="이전 곡" title="이전 곡">
+                <svg viewBox="0 0 24 24"><polygon points="19 20 9 12 19 4"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+            </button>
+            <button type="button" class="player__btn player__btn--play" id="playerToggle" aria-label="재생/일시정지" title="재생/일시정지"></button>
+            <button type="button" class="player__btn" id="playerNext" aria-label="다음 곡" title="다음 곡">
+                <svg viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+            </button>
+            <button type="button" class="player__btn" id="playerRepeat" aria-label="반복재생" title="반복재생">
+                <svg viewBox="0 0 24 24"><path d="M17 2l4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>
+            </button>
+            <!-- @동작 재생 안하기(정지): 아이콘만 -->
+            <button type="button" class="player__btn player__btn--stop" id="playerStop" aria-label="재생 안하기" title="재생 안하기">
+                <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+            </button>
+        </div>
+        <div class="player__bar"><span class="player__fill" id="playerFill"></span></div>
+    </div>
+
+    <!-- @주의 과제 필수 요소: audio + source (type 생략 → mp3/wav 등 확장자 자동 인식) -->
+    <audio id="musAudio" preload="none"><source id="musAudioSrc" src=""></audio>
+
+    <!-- ATELIER 포팅킷: 풀스크린 오버레이 메뉴 (데스크톱 MENU 버튼으로 열림) -->
+    <div class="overlay-menu" id="overlayMenu" role="dialog" aria-modal="true" aria-label="사이트 메뉴">
+        <div class="overlay-top">
+            <button class="overlay-close" id="overlayClose" type="button" aria-label="메뉴 닫기">Close <span aria-hidden="true">&#10005;</span></button>
+        </div>
+        <nav class="overlay-nav" aria-label="주요 메뉴">
+            <ol>
+                <li><a href="index.html"><span class="n">00</span> 홈 <span class="en">Hello, world!</span></a></li>
+                <li><a href="myProfile.html"><span class="n">01</span> 소개 <span class="en">Profile</span></a></li>
+                <li><a href="myClass.html"><span class="n">02</span> 시간표 <span class="en">Class</span></a></li>
+                <li><a href="myHoliday.html"><span class="n">03</span> 휴일계획 <span class="en">Holiday</span></a></li>
+                <li><a href="myTrip.html"><span class="n">04</span> 여행앨범 <span class="en">Trip</span></a></li>
+            </ol>
+        </nav>
+        <div class="overlay-foot">
+            <span><a href="login.html">로그인</a> &middot; <a href="signUp.html">회원가입</a></span>
+            <span>&copy; 2026 한결</span>
+        </div>
+    </div>
+
+    <a class="totop" href="#main" id="totop" aria-label="맨 위로">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15 L12 8 L19 15"></path></svg>
+    </a>
+
+    <script>
+// ==========================================================================
+// 음악 앨범 - 커버플로우 + 상세(트랙리스트) + 하단 고정 플레이어(뷰 전환에도 재생 유지)
+// ==========================================================================
+const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 40);
+window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+const burger = document.getElementById('navBurger');
+const backdrop = document.getElementById('navBackdrop');
+const toggleNav = (open) => {
+    document.body.classList.toggle('nav--open', open);
+    burger.setAttribute('aria-expanded', open);
+    const sw = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = open ? sw + 'px' : '';
+    document.body.style.overflow = open ? 'hidden' : '';
+};
+if (burger) burger.addEventListener('click', () => toggleNav(!document.body.classList.contains('nav--open')));
+if (backdrop) backdrop.addEventListener('click', () => toggleNav(false));
+
+// --- @데이터 앨범 목록 ---
+// @확장 실제 앨범 추가 방법: media/music/<앨범명>/ 폴더에 커버(jpg) + 곡(mp3)을 넣고
+//   아래 배열 맨 위(또는 원하는 위치)에 { title, artist, cover, tracks:[{name,dur,src}] } 항목 추가.
+//   경로에 공백/특수문자가 있으면 %20 등으로 인코딩해서 넣으면 됨.
+const ALBUMS = [
+    // @실제 앨범: Jane & The Boy — Starry Eyed (media/music/Starry Eyed/)
+    { title: 'Starry Eyed', artist: 'Jane & The Boy', cover: 'media/music/Starry%20Eyed/Starry%20Eyed.jpg', tracks: [
+        { name: 'Starry Eyed',         dur: '3:06', src: 'media/music/Starry%20Eyed/Jane%20%20The%20Boy%20-%20Starry%20Eyed.mp3' },
+        { name: 'Wonderstruck',        dur: '2:38', src: 'media/music/Starry%20Eyed/Jane%20%20The%20Boy%20-%20Wonderstruck.mp3' },
+        { name: 'Miss You Missing Me', dur: '2:44', src: 'media/music/Starry%20Eyed/Jane%20%20The%20Boy%20-%20Miss%20You%20Missing%20Me.mp3' },
+        { name: 'Save Myself',         dur: '3:19', src: 'media/music/Starry%20Eyed/Jane%20%20The%20Boy%20-%20Save%20Myself.mp3' },
+        { name: 'Backwards',           dur: '3:05', src: 'media/music/Starry%20Eyed/Jane%20%20The%20Boy%20-%20Backwards.mp3' } ] },
+    // @실제 앨범: FLAMEBOY — Echo (media/music/Echo/)
+    { title: 'Echo', artist: 'FLAMEBOY', cover: 'media/music/Echo/Echo.jpg', tracks: [
+        { name: 'Echo',      dur: '2:18', src: 'media/music/Echo/FLAMEBOY%20-%20Echo.mp3' },
+        { name: 'DROP',      dur: '2:17', src: 'media/music/Echo/FLAMEBOY%20-%20DROP.mp3' },
+        { name: 'Machine',   dur: '2:03', src: 'media/music/Echo/FLAMEBOY%20-%20Machine.mp3' },
+        { name: 'Send It',   dur: '2:10', src: 'media/music/Echo/FLAMEBOY%20-%20Send%20It.mp3' },
+        { name: 'Get Up Go', dur: '2:00', src: 'media/music/Echo/FLAMEBOY%20-%20Get%20Up%20Go.mp3' },
+        { name: '1V1',       dur: '1:58', src: 'media/music/Echo/FLAMEBOY%20-%201V1.mp3' } ] },
+    // @실제 앨범: Ziggy — Last Train to Nowhere (media/music/Last Train to Nowhere/)
+    { title: 'Last Train to Nowhere', artist: 'Ziggy', cover: 'media/music/Last%20Train%20to%20Nowhere/Last%20Train%20to%20Nowhere.jpg', tracks: [
+        { name: 'Last Train to Nowhere', dur: '2:37', src: 'media/music/Last%20Train%20to%20Nowhere/Ziggy%20-%20Last%20Train%20to%20Nowhere.mp3' },
+        { name: 'Starlight Reflection',  dur: '2:43', src: 'media/music/Last%20Train%20to%20Nowhere/Ziggy%20-%20Starlight%20Reflection.mp3' },
+        { name: 'Walk the Walk',         dur: '2:23', src: 'media/music/Last%20Train%20to%20Nowhere/Ziggy%20-%20Walk%20the%20Walk.mp3' } ] },
+    // @실제 앨범: Yarin Primak — 5 to 9 (media/music/5 to 9/)
+    { title: '5 to 9', artist: 'Yarin Primak', cover: 'media/music/5%20to%209/5%20to%209.jpg', tracks: [
+        { name: '5 to 9',                  dur: '2:18', src: 'media/music/5%20to%209/Yarin%20Primak%20-%205%20to%209.mp3' },
+        { name: '5 to 9 (No Lead Vocals)', dur: '2:18', src: 'media/music/5%20to%209/Yarin%20Primak%20-%205%20to%209%20-%20No%20Lead%20Vocals.mp3' } ] },
+    // @실제 앨범: Paradise Husky — Electric Cantina (media/music/Electric Cantina/)
+    { title: 'Electric Cantina', artist: 'Paradise Husky', cover: 'media/music/Electric%20Cantina/Electric%20Cantina.avif', tracks: [
+        { name: 'Dr Funkstein',  dur: '2:50', src: 'media/music/Electric%20Cantina/Paradise%20Husky%20-%20Dr%20Funkstein.mp3' },
+        { name: 'El Camión',     dur: '2:08', src: 'media/music/Electric%20Cantina/Paradise%20Husky%20-%20El%20Cami%C3%B3n.mp3' },
+        { name: 'Gin and Tonic', dur: '1:52', src: 'media/music/Electric%20Cantina/Paradise%20Husky%20-%20Gin%20and%20Tonic.mp3' } ] },
+    // @실제 앨범: Alex Hager — RUN (media/music/RUN/)
+    { title: 'RUN', artist: 'Alex Hager', cover: 'media/music/RUN/RUN.jpg', tracks: [
+        { name: 'Run',                dur: '2:44', src: 'media/music/RUN/Alex%20Hager%20-%20Run.mp3' },
+        { name: 'Run (Instrumental)', dur: '2:44', src: 'media/music/RUN/Alex%20Hager%20-%20Run%20-%20Instrumental%20version.mp3' } ] },
+    // @실제 앨범: messwave — lost in the right direction (media/music/lost in the right direction/)
+    { title: 'lost in the right direction', artist: 'messwave', cover: 'media/music/lost%20in%20the%20right%20direction/lost%20in%20the%20right%20direction.jpeg', tracks: [
+        { name: 'lost in the right direction',                dur: '2:47', src: 'media/music/lost%20in%20the%20right%20direction/messwave%20-%20lost%20in%20the%20right%20direction.mp3' },
+        { name: 'lost in the right direction (Instrumental)', dur: '2:45', src: 'media/music/lost%20in%20the%20right%20direction/messwave%20-%20lost%20in%20the%20right%20direction%20-%20Instrumental%20version.mp3' } ] }
+];
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const stage = document.getElementById('cfStage');
+const flowTitle = document.getElementById('flowTitle');
+const flowSub = document.getElementById('flowSub');
+const cards = [];
+let center = 0;
+
+// --- @섹션 LP 크레이트 렌더: 레코드를 넘겨보듯, 옆면(스파인)에 제목 표시 ---
+// @동작 앨범 커버를 눌러도 재생하지 않음 → 앞 앨범이면 상세로, 아니면 그 앨범을 앞으로
+ALBUMS.forEach((al, i) => {
+    const c = document.createElement('button');
+    c.type = 'button';
+    c.className = 'lp';
+    c.innerHTML = `
+        <span class="lp__cover"><img src="${al.cover}" alt="${al.title} 커버"></span>
+        <span class="lp__spine"><span class="lp__spine-txt">${al.title}</span></span>`;
+    c.addEventListener('click', () => {
+        if (i !== center) { center = i; layout(); } else openDetail(i);
+    });
+    stage.appendChild(c);
+    cards.push(c);
+});
+
+const N = ALBUMS.length;
+// @동작 순환 오프셋: 처음과 끝이 이어짐(12345 → 23451). 중심 기준으로 -N/2 ~ +N/2 범위
+function relOf(i) {
+    let d = ((i - center) % N + N) % N;   // 0..N-1
+    if (d > N / 2) d -= N;                 // 뒤쪽 절반은 음수(왼쪽)로
+    return d;
+}
+const SIDE = 3;   // 좌우로 보여줄 레코드 수
+function layout() {
+    cards.forEach((c, i) => {
+        const off = relOf(i);
+        const abs = Math.abs(off);
+        if (off === 0) {
+            // @동작 중심 레코드: 화면 정중앙에 정면으로
+            c.style.transform = 'translate(-50%,-50%) rotateY(0deg) translateZ(80px)';
+            c.style.opacity = 1;
+        } else if (off > 0) {
+            // 오른쪽에 대기: 중심에서 더 넓게 펼침
+            const x = 72 + (off - 1) * 18;
+            c.style.transform = `translate(-50%,-50%) translateX(${x}%) rotateY(-68deg) translateZ(${-off * 18}px)`;
+            c.style.opacity = abs > SIDE ? 0 : 1;
+        } else {
+            // 왼쪽에 지나간 것도 대칭으로(순환이라 계속 이어짐)
+            const x = -72 + (off + 1) * 18;
+            c.style.transform = `translate(-50%,-50%) translateX(${x}%) rotateY(68deg) translateZ(${off * 18}px)`;
+            c.style.opacity = abs > SIDE ? 0 : 1;
+        }
+        c.style.zIndex = 100 - abs;
+        c.style.pointerEvents = abs > SIDE ? 'none' : 'auto';
+        c.classList.toggle('is-center', off === 0);
+    });
+    flowTitle.textContent = ALBUMS[center].title;
+    flowSub.textContent = `${ALBUMS[center].artist} · ${ALBUMS[center].tracks.length}곡 · ${center + 1}/${N} — 가운데 앨범을 눌러 트랙을 펼치세요`;
+    if (typeof updatePreview === 'function') updatePreview();   // 재생 중이 아니면 하단 미리보기도 가운데로
+}
+function step(d) { center = ((center + d) % N + N) % N; layout(); }   // 순환 이동
+// @동작 스크롤: 가운데+양옆 앨범이 놓인 넓은 밴드 위에서 앨범을 넘김. 그 바깥 배경에선 페이지가 스크롤됨.
+//       휠 한 번에 한 장씩(스로틀)이라 전환이 튀지 않고 자연스러움.
+const cfEl = document.getElementById('cf');
+let wheelLock = false;
+cfEl.addEventListener('wheel', (e) => {
+    const rect = cfEl.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    // 양옆 앨범까지 포함하는 넓은 밴드(화면 폭의 약 44%, 최대 460px). 그 밖은 페이지 스크롤.
+    const band = Math.min(window.innerWidth * 0.44, 460);
+    if (Math.abs(e.clientX - cx) > band) return;
+    if (Math.abs(e.deltaY) < 6 && Math.abs(e.deltaX) < 6) return;
+    e.preventDefault();
+    if (wheelLock) return;
+    wheelLock = true;
+    step((e.deltaY || e.deltaX) > 0 ? 1 : -1);
+    setTimeout(() => { wheelLock = false; }, 240);
+}, { passive: false });
+// @동작 키보드 좌우로도 순환
+document.addEventListener('keydown', (e) => {
+    if (document.body.classList.contains('detail-open')) return;
+    if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'ArrowLeft') step(-1);
+});
+
+// --- @섹션 상세 뷰 (트랙리스트) ---
+const detail = document.getElementById('musDetail');
+const flow = document.getElementById('musFlow');
+const detailCover = document.getElementById('detailCover');
+const detailTitle = document.getElementById('detailTitle');
+const detailArtist = document.getElementById('detailArtist');
+const detailTracks = document.getElementById('detailTracks');
+let detailAlbum = 0;
+
+function openDetail(i) {
+    detailAlbum = i;
+    const al = ALBUMS[i];
+    detailCover.src = al.cover;
+    detailTitle.textContent = al.title;
+    detailArtist.textContent = `${al.artist} · ${al.tracks.length}곡`;
+    renderTracks(i);
+    document.body.classList.add('detail-open');
+    detail.setAttribute('aria-hidden', 'false');
+    flow.setAttribute('aria-hidden', 'true');
+}
+function renderTracks(i) {
+    const al = ALBUMS[i];
+    detailTracks.innerHTML = '';
+    al.tracks.forEach((t, ti) => {
+        const li = document.createElement('li');
+        li.className = 'track';
+        li.innerHTML = `
+            <span class="track__no">${ti + 1}</span>
+            <span class="track__name">${t.name}</span>
+            <span class="track__eq" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="track__dur">${t.dur}</span>`;
+        li.addEventListener('click', () => playAlbum(i, ti));
+        detailTracks.appendChild(li);
+    });
+    markPlaying();
+}
+document.getElementById('detailBack').addEventListener('click', () => {
+    document.body.classList.remove('detail-open');
+    detail.setAttribute('aria-hidden', 'true');
+    flow.setAttribute('aria-hidden', 'false');
+});
+
+// --- @섹션 재생 엔진 (하단 고정 플레이어, 뷰 전환과 무관하게 유지) ---
+const audio = document.getElementById('musAudio');
+const audioSrc = document.getElementById('musAudioSrc');
+const player = document.getElementById('musPlayer');
+const playerCover = document.getElementById('playerCover');
+const playerTrack = document.getElementById('playerTrack');
+const playerAlbum = document.getElementById('playerAlbum');
+const playerToggle = document.getElementById('playerToggle');
+const playerFill = document.getElementById('playerFill');
+const detailPlayIcon = document.getElementById('detailPlayIcon');
+const detailPlayLabel = document.getElementById('detailPlayLabel');
+const shuffleBtn = document.getElementById('playerShuffle');
+const repeatBtn = document.getElementById('playerRepeat');
+let curAlbum = -1, curTrack = -1;
+let shuffleOn = false, repeatOn = false;
+
+// @동작 통일된 재생/일시정지 아이콘 (SVG)
+const SVG_PLAY = '<svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20"/></svg>';
+const SVG_PAUSE = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+playerToggle.innerHTML = SVG_PLAY;
+document.getElementById('detailPlayIcon').innerHTML = SVG_PLAY;
+
+function playAlbum(ai, ti) {
+    const al = ALBUMS[ai], t = al.tracks[ti];
+    curAlbum = ai; curTrack = ti;
+    audioSrc.src = t.src;
+    audio.load();
+    audio.play().catch(() => {});
+    player.classList.add('is-active');
+    playerCover.src = al.cover;
+    playerTrack.textContent = t.name;
+    playerAlbum.textContent = `${al.title} · ${al.artist}`;
+    syncUI();
+}
+// @동작 아무것도 재생 안 할 때 하단 플레이어에 가운데 앨범 미리보기 표시
+function updatePreview() {
+    if (curAlbum >= 0) return;
+    const al = ALBUMS[center];
+    playerCover.src = al.cover;
+    playerTrack.textContent = al.tracks[0].name;
+    playerAlbum.textContent = `${al.title} · ${al.artist}`;
+}
+function syncUI() {
+    const playing = !audio.paused && curTrack >= 0;
+    playerToggle.innerHTML = playing ? SVG_PAUSE : SVG_PLAY;
+    const inThisAlbum = curAlbum === detailAlbum;
+    detailPlayIcon.innerHTML = (playing && inThisAlbum) ? SVG_PAUSE : SVG_PLAY;
+    detailPlayLabel.textContent = (playing && inThisAlbum) ? '일시정지' : '전체 재생';
+    markPlaying();
+}
+// @동작 "현재 재생 중" 표기: 상세가 그 앨범일 때 해당 트랙에 표시
+function markPlaying() {
+    detailTracks.querySelectorAll('.track').forEach((li, ti) => {
+        const on = (curAlbum === detailAlbum && ti === curTrack);
+        li.classList.toggle('is-playing', on);
+        li.classList.toggle('is-paused', on && audio.paused);
+    });
+}
+// @동작 다음 곡 계산: 셔플이면 무작위, 아니면 순차
+function nextTrack() {
+    const len = ALBUMS[curAlbum].tracks.length;
+    if (shuffleOn && len > 1) {
+        let r; do { r = Math.floor(Math.random() * len); } while (r === curTrack);
+        return r;
+    }
+    return (curTrack + 1) % len;
+}
+
+playerToggle.addEventListener('click', () => {
+    if (curTrack < 0) { playAlbum(center, 0); return; }
+    if (audio.paused) audio.play(); else audio.pause();
+});
+document.getElementById('playerPrev').addEventListener('click', () => {
+    if (curAlbum < 0) { playAlbum(center, 0); return; }
+    const len = ALBUMS[curAlbum].tracks.length;
+    playAlbum(curAlbum, (curTrack - 1 + len) % len);
+});
+document.getElementById('playerNext').addEventListener('click', () => {
+    if (curAlbum < 0) { playAlbum(center, 0); return; }
+    playAlbum(curAlbum, nextTrack());
+});
+// @동작 셔플 토글
+shuffleBtn.addEventListener('click', () => {
+    shuffleOn = !shuffleOn;
+    shuffleBtn.classList.toggle('is-on', shuffleOn);
+});
+// @동작 반복재생 토글 (앨범 끝나면 처음부터 반복)
+repeatBtn.addEventListener('click', () => {
+    repeatOn = !repeatOn;
+    repeatBtn.classList.toggle('is-on', repeatOn);
+});
+// @동작 재생 안하기(정지): 멈추고 처음으로, 표시 초기화
+document.getElementById('playerStop').addEventListener('click', () => {
+    audio.pause();
+    audio.currentTime = 0;
+    curAlbum = -1; curTrack = -1;
+    playerFill.style.width = '0%';
+    updatePreview();
+    syncUI();
+});
+document.getElementById('detailPlay').addEventListener('click', () => {
+    if (curAlbum === detailAlbum && !audio.paused) audio.pause();
+    else if (curAlbum === detailAlbum && audio.paused && curTrack >= 0) audio.play();
+    else playAlbum(detailAlbum, shuffleOn ? Math.floor(Math.random() * ALBUMS[detailAlbum].tracks.length) : 0);
+});
+
+audio.addEventListener('play', syncUI);
+audio.addEventListener('pause', syncUI);
+audio.addEventListener('ended', () => {
+    if (curAlbum < 0) return;
+    const len = ALBUMS[curAlbum].tracks.length;
+    const last = curTrack === len - 1;
+    if (shuffleOn) { playAlbum(curAlbum, nextTrack()); return; }
+    if (!last) { playAlbum(curAlbum, curTrack + 1); return; }
+    if (repeatOn) { playAlbum(curAlbum, 0); return; }   // 앨범 반복
+    audio.pause(); audio.currentTime = 0; playerFill.style.width = '0%'; syncUI();   // 앨범 끝 → 정지
+});
+audio.addEventListener('timeupdate', () => {
+    if (audio.duration) playerFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+    saveState();
+});
+
+// ==========================================================================
+// @섹션 페이지 이동 후에도 재생 이어지기 (방식 3: localStorage 저장→재개)
+//   현재 곡의 src/제목/앨범/커버/위치/재생상태를 저장. 다른 페이지에선
+//   js/music-continue.js 가 이 상태를 읽어 플로팅 플레이어로 이어재생함.
+// ==========================================================================
+const MUSIC_KEY = 'skalaMusic';
+function saveState() {
+    if (curAlbum < 0) { localStorage.removeItem(MUSIC_KEY); return; }
+    const al = ALBUMS[curAlbum], t = al.tracks[curTrack];
+    localStorage.setItem(MUSIC_KEY, JSON.stringify({
+        src: t.src, name: t.name, album: al.title, artist: al.artist, cover: al.cover,
+        time: audio.currentTime, playing: !audio.paused, leftAt: Date.now(),
+        shuffle: shuffleOn, repeat: repeatOn,
+        // @동작 다른 페이지 미니 플레이어가 이전/다음/셔플/반복을 하려면 앨범 트랙 목록·현재 인덱스가 필요
+        tracks: al.tracks, index: curTrack
+    }));
+}
+
+// @동작 하단 재생바 클릭/드래그로 타임라인 이동(시크)
+const playerBar = document.querySelector('.player__bar');
+function seekAt(clientX) {
+    if (!audio.duration) return;
+    const r = playerBar.getBoundingClientRect();
+    const p = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+    audio.currentTime = p * audio.duration;
+    playerFill.style.width = (p * 100) + '%';
+}
+if (playerBar) {
+    let dragging = false;
+    playerBar.addEventListener('pointerdown', (e) => { dragging = true; playerBar.setPointerCapture(e.pointerId); seekAt(e.clientX); });
+    playerBar.addEventListener('pointermove', (e) => { if (dragging) seekAt(e.clientX); });
+    playerBar.addEventListener('pointerup', () => { dragging = false; });
+    playerBar.style.cursor = 'pointer';
+}
+audio.addEventListener('play', saveState);
+audio.addEventListener('pause', saveState);
+window.addEventListener('pagehide', saveState);
+
+// @동작 다른 페이지에서 넘어오면 저장된 곡을 찾아 그 지점(+이동에 걸린 시간)부터 이어재생
+function resumeFromState() {
+    const s = JSON.parse(localStorage.getItem(MUSIC_KEY) || 'null');
+    if (!s || !s.playing || !s.src) return;
+    let ai = -1, ti = -1;
+    ALBUMS.forEach((al, i) => al.tracks.forEach((t, j) => { if (t.src === s.src) { ai = i; ti = j; } }));
+    if (ai < 0) return;
+    center = ai; layout();
+    curAlbum = ai; curTrack = ti;
+    shuffleOn = !!s.shuffle; shuffleBtn.classList.toggle('is-on', shuffleOn);
+    repeatOn = !!s.repeat; repeatBtn.classList.toggle('is-on', repeatOn);
+    audioSrc.src = s.src; audio.load();
+    const resumeAt = (s.time || 0) + (s.leftAt ? (Date.now() - s.leftAt) / 1000 : 0);
+    const start = () => { try { audio.currentTime = resumeAt; } catch (e) {} };
+    audio.addEventListener('loadedmetadata', start, { once: true });
+    player.classList.add('is-active');
+    playerCover.src = s.cover; playerTrack.textContent = s.name;
+    playerAlbum.textContent = `${s.album} · ${s.artist}`;
+    audio.play().then(syncUI).catch(() => syncUI());   // 자동재생 막히면 사용자가 ▶ 한 번
+}
+
+layout();
+updatePreview();
+resumeFromState();
+
+// ===== ATELIER 포팅킷: 커스텀 커서 + 오버레이 메뉴 + 스크롤 프로그레스 (다른 페이지와 동일) =====
+(function () {
+    'use strict';
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var finePointer  = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    function initCursor() {
+        if (!finePointer || reduceMotion) return;
+        var dot = document.createElement('div'), ring = document.createElement('div');
+        dot.className = 'cursor-dot'; ring.className = 'cursor-ring';
+        document.body.append(dot, ring);
+        var mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
+        document.addEventListener('mousemove', function (e) {
+            mx = e.clientX; my = e.clientY;
+            dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+        });
+        (function loop() {
+            rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
+            ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
+            requestAnimationFrame(loop);
+        })();
+        var hoverSel = 'a, button, select, input, textarea, label, .lp, .cf-card, .track, .player__btn';
+        document.addEventListener('mouseover', function (e) { if (e.target.closest(hoverSel)) ring.classList.add('is-hover'); });
+        document.addEventListener('mouseout', function (e) { if (e.target.closest(hoverSel)) ring.classList.remove('is-hover'); });
+    }
+    function initOverlayMenu() {
+        var menu = document.getElementById('overlayMenu');
+        var openBtn = document.getElementById('menuBtn');
+        var closeBtn = document.getElementById('overlayClose');
+        if (!menu || !openBtn) return;
+        var open = function () { menu.classList.add('is-open'); document.body.classList.add('menu-open'); openBtn.setAttribute('aria-expanded', 'true'); };
+        var close = function () { menu.classList.remove('is-open'); document.body.classList.remove('menu-open'); openBtn.setAttribute('aria-expanded', 'false'); };
+        openBtn.addEventListener('click', open);
+        if (closeBtn) closeBtn.addEventListener('click', close);
+        menu.querySelectorAll('.overlay-nav a').forEach(function (a) { a.addEventListener('click', close); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    }
+    function initProgress() {
+        var bar = document.querySelector('.scroll-progress');
+        if (!bar) return;
+        var onScroll = function () {
+            var h = document.documentElement;
+            var max = h.scrollHeight - h.clientHeight;
+            bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+        };
+        document.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    }
+    var boot = function () { initCursor(); initOverlayMenu(); initProgress(); };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+
+// ===== 드로어 닫기(X) 버튼 → 배경 클릭과 동일하게 닫힘 =====
+(function () {
+    var c = document.getElementById('navDrawerClose'), b = document.getElementById('navBackdrop');
+    if (c && b) c.addEventListener('click', function () { b.click(); });
+})();
+    </script>
+</body>
+</html>
