@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="한결의 휴일 계획 — 보딩패스">
+    <meta name="author" content="한결">
+    <title>휴일 계획 · 보딩패스 | 한결</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-class page-hol has-overlay">
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">본문 바로가기</a>
+
+    <a class="brand" id="brand" href="index.html" aria-label="처음 화면으로">
+        <span class="brand__hello">Hello, world!&nbsp;</span><span class="brand__name"> I'm 한결</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="주요 메뉴">
+        <ul class="nav__list" id="navList">
+            <li><a class="nav__link" href="myProfile.html">소개</a></li>
+            <li><a class="nav__link" href="myClass.html">시간표</a></li>
+            <li><a class="nav__link" href="myTrip.html">여행앨범</a></li>
+            <li><a class="nav__link" href="login.html">로그인</a></li>
+            <li><a class="nav__link" href="signUp.html">회원가입</a></li>
+        </ul>
+        <button class="nav__burger" id="navBurger" aria-label="메뉴 열기" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="메뉴 열기" aria-expanded="false">Menu <span class="bars" aria-hidden="true"><i></i><i></i></span></button>
+    </nav>
+
+    <div class="nav__backdrop" id="navBackdrop"></div>
+    <aside class="nav__drawer" id="navDrawer" aria-label="모바일 메뉴">
+        <button class="nav__drawer-close" id="navDrawerClose" type="button" aria-label="메뉴 닫기">&#10005;</button>
+        <ul class="nav__drawer-list">
+            <li><a href="myProfile.html">소개</a></li>
+            <li><a href="myClass.html">시간표</a></li>
+            <li><a href="myTrip.html">여행앨범</a></li>
+            <li><a href="login.html">로그인</a></li>
+            <li><a href="signUp.html">회원가입</a></li>
+        </ul>
+    </aside>
+
+    <main id="main" class="hdk">
+        <header class="hol-hero hdk__hero" id="hdkHero">
+            <p class="hol-hero__eyebrow">HOLIDAY · BOARDING PASS</p>
+            <h1 class="hol-hero__title">휴일 계획</h1>
+            <p class="hol-hero__lead">왼쪽 제목을 훑으면 그 <b>탑승권</b>이 맨 앞으로. 클릭하면 <mark>절취선</mark>을 따라 찢기고 그날의 계획만 남아요.</p>
+        </header>
+
+        <!-- @섹션 덱: [제목 목록 | 가운데 티켓 스택 | 날짜 목록]. JS가 채움 -->
+        <section class="hdk__cols" id="hdkCols" aria-label="휴일 티켓 덱">
+            <ul class="hdk__titles" id="hdkTitles" aria-label="휴일 제목"></ul>
+            <div class="hdk__stage" id="hdkStage"></div>
+            <ul class="hdk__dates" id="hdkDates" aria-hidden="true"></ul>
+        </section>
+    </main>
+
+    <!-- @섹션 계획 오버레이 -->
+    <div class="hdk-plan" id="hdkPlanWrap" aria-hidden="true">
+        <div class="hdk-plan__backdrop" id="hdkBackdrop"></div>
+        <div class="pass__plan" id="hdkPlan"></div>
+    </div>
+
+    <!-- @섹션 휴일별 계획 템플릿 -->
+    <template id="plan-0">
+        <div class="plan__head"><h3 class="plan__title">집콕 리조트 <span class="plan__badge">대체휴일</span></h3><span class="plan__date">07.17 (금)</span></div>
+        <ol class="plan__list">
+            <li class="plan__row"><span class="plan__t">09:00</span><p class="plan__act"><b>늦잠</b>의 정석 — <mark>알람 없는 아침</mark> 🛏️</p></li>
+            <li class="plan__row"><span class="plan__t">14:00</span><p class="plan__act">밀린 <u>드라마 정주행</u>과 배달음식 🍜</p></li>
+            <li class="plan__row"><span class="plan__t">20:00</span><p class="plan__act"><i>반신욕</i> 후 일찍 잠들기 🛁</p></li>
+        </ol>
+        <button class="plan__back" type="button">↩ 티켓 다시 넣기</button>
+    </template>
+    <template id="plan-1">
+        <div class="plan__head"><h3 class="plan__title">한강 피크닉 <span class="plan__badge">광복절 대체휴일</span></h3><span class="plan__date">08.17 (월)</span></div>
+        <ol class="plan__list">
+            <li class="plan__row"><span class="plan__t">10:00</span><p class="plan__act">돗자리 깔고 <b>한강 피크닉</b> 🧺</p></li>
+            <li class="plan__row"><span class="plan__t">13:00</span><p class="plan__act"><mark>치킨과 라면</mark>, 자전거 대여 🚲</p></li>
+            <li class="plan__row"><span class="plan__t">19:00</span><p class="plan__act">노을 보며 <u>산책</u> 🌇</p></li>
+        </ol>
+        <button class="plan__back" type="button">↩ 티켓 다시 넣기</button>
+    </template>
+    <template id="plan-2">
+        <div class="plan__head"><h3 class="plan__title">무계획 데이 <span class="plan__badge">자체휴강</span></h3><span class="plan__date">09.23 (수)</span></div>
+        <ol class="plan__list">
+            <li class="plan__row"><span class="plan__t">오전</span><p class="plan__act"><s>빡빡한 계획</s> 없음 — <b>발길 닿는 대로</b> 🚶</p></li>
+            <li class="plan__row"><span class="plan__t">오후</span><p class="plan__act">동네 <u>서점</u>에서 책 한 권 📖</p></li>
+            <li class="plan__row"><span class="plan__t">저녁</span><p class="plan__act"><i>혼밥 맛집</i> 탐방 🍣</p></li>
+        </ol>
+        <button class="plan__back" type="button">↩ 티켓 다시 넣기</button>
+    </template>
+    <template id="plan-3">
+        <div class="plan__head"><h3 class="plan__title">고향 본가 <span class="plan__badge">추석 연휴</span></h3><span class="plan__date">09.24 (목–일)</span></div>
+        <ol class="plan__list">
+            <li class="plan__row"><span class="plan__t">09:00</span><p class="plan__act"><b>귀성길</b> 출발 — 휴게소 간식은 필수 🚗</p></li>
+            <li class="plan__row"><span class="plan__t">13:00</span><p class="plan__act"><mark>온 가족 차례</mark>와 송편 빚기 🌕</p></li>
+            <li class="plan__row"><span class="plan__t">저녁</span><p class="plan__act">사촌들과 <u>윷놀이</u> 한판 🎲</p></li>
+        </ol>
+        <button class="plan__back" type="button">↩ 티켓 다시 넣기</button>
+    </template>
+    <template id="plan-4">
+        <div class="plan__head"><h3 class="plan__title">가을 산행 <span class="plan__badge">개천절 대체휴일</span></h3><span class="plan__date">10.05 (월)</span></div>
+        <ol class="plan__list">
+            <li class="plan__row"><span class="plan__t">08:00</span><p class="plan__act"><b>단풍 산행</b> 시작 🍁</p></li>
+            <li class="plan__row"><span class="plan__t">12:00</span><p class="plan__act">정상에서 <mark>김밥 한 줄</mark> 🍙</p></li>
+            <li class="plan__row"><span class="plan__t">17:00</span><p class="plan__act"><i>온천</i>으로 피로 풀기 ♨️</p></li>
+        </ol>
+        <button class="plan__back" type="button">↩ 티켓 다시 넣기</button>
+    </template>
+    <template id="plan-5">
+        <div class="plan__head"><h3 class="plan__title">카페 투어 <span class="plan__badge">한글날</span></h3><span class="plan__date">10.09 (금)</span></div>
+        <ol class="plan__list">
+            <li class="plan__row"><span class="plan__t">11:00</span><p class="plan__act"><b>감성 카페</b> 첫 잔 ☕</p></li>
+            <li class="plan__row"><span class="plan__t">15:00</span><p class="plan__act"><u>손글씨 엽서</u> 쓰기 ✍️</p></li>
+            <li class="plan__row"><span class="plan__t">19:00</span><p class="plan__act"><mark>한글날 특선</mark> 전시 관람 🖼️</p></li>
+        </ol>
+        <button class="plan__back" type="button">↩ 티켓 다시 넣기</button>
+    </template>
+
+    <footer class="footer">
+        <address class="footer__meta">작성: 한결 · <time datetime="2026-07">2026년 7월</time></address>
+    </footer>
+
+    <!-- ATELIER 포팅킷: 풀스크린 오버레이 메뉴 (데스크톱 MENU 버튼으로 열림) -->
+    <div class="overlay-menu" id="overlayMenu" role="dialog" aria-modal="true" aria-label="사이트 메뉴">
+        <div class="overlay-top">
+            <button class="overlay-close" id="overlayClose" type="button" aria-label="메뉴 닫기">Close <span aria-hidden="true">&#10005;</span></button>
+        </div>
+        <nav class="overlay-nav" aria-label="주요 메뉴">
+            <ol>
+                <li><a href="index.html"><span class="n">00</span> 홈 <span class="en">Hello, world!</span></a></li>
+                <li><a href="myProfile.html"><span class="n">01</span> 소개 <span class="en">Profile</span></a></li>
+                <li><a href="myClass.html"><span class="n">02</span> 시간표 <span class="en">Class</span></a></li>
+                <li><a href="myHoliday.html"><span class="n">03</span> 휴일계획 <span class="en">Holiday</span></a></li>
+                <li><a href="myTrip.html"><span class="n">04</span> 여행앨범 <span class="en">Trip</span></a></li>
+            </ol>
+        </nav>
+        <div class="overlay-foot">
+            <span><a href="login.html">로그인</a> &middot; <a href="signUp.html">회원가입</a></span>
+            <span>&copy; 2026 한결</span>
+        </div>
+    </div>
+
+    <a class="totop" href="#main" id="totop" aria-label="맨 위로">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15 L12 8 L19 15"></path></svg>
+    </a>
+
+    <script>
+// ==========================================================================
+// 휴일 계획 - 카드 덱: 앞의 한 장만 선명 / 뒤 티켓은 흐린 채 대기 / 지나간 티켓은 앞으로 날아가 사라짐
+// ==========================================================================
+const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 40);
+window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+const burger = document.getElementById('navBurger');
+const backdrop = document.getElementById('navBackdrop');
+const toggleNav = (open) => {
+    document.body.classList.toggle('nav--open', open);
+    burger.setAttribute('aria-expanded', open);
+    const sw = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = open ? sw + 'px' : '';
+    document.body.style.overflow = open ? 'hidden' : '';
+};
+if (burger) burger.addEventListener('click', () => toggleNav(!document.body.classList.contains('nav--open')));
+if (backdrop) backdrop.addEventListener('click', () => toggleNav(false));
+
+// --- @섹션 데이터 ---
+const HOLS = [
+    { name: '집콕 리조트', en: 'HOME',     badge: '대체휴일',        date: '07.17 금',   flight: 'SK-0717' },
+    { name: '한강 피크닉', en: 'HANGANG',  badge: '광복절 대체휴일',  date: '08.17 월',   flight: 'SK-0817' },
+    { name: '무계획 데이', en: 'NOWHERE',  badge: '자체휴강',        date: '09.23 수',   flight: 'SK-0923' },
+    { name: '고향 본가',   en: 'HOMETOWN', badge: '추석 연휴',       date: '09.24 목–일', flight: 'SK-0924' },
+    { name: '가을 산행',   en: 'MOUNTAIN', badge: '개천절 대체휴일',  date: '10.05 월',   flight: 'SK-1005' },
+    { name: '카페 투어',   en: 'CAFE',     badge: '한글날',          date: '10.09 금',   flight: 'SK-1009' }
+];
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const titlesEl = document.getElementById('hdkTitles');
+const datesEl = document.getElementById('hdkDates');
+const stageEl = document.getElementById('hdkStage');
+const planWrap = document.getElementById('hdkPlanWrap');
+const planBox = document.getElementById('hdkPlan');
+
+const titleBtns = [];
+const tickets = [];
+
+HOLS.forEach((d, i) => {
+    // 제목 (왼쪽)
+    const tli = document.createElement('li');
+    const tbtn = document.createElement('button');
+    tbtn.type = 'button';
+    tbtn.className = 'hdk__title';
+    tbtn.textContent = d.name;
+    tbtn.setAttribute('aria-label', d.name + ' 탑승권 열기');
+    tli.appendChild(tbtn);
+    titlesEl.appendChild(tli);
+    titleBtns.push(tbtn);
+
+    // 날짜 (오른쪽)
+    const dli = document.createElement('li');
+    dli.className = 'hdk__date';
+    dli.innerHTML = `<span>${d.badge}</span><small>${d.date}</small>`;
+    datesEl.appendChild(dli);
+
+    // 티켓 (가운데 스택, 전부 같은 자리·같은 크기)
+    const pass = document.createElement('div');
+    pass.className = 'pass hdk__pass';
+    pass.innerHTML = `
+        <span class="ticket__main">
+            <span class="ticket__air"><span class="ticket__logo">✈ SKALA AIR</span><span class="ticket__cls">HOLIDAY</span></span>
+            <span class="ticket__route">
+                <span class="rt"><b>일상</b><small>SEOUL</small></span>
+                <span class="rt__arrow" aria-hidden="true">✈</span>
+                <span class="rt rt--to"><b>${d.name}</b><small>${d.en}</small></span>
+            </span>
+            <span class="ticket__meta">
+                <span class="mcell"><small>DATE</small><b>${d.date}</b></span>
+                <span class="mcell"><small>FLIGHT</small><b>${d.flight}</b></span>
+                <span class="mcell"><small>BADGE</small><b>${d.badge}</b></span>
+            </span>
+        </span>
+        <span class="ticket__stub">
+            <span class="ticket__barcode" aria-hidden="true"></span>
+            <span class="ticket__go">BOARD →</span>
+        </span>
+        <span class="plane" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 21 L23 12 L2 3 L2 10 L17 12 L2 14 Z"/></svg></span>`;
+    stageEl.appendChild(pass);
+    tickets.push(pass);
+});
+
+let active = 0;
+let locked = false;
+
+// --- @동작 덱 렌더: active만 선명 front / 뒤(대기)는 흐림 / 앞(지나감)은 날아가 사라짐 ---
+function render() {
+    tickets.forEach((t, i) => {
+        const off = i - active;   // >0 뒤 대기, 0 정면, <0 이미 지나감
+        let tf, op, blur, z;
+        if (off === 0) {
+            tf = 'translate(-50%, -50%) translateY(0) scale(1)';
+            op = 1; blur = 0; z = 100;
+        } else if (off > 0) {
+            // 뒤에서 대기: 아래로 조금씩 쌓이고 흐려짐 (크기는 거의 동일)
+            const s = Math.min(off, 4);
+            tf = `translate(-50%, -50%) translateY(${s * 18}px) scale(${1 - s * 0.02})`;
+            op = Math.max(0, 1 - s * 0.26);
+            blur = Math.min(9, s * 2.4);
+            z = 90 - off;
+        } else {
+            // 이미 지나간 티켓: 앞으로(크게) 날아가며 사라짐
+            tf = `translate(-50%, -50%) translateY(${off * 46}px) scale(${1 + (-off) * 0.4})`;
+            op = 0; blur = 0; z = 40 + off;
+        }
+        t.style.transform = tf;
+        t.style.opacity = op;
+        t.style.filter = blur ? `blur(${blur}px)` : 'none';
+        t.style.zIndex = z;
+    });
+    titleBtns.forEach((b, i) => b.classList.toggle('is-active', i === active));
+    datesEl.querySelectorAll('.hdk__date').forEach((d, i) => d.classList.toggle('is-active', i === active));
+}
+
+function setActive(i) {
+    if (locked || i === active) return;
+    active = i;
+    render();
+}
+
+// @주의 hover 없는 터치기기: 첫 탭=그 티켓 앞으로 / 이미 앞이면 탑승 (데스크톱은 hover로 이미 앞이라 바로 탑승)
+function pickOrBoard(i) { if (i !== active) setActive(i); else board(i); }
+titleBtns.forEach((b, i) => {
+    b.addEventListener('mouseenter', () => setActive(i));
+    b.addEventListener('focus', () => setActive(i));
+    b.addEventListener('click', () => pickOrBoard(i));
+});
+// @동작 오른쪽 날짜로도 덱을 넘길 수 있음: hover=그 티켓 앞으로, click=선택/탑승
+const dateItems = [...datesEl.querySelectorAll('.hdk__date')];
+dateItems.forEach((d, i) => {
+    d.tabIndex = 0;
+    d.addEventListener('mouseenter', () => setActive(i));
+    d.addEventListener('focus', () => setActive(i));
+    d.addEventListener('click', () => pickOrBoard(i));
+});
+// 가운데 정면 티켓 클릭해도 탑승
+stageEl.addEventListener('click', (e) => { if (e.target.closest('.hdk__pass') === tickets[active]) board(active); });
+
+// @동작 덱 영역에서 휠을 굴리면 카드가 한 장씩 넘어감 (페이지 스크롤은 유지하되 덱 위에서만 가로채기)
+const cols = document.getElementById('hdkCols');
+let wheelLock = false;
+cols.addEventListener('wheel', (e) => {
+    if (locked) return;
+    if (Math.abs(e.deltaY) < 6) return;
+    e.preventDefault();
+    if (wheelLock) return;
+    wheelLock = true;
+    setActive(Math.max(0, Math.min(tickets.length - 1, active + (e.deltaY > 0 ? 1 : -1))));
+    setTimeout(() => { wheelLock = false; }, 260);
+}, { passive: false });
+
+// --- @동작 클릭: 정면 티켓만 절취 → 계획만 표시 ---
+function board(i) {
+    if (locked) return;
+    setActiveImmediate(i);
+    locked = true;
+    document.body.classList.add('hdk-open');
+    planBox.innerHTML = '';
+    planBox.appendChild(document.getElementById('plan-' + i).content.cloneNode(true));
+    const pass = tickets[i];
+    if (reduceMotion) { openPlan(); return; }
+    pass.classList.add('is-tearing');
+    setTimeout(openPlan, 1000);   // 절취(0.6s) + 비행기 여운
+}
+function setActiveImmediate(i) { active = i; render(); }
+function openPlan() {
+    planWrap.classList.add('is-open');
+    planWrap.setAttribute('aria-hidden', 'false');
+}
+
+// --- @동작 다시 넣기: 계획 닫힘 → 덱(나머지 티켓)이 먼저 다시 보이고,
+//     앞 티켓이 그 덱 맨 앞 자리로 내려앉으며 꽂힘 (덱이 배경에 보여서 끊김 없음) ---
+function closePlan() {
+    if (!locked) return;
+    const pass = tickets[active];
+    planWrap.classList.remove('is-open');
+    planWrap.setAttribute('aria-hidden', 'true');
+    pass.classList.remove('is-tearing');            // 온전한 티켓 복원
+    document.body.classList.remove('hdk-open');      // 덱 전체(나머지 티켓·제목·날짜) 다시 보이게
+    render();                                        // 모든 티켓 제자리로 (앞 티켓 = 덱 맨 앞)
+    if (reduceMotion) { locked = false; return; }
+    // 앞 티켓이 살짝 앞·위에서 덱 맨 앞 자리로 내려앉는 모션
+    pass.classList.add('is-inserting');
+    setTimeout(() => { pass.classList.remove('is-inserting'); locked = false; }, 520);
+}
+planBox.addEventListener('click', (e) => { if (e.target.closest('.plan__back')) closePlan(); });
+document.getElementById('hdkBackdrop').addEventListener('click', closePlan);
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePlan(); });
+
+render();
+    
+// ===== ATELIER 포팅킷: 커스텀 커서 + 오버레이 메뉴 + 스크롤 프로그레스 (IIFE, 기존 코드와 충돌 없음) =====
+(function () {
+    'use strict';
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var finePointer  = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    function initCursor() {
+        if (!finePointer || reduceMotion) return;
+        var dot = document.createElement('div'), ring = document.createElement('div');
+        dot.className = 'cursor-dot'; ring.className = 'cursor-ring';
+        document.body.append(dot, ring);
+        var mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
+        document.addEventListener('mousemove', function (e) {
+            mx = e.clientX; my = e.clientY;
+            dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+        });
+        (function loop() {
+            rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
+            ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
+            requestAnimationFrame(loop);
+        })();
+        var hoverSel = 'a, button, select, input, textarea, label, .split-panel, .tg-tile, .pass__ticket, .flip, .goal-card, .cl-nav__toggle';
+        document.addEventListener('mouseover', function (e) { if (e.target.closest(hoverSel)) ring.classList.add('is-hover'); });
+        document.addEventListener('mouseout', function (e) { if (e.target.closest(hoverSel)) ring.classList.remove('is-hover'); });
+    }
+
+    function initOverlayMenu() {
+        var menu = document.getElementById('overlayMenu');
+        var openBtn = document.getElementById('menuBtn');
+        var closeBtn = document.getElementById('overlayClose');
+        if (!menu || !openBtn) return;
+        var open = function () { menu.classList.add('is-open'); document.body.classList.add('menu-open'); openBtn.setAttribute('aria-expanded', 'true'); };
+        var close = function () { menu.classList.remove('is-open'); document.body.classList.remove('menu-open'); openBtn.setAttribute('aria-expanded', 'false'); };
+        openBtn.addEventListener('click', open);
+        if (closeBtn) closeBtn.addEventListener('click', close);
+        menu.querySelectorAll('.overlay-nav a').forEach(function (a) { a.addEventListener('click', close); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    }
+
+    function initProgress() {
+        var bar = document.querySelector('.scroll-progress');
+        if (!bar) return;
+        var onScroll = function () {
+            var h = document.documentElement;
+            var max = h.scrollHeight - h.clientHeight;
+            bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+        };
+        document.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    }
+
+    var boot = function () { initCursor(); initOverlayMenu(); initProgress(); };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+
+    
+// ===== 드로어 닫기(X) 버튼 → 배경 클릭과 동일하게 닫힘 =====
+(function () {
+    var c = document.getElementById('navDrawerClose'), b = document.getElementById('navBackdrop');
+    if (c && b) c.addEventListener('click', function () { b.click(); });
+})();
+
+    </script>
+    <script defer src="js/music-continue.js"></script>
+</body>
+</html>
