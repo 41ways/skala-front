@@ -158,6 +158,7 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15 L12 8 L19 15"></path></svg>
     </a>
 
+    <script src="js/albums-data.js"></script>
     <script>
 // ==========================================================================
 // 음악 앨범 - 커버플로우 + 상세(트랙리스트) + 하단 고정 플레이어(뷰 전환에도 재생 유지)
@@ -180,48 +181,8 @@ if (backdrop) backdrop.addEventListener('click', () => toggleNav(false));
 // @확장 실제 앨범 추가 방법: media/music/<앨범명>/ 폴더에 커버(jpg) + 곡(mp3)을 넣고
 //   아래 배열 맨 위(또는 원하는 위치)에 { title, artist, cover, tracks:[{name,dur,src}] } 항목 추가.
 //   경로에 공백/특수문자가 있으면 %20 등으로 인코딩해서 넣으면 됨.
-const ALBUMS = [
-    // @실제 앨범: Everything happens to me (media/music/Everything happens to me/) · 메인 화면 시그니처 곡
-    { title: 'Everything happens to me', artist: 'Chet Baker', cover: 'media/music/Everything%20happens%20to%20me/Everyhting%20hanppens%20to%20me.jpg', tracks: [
-        { name: 'Everything Happens to Me', dur: '6:47', src: 'media/music/Everything%20happens%20to%20me/Everything%20happens%20to%20me.mp3' } ] },
-    // @실제 앨범: Jane & The Boy — Starry Eyed (media/music/Starry Eyed/)
-    { title: 'Starry Eyed', artist: 'Jane & The Boy', cover: 'media/music/Starry%20Eyed/Starry%20Eyed.jpg', tracks: [
-        { name: 'Starry Eyed',         dur: '3:06', src: 'media/music/Starry%20Eyed/Jane%20%20The%20Boy%20-%20Starry%20Eyed.mp3' },
-        { name: 'Wonderstruck',        dur: '2:38', src: 'media/music/Starry%20Eyed/Jane%20%20The%20Boy%20-%20Wonderstruck.mp3' },
-        { name: 'Miss You Missing Me', dur: '2:44', src: 'media/music/Starry%20Eyed/Jane%20%20The%20Boy%20-%20Miss%20You%20Missing%20Me.mp3' },
-        { name: 'Save Myself',         dur: '3:19', src: 'media/music/Starry%20Eyed/Jane%20%20The%20Boy%20-%20Save%20Myself.mp3' },
-        { name: 'Backwards',           dur: '3:05', src: 'media/music/Starry%20Eyed/Jane%20%20The%20Boy%20-%20Backwards.mp3' } ] },
-    // @실제 앨범: FLAMEBOY — Echo (media/music/Echo/)
-    { title: 'Echo', artist: 'FLAMEBOY', cover: 'media/music/Echo/Echo.jpg', tracks: [
-        { name: 'Echo',      dur: '2:18', src: 'media/music/Echo/FLAMEBOY%20-%20Echo.mp3' },
-        { name: 'DROP',      dur: '2:17', src: 'media/music/Echo/FLAMEBOY%20-%20DROP.mp3' },
-        { name: 'Machine',   dur: '2:03', src: 'media/music/Echo/FLAMEBOY%20-%20Machine.mp3' },
-        { name: 'Send It',   dur: '2:10', src: 'media/music/Echo/FLAMEBOY%20-%20Send%20It.mp3' },
-        { name: 'Get Up Go', dur: '2:00', src: 'media/music/Echo/FLAMEBOY%20-%20Get%20Up%20Go.mp3' },
-        { name: '1V1',       dur: '1:58', src: 'media/music/Echo/FLAMEBOY%20-%201V1.mp3' } ] },
-    // @실제 앨범: Ziggy — Last Train to Nowhere (media/music/Last Train to Nowhere/)
-    { title: 'Last Train to Nowhere', artist: 'Ziggy', cover: 'media/music/Last%20Train%20to%20Nowhere/Last%20Train%20to%20Nowhere.jpg', tracks: [
-        { name: 'Last Train to Nowhere', dur: '2:37', src: 'media/music/Last%20Train%20to%20Nowhere/Ziggy%20-%20Last%20Train%20to%20Nowhere.mp3' },
-        { name: 'Starlight Reflection',  dur: '2:43', src: 'media/music/Last%20Train%20to%20Nowhere/Ziggy%20-%20Starlight%20Reflection.mp3' },
-        { name: 'Walk the Walk',         dur: '2:23', src: 'media/music/Last%20Train%20to%20Nowhere/Ziggy%20-%20Walk%20the%20Walk.mp3' } ] },
-    // @실제 앨범: Yarin Primak — 5 to 9 (media/music/5 to 9/)
-    { title: '5 to 9', artist: 'Yarin Primak', cover: 'media/music/5%20to%209/5%20to%209.jpg', tracks: [
-        { name: '5 to 9',                  dur: '2:18', src: 'media/music/5%20to%209/Yarin%20Primak%20-%205%20to%209.mp3' },
-        { name: '5 to 9 (No Lead Vocals)', dur: '2:18', src: 'media/music/5%20to%209/Yarin%20Primak%20-%205%20to%209%20-%20No%20Lead%20Vocals.mp3' } ] },
-    // @실제 앨범: Paradise Husky — Electric Cantina (media/music/Electric Cantina/)
-    { title: 'Electric Cantina', artist: 'Paradise Husky', cover: 'media/music/Electric%20Cantina/Electric%20Cantina.avif', tracks: [
-        { name: 'Dr Funkstein',  dur: '2:50', src: 'media/music/Electric%20Cantina/Paradise%20Husky%20-%20Dr%20Funkstein.mp3' },
-        { name: 'El Camión',     dur: '2:08', src: 'media/music/Electric%20Cantina/Paradise%20Husky%20-%20El%20Cami%C3%B3n.mp3' },
-        { name: 'Gin and Tonic', dur: '1:52', src: 'media/music/Electric%20Cantina/Paradise%20Husky%20-%20Gin%20and%20Tonic.mp3' } ] },
-    // @실제 앨범: Alex Hager — RUN (media/music/RUN/)
-    { title: 'RUN', artist: 'Alex Hager', cover: 'media/music/RUN/RUN.jpg', tracks: [
-        { name: 'Run',                dur: '2:44', src: 'media/music/RUN/Alex%20Hager%20-%20Run.mp3' },
-        { name: 'Run (Instrumental)', dur: '2:44', src: 'media/music/RUN/Alex%20Hager%20-%20Run%20-%20Instrumental%20version.mp3' } ] },
-    // @실제 앨범: messwave — lost in the right direction (media/music/lost in the right direction/)
-    { title: 'lost in the right direction', artist: 'messwave', cover: 'media/music/lost%20in%20the%20right%20direction/lost%20in%20the%20right%20direction.jpeg', tracks: [
-        { name: 'lost in the right direction',                dur: '2:47', src: 'media/music/lost%20in%20the%20right%20direction/messwave%20-%20lost%20in%20the%20right%20direction.mp3' },
-        { name: 'lost in the right direction (Instrumental)', dur: '2:45', src: 'media/music/lost%20in%20the%20right%20direction/messwave%20-%20lost%20in%20the%20right%20direction%20-%20Instrumental%20version.mp3' } ] }
-];
+// @주의 앨범 데이터는 js/albums-data.js 공용 파일 사용
+const ALBUMS = window.SKALA_ALBUMS;
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const stage = document.getElementById('cfStage');
@@ -500,8 +461,7 @@ document.getElementById('playerNext').addEventListener('click', () => {
     if (curAlbum < 0) { playAlbum(center, 0); return; }
     if (shuffleOn) { playAlbum(curAlbum, nextTrack()); return; }
     const len = ALBUMS[curAlbum].tracks.length;
-    // @동작 앨범 반복: 앨범 안에서 순환(끝이면 첫 곡) / 그 외: 앨범 끝이면 다음 앨범 첫 곡
-    if (repeatMode === 'album') { playAlbum(curAlbum, (curTrack + 1) % len); return; }
+    // @동작 수동 다음곡: 반복 모드와 무관하게 앨범 끝이면 항상 다음 앨범 첫 곡 (앨범 반복은 자동 종료 시에만 적용)
     if (curTrack < len - 1) playAlbum(curAlbum, curTrack + 1);
     else playAlbum((curAlbum + 1) % ALBUMS.length, 0);
 });
@@ -605,6 +565,20 @@ function openCurrentDetail() { openDetail(curAlbum >= 0 ? curAlbum : center); }
 audio.addEventListener('play', saveState);
 audio.addEventListener('pause', saveState);
 window.addEventListener('pagehide', saveState);
+// @동작 자동재생 차단 시(뒤로가기엔 제스처 없음) 첫 입력에서 이어재생
+function armAutoResume() {
+    const go = () => { if (audio.paused && curTrack >= 0) audio.play().then(syncUI).catch(() => syncUI()); };
+    ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((ev) => document.addEventListener(ev, go, { once: true, passive: true }));
+}
+// @동작 브라우저 뒤로가기(bfcache 복원): 저장 상태가 '재생 중'이면 그 지점부터 다시 재생
+window.addEventListener('pageshow', (e) => {
+    if (!e.persisted) return;
+    let st; try { st = JSON.parse(localStorage.getItem(MUSIC_KEY) || 'null'); } catch (_) { st = null; }
+    if (st && st.playing && audio.paused && curTrack >= 0) {
+        try { audio.currentTime = st.time || audio.currentTime; } catch (_) {}
+        audio.play().then(syncUI).catch(() => { syncUI(); armAutoResume(); });
+    }
+});
 
 // @동작 다른 페이지에서 넘어오면 저장된 곡을 찾아 그 지점(+이동에 걸린 시간)부터 이어재생
 function resumeFromState() {
@@ -625,7 +599,7 @@ function resumeFromState() {
     // @동작 시크(위치 맞추기) 후 재생 → 처음부터 잠깐 재생되는 깜빡임 방지
     audio.addEventListener('loadedmetadata', () => {
         try { audio.currentTime = resumeAt; } catch (e) {}
-        audio.play().then(syncUI).catch(() => syncUI());
+        audio.play().then(syncUI).catch(() => { syncUI(); armAutoResume(); });   // 차단되면 첫 입력에서 이어재생
     }, { once: true });
 }
 

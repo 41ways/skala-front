@@ -20,8 +20,18 @@
 
     var KEY = 'skalaMusic';
     var state; try { state = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { state = null; }
-    // @동작 전체 앨범 카탈로그(myMusic이 저장) → 다음 앨범 이동에 필요
-    var catalog; try { catalog = JSON.parse(localStorage.getItem('skalaCatalog') || 'null'); } catch (e) { catalog = null; }
+    // @동작 전체 앨범 카탈로그 → 다음 앨범 이동에 필요.
+    //       공용 데이터(js/albums-data.js)가 있으면 그걸 쓰고, 없으면 localStorage(음악 페이지 방문 시 저장) 사용
+    //       → 처음 열었을 때도 전체 앨범으로 다음곡/다음앨범 동작
+    var catalog = null;
+    if (window.SKALA_ALBUMS && window.SKALA_ALBUMS.length) {
+        catalog = window.SKALA_ALBUMS.map(function (a) {
+            return { title: a.title, artist: a.artist, cover: a.cover,
+                     tracks: a.tracks.map(function (t) { return { name: t.name, src: t.src }; }) };
+        });
+    } else {
+        try { catalog = JSON.parse(localStorage.getItem('skalaCatalog') || 'null'); } catch (e) { catalog = null; }
+    }
 
     var tracks, idx, meta, autoNow, waitMain, albumIdx = -1;
     // @동작 MAIN이 속한 앨범 전체로 확장(카탈로그 있을 때) → 메인/기본 LP도 다음곡/앨범/전체반복 동작
@@ -185,6 +195,15 @@
     var audio = new Audio();
     var labelImg = box.querySelector('.mc__label');
     var trackEl = box.querySelector('.mc__track');
+    // @동작 제목(메타) 클릭 → 음악 페이지의 그 앨범 상세로 이동 (재생 상태는 저장돼 이어짐)
+    var metaEl = box.querySelector('.mc__meta');
+    if (metaEl) {
+        metaEl.style.cursor = 'pointer';
+        metaEl.title = '앨범 상세로 이동';
+        metaEl.addEventListener('click', function () {
+            location.href = 'myMusic.html?album=' + encodeURIComponent(meta.album || '');
+        });
+    }
     var albumEl = box.querySelector('.mc__album');
     var toggle = box.querySelector('.mc__toggle');
     var fill = box.querySelector('.mc__fill');
@@ -278,9 +297,9 @@
             audio.addEventListener('loadedmetadata', function once() {
                 audio.removeEventListener('loadedmetadata', once);
                 try { audio.currentTime = resumeAt; } catch (e) {}
-                if (autoplay) audio.play().then(sync).catch(sync);
+                if (autoplay) tryPlay();   // 차단되면 첫 입력에서 이어재생
             });
-        } else if (autoplay) { audio.play().then(sync).catch(sync); }
+        } else if (autoplay) { tryPlay(); }
         save();
     }
 
@@ -321,9 +340,9 @@
     box.querySelector('.mc__prev').addEventListener('click', function () { load((idx - 1 + tracks.length) % tracks.length, true); });
     box.querySelector('.mc__next').addEventListener('click', function () {
         if (shuffleOn) { load(nextIndex(), true); return; }
-        if (repeatMode === 'album') { load((idx + 1) % tracks.length, true); return; }   // @동작 앨범 반복: 앨범 안에서 순환
+        // @동작 수동 다음곡: 반복 모드와 무관하게 앨범 끝이면 항상 다음 앨범 (앨범 반복은 자동 종료 시에만)
         if (idx < tracks.length - 1) { load(idx + 1, true); return; }
-        if (canAlbum()) { loadAlbum(albumIdx + 1, true); return; }              // @동작 앨범 끝 → 다음 앨범
+        if (canAlbum()) { loadAlbum(albumIdx + 1, true); return; }
         load(0, true);
     });
     shBtn.addEventListener('click', function () { shuffleOn = !shuffleOn; shBtn.classList.toggle('is-on', shuffleOn); save(); });
@@ -345,6 +364,28 @@
     bar.addEventListener('pointermove', function (e) { if (dragging) seekAt(e.clientX); });
     bar.addEventListener('pointerup', function () { dragging = false; });
     window.addEventListener('pagehide', save);
+    // @동작 자동재생이 차단되면(뒤로가기엔 사용자 제스처가 없어 브라우저가 막음)
+    //       첫 입력(터치/클릭/키/휠)에서 즉시 이어재생
+    var armed = false;
+    function armAutoResume() {
+        if (armed) return; armed = true;
+        var go = function () {
+            armed = false;
+            ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) { document.removeEventListener(ev, go); });
+            if (audio.paused) audio.play().then(sync).catch(sync);
+        };
+        ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) { document.addEventListener(ev, go, { once: true, passive: true }); });
+    }
+    function tryPlay() { audio.play().then(sync).catch(function () { sync(); armAutoResume(); }); }
+    // @동작 브라우저 뒤로가기(bfcache 복원): 오디오가 멈춘 채 남음 → 재생 중이었다면 그 지점부터 재개
+    window.addEventListener('pageshow', function (e) {
+        if (!e.persisted) return;
+        var st; try { st = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (_) { st = null; }
+        if (st && st.playing && audio.paused) {
+            try { if (st.src === audio.src || audio.src.indexOf(st.src) >= 0) audio.currentTime = st.time || audio.currentTime; } catch (_) {}
+            tryPlay();
+        }
+    });
 
     function showBubble() {
         bubble.classList.add('is-on');
