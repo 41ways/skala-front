@@ -1,7 +1,7 @@
 /* ==========================================================================
    SKALA-FRONT · 공통 스타일 (다크 + 골드 액센트)
-   @주의 이 파일은 여러 페이지가 공유합니다. 페이지 전용 스타일은 하단에
-         "@섹션 index 전용"처럼 구분해서 추가하고, 공통 토큰/유틸은 위쪽에 둡니다.
+   @주의 여러 페이지가 공유 중. 페이지 전용 스타일 하단
+         "@섹션 index 전용"처럼 구분해서 추가하기. 공통 토큰/유틸은 위쪽
    ========================================================================== */
 
 /* ==========================================================================
@@ -1490,6 +1490,9 @@ body.page-login .login-form__submit:hover {
    → 화면 전체 폭으로 확장(full-bleed). 콘텐츠 정렬은 섹션 내부 규칙이 그대로 담당 */
 .container > .hero, .container > .signup { width: 100vw; margin-left: calc(50% - 50vw); }
 body { overflow-x: clip; }   /* full-bleed(100vw)로 인한 미세 가로 스크롤 방지 */
+/* @동작 축하 타이틀: 한 줄에 다 보이게 축소 (좁은 화면은 줄바꿈 허용) */
+.hero__title--sm { font-size: clamp(28px, 4.6vw, 54px); white-space: nowrap; }
+@media (max-width: 600px) { .hero__title--sm { white-space: normal; font-size: clamp(24px, 7.5vw, 32px); } }
 /* @동작 홈으로 돌아가기: 뒤로가기 버튼과 같은 깔끔한 스타일 (테두리·배경 없음, 화살표 + 글자) */
 .result__home { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; color: var(--ink); font-weight: 700; font-size: 17px; text-decoration: none; transition: color 0.2s ease, transform 0.2s ease; }
 .result__home svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
