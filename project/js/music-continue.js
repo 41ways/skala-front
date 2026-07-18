@@ -171,12 +171,13 @@
       +     '<button class="mc__btn mc__play mc__toggle" type="button" aria-label="재생/일시정지"></button>'
       +     '<button class="mc__btn mc__next" type="button" aria-label="다음 곡">' + I.next + '</button>'
       +     '<button class="mc__btn mc__repeat" type="button" aria-label="반복">' + I.repeat + '</button>'
+      // @동작 음량을 컨트롤 그룹 안에 포함 → 화면이 좁아져도 재생 버튼들과 한 덩어리로 움직임
+      +     '<div class="mc__vol">'
+      +       '<button class="mc__btn mc__mute" type="button" aria-label="음소거">' + I.vol + '</button>'
+      +       '<input class="mc__vrange" type="range" min="0" max="1" step="0.01" value="1" aria-label="음량">'
+      +     '</div>'
       +   '</div>'
       +   '<div class="mc__bar"><span class="mc__fill"></span></div>'
-      +   '<div class="mc__vol">'
-      +     '<button class="mc__btn mc__mute" type="button" aria-label="음소거">' + I.vol + '</button>'
-      +     '<input class="mc__vrange" type="range" min="0" max="1" step="0.01" value="1" aria-label="음량">'
-      +   '</div>'
       +   '<button class="mc__btn mc__closebtn" type="button" aria-label="재생바 닫기">&#10005;</button>'
       + '</div>';
     document.body.appendChild(box);

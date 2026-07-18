@@ -3098,4 +3098,14 @@ body.detail-open .mus-detail { opacity: 1; pointer-events: auto; transform: none
     /* @동작 뒤로가기 버튼: 좌상단 타이틀 아래로 이동 + 축소 */
     .album-back { top: 56px; bottom: auto; left: 16px; font-size: 14px; padding: 6px 4px; }
     .album-back svg { width: 20px; height: 20px; }
+
+    /* @동작 홈(index) 모바일 상단바: 스크롤 내리면 타이틀+버거 바가 내려오고, 떠다니던 로그인/회원가입은 숨김 */
+    .m-topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 150; display: flex; align-items: center; justify-content: space-between; height: 56px; padding: 0 16px; background: color-mix(in srgb, var(--bg) 88%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); transform: translateY(-100%); transition: transform 0.4s cubic-bezier(0.22,1,0.36,1); }
+    body.scrolled .m-topbar { transform: translateY(0); }
+    .m-topbar__brand { font-family: "Dancing Script", "Nanum Brush Script", cursive; font-size: 24px; color: var(--ink); text-decoration: none; }
+    .m-topbar__burger { position: static; display: grid; opacity: 1; transform: none; pointer-events: auto; }
+    .m-topbar__burger span { background: var(--ink); }
+    body.page-index.scrolled .signup-fab { opacity: 0; pointer-events: none; }
 }
+/* @주의 데스크톱에선 홈 모바일 상단바 숨김 */
+@media (min-width: 769px) { .m-topbar { display: none; } }

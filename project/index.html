@@ -64,6 +64,26 @@
         <a href="signUp.html">회원가입</a>
     </div>
 
+    <!-- @섹션 모바일 전용 상단바: 스크롤 내리면 나타남 (타이틀 + 버거 메뉴) -->
+    <header class="m-topbar" id="mTopbar" aria-hidden="true">
+        <a class="m-topbar__brand" href="#intro">I'm 한결</a>
+        <button class="nav__burger m-topbar__burger" id="navBurger" aria-label="메뉴 열기" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+    <div class="nav__backdrop" id="navBackdrop"></div>
+    <aside class="nav__drawer" id="navDrawer" aria-label="모바일 메뉴">
+        <button class="nav__drawer-close" id="navDrawerClose" type="button" aria-label="메뉴 닫기">&#10005;</button>
+        <ul class="nav__drawer-list">
+            <li><a href="myProfile.html">소개</a></li>
+            <li><a href="myClass.html">시간표</a></li>
+            <li><a href="myTrip.html">앨범</a></li>
+            <li><a href="myHoliday.html">휴일계획</a></li>
+            <li><a href="login.html">로그인</a></li>
+            <li><a href="signUp.html">회원가입</a></li>
+        </ul>
+    </aside>
+
     <!-- @섹션 추가 정보: 4분할 메뉴 등장 후 카드가 하나씩 나타남 (본문의 핵심은 아니라서 aside로 표시) -->
     <!-- @확장 내용은 이후 script/weatherAPI.js, upDown.js, grade.js, bag.js 연결 예정. 지금은 자리만 마련 -->
     <aside id="info" aria-label="추가 정보">
@@ -272,6 +292,21 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
 // --- @동작 5. 스크롤 시 맨 위로 버튼 표시 ---
 const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 40);
+
+// @동작 모바일 상단바 버거 → 드로어 열고 닫기 (다른 페이지와 동일 패턴)
+(function () {
+    const burger = document.getElementById('navBurger');
+    const backdrop = document.getElementById('navBackdrop');
+    const closeBtn = document.getElementById('navDrawerClose');
+    if (!burger) return;
+    const toggleNav = (open) => {
+        document.body.classList.toggle('nav--open', open);
+        burger.setAttribute('aria-expanded', open);
+    };
+    burger.addEventListener('click', () => toggleNav(!document.body.classList.contains('nav--open')));
+    if (backdrop) backdrop.addEventListener('click', () => toggleNav(false));
+    if (closeBtn) closeBtn.addEventListener('click', () => toggleNav(false));
+})();
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
