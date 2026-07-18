@@ -116,16 +116,16 @@
                 <div class="spec__head"><span class="spec__no">02</span><h3 class="spec__title">나의 소개 — &lt;ul&gt; / &lt;ol&gt; / &lt;dl&gt;</h3><span class="spec__badge spec__badge--met">충족</span></div>
                 <p class="spec__where"><b>myProfile.html</b> · &lt;ol&gt; 155줄, &lt;dl&gt; 218줄 / 좋아하는 음식 64~146줄</p>
                 <pre class="spec__code"><code>&lt;!-- 올해 할 일 --&gt;      &lt;ol class="goals__track" data-track&gt; … (155줄)
-&lt;!-- 나를 설명하는 단어 --&gt; &lt;dl&gt;&lt;dt&gt;끈기&lt;/dt&gt;&lt;dd&gt;…&lt;/dd&gt;&lt;/dl&gt; (216줄)</code></pre>
+&lt;!-- 나를 설명하는 단어 --&gt; &lt;dl&gt;&lt;dt&gt;끈기&lt;/dt&gt;&lt;dd&gt;…&lt;/dd&gt;&lt;/dl&gt; (218줄)</code></pre>
                 <p class="spec__note">올해 할 일은 &lt;ol&gt;(도넛 그래프 카드), 나를 설명하는 단어는 &lt;dl&gt;(앞뒤로 뒤집히는 플립 카드)로 시맨틱 태그를 그대로 썼습니다.<br><b>참고:</b> "좋아하는 음식"만 &lt;ul&gt; 대신, 스크롤 위치에 따라 영상이 감기는 &lt;video&gt;(스크롤 스크러빙)로 바꿨습니다.</p>
             </article>
 
             <article class="spec">
                 <div class="spec__head"><span class="spec__no">03</span><h3 class="spec__title">나의 강의 일정 — table / thead / tbody / 셀 병합</h3><span class="spec__badge spec__badge--met">충족</span></div>
                 <p class="spec__where"><b>myClass.html</b> · table 77줄, thead 79줄, tbody 89줄, rowspan 92·110줄, colspan 106줄 / 동적 생성 211줄</p>
-                <pre class="spec__code"><code>&lt;td class="cl-g__lunch" colspan="5"&gt;🍱 점심시간&lt;/td&gt;   (105줄)
+                <pre class="spec__code"><code>&lt;td class="cl-g__lunch" colspan="5"&gt;🍱 점심시간&lt;/td&gt;   (106줄)
 &lt;td … rowspan="3"&gt; … &lt;/td&gt;                          (오전 3칸 병합)
-function renderWeek(idx){ … }  // 22주치 표를 동적 렌더 (210줄)</code></pre>
+function renderWeek(idx){ … }  // 22주치 표를 동적 렌더 (211줄)</code></pre>
                 <p class="spec__note">시간·요일 &lt;thead&gt;와 &lt;tbody&gt;를 만들고, 2시간 이상 강의와 점심시간은 rowspan·colspan으로 셀을 합쳤습니다.<br><b>발전:</b> 정적 표에 그치지 않고 22주 커리큘럼을 배열(WEEKS)에 담아 renderWeek() 함수로 표를 자동 생성하고, 오늘 날짜 칸을 강조했습니다.</p>
             </article>
 
@@ -239,7 +239,7 @@ var average = total/subjects.length; var passed = average &gt;= 60;   (37줄)</c
 
             <article class="spec">
                 <div class="spec__head"><span class="spec__no">14</span><h3 class="spec__title">내 가방 보기</h3><span class="spec__badge spec__badge--met">충족</span> <span class="spec__badge spec__badge--plus">발전</span></div>
-                <p class="spec__where"><b>script/bag.js</b> · myBag 9줄, showMyBag() 19줄, 반복출력 21줄 / 버튼 <b>index.html</b> 144줄</p>
+                <p class="spec__where"><b>script/bag.js</b> · myBag 9줄, showMyBag() 19줄, 반복출력 22줄 / 버튼 <b>index.html</b> 144줄</p>
                 <pre class="spec__code"><code>var myBag = [ { name:'노트북', count:1, … }, … ];              (9줄)
 function showMyBag(){ for(var i=0;i&lt;myBag.length;i++){ console.log(…);} } (19~24줄)</code></pre>
                 <p class="spec__note">소지품을 객체 배열(myBag)로 만들고 showMyBag()에서 for 반복으로 출력했습니다(console.log 유지).<br><b>발전:</b> 화면에는 아이콘 카드 그리드로 렌더하고, 항목에 마우스를 올리면 실제 사진 미리보기가 뜨며, "가방 열기/닫기" 토글도 넣었습니다.</p>
@@ -271,12 +271,12 @@ select.addEventListener('change', async () =&gt; {
 
             <article class="spec">
                 <div class="spec__head"><span class="spec__no">17</span><h3 class="spec__title">실시간 날씨 — 모듈 분리(import/export)</h3><span class="spec__badge spec__badge--met">충족</span> <span class="spec__badge spec__badge--plus">발전</span></div>
-                <p class="spec__where"><b>weatherAPI.js</b> · export 8줄 / <b>realtimeInfo.js</b> · import 6줄 / <b>index.html</b> · module 379줄</p>
+                <p class="spec__where"><b>weatherAPI.js</b> · export 8줄 / <b>realtimeInfo.js</b> · import 6줄 / <b>index.html</b> · module 380줄</p>
                 <pre class="spec__code"><code>// weatherAPI.js
 export async function getWeather(lat, lon){ … }        (8줄)
 // realtimeInfo.js
 import { getWeather } from './weatherAPI.js';          (6줄)
-&lt;script type="module" src="script/realtimeInfo.js"&gt;&lt;/script&gt;  (index 379줄)</code></pre>
+&lt;script type="module" src="script/realtimeInfo.js"&gt;&lt;/script&gt;  (index 380줄)</code></pre>
                 <p class="spec__note">데이터 담당(weatherAPI.js)과 화면 담당(realtimeInfo.js)으로 파일을 나누고, export/import(ES 모듈)와 &lt;script type="module"&gt;로 연결했습니다.<br><b>발전:</b> 파일을 브라우저에서 그냥 열면(file://) 모듈이 막히는데, 이를 대비한 weatherFallback.js를 추가해 어디서 열어도 날씨가 뜨게 했습니다.</p>
             </article>
         </section>
@@ -311,6 +311,7 @@ import { getWeather } from './weatherAPI.js';          (6줄)
             <div class="etc-note-box">
                 <p><b>· 커밋 이력:</b> 기능 단위로 커밋을 쌓아 시행착오(레이아웃 겹침 수정, 모바일 hover 잔존 버그, WebGL 로컬 텍스처 제한 우회 등)를 저장소 이력에서 그대로 볼 수 있습니다.</p>
                 <p style="margin-top:10px"><b>· 문제 해결 기록:</b> file://에서 ES 모듈이 막히는 문제 → weatherFallback.js로 대비, WebGL이 로컬 이미지를 텍스처로 못 쓰는 문제 → 대륙 마스크를 data URI로 임베드해 점 지구본으로 전환, 모바일 브라우저의 :hover 잔존 문제 → 클래스 기반 여닫기로 재설계.</p>
+                <p style="margin-top:10px"><b>· 알려진 제한(브라우저 정책):</b> 뒤로가기 직후의 <b>즉시 자동재생은 브라우저 자동재생 정책상 허용되지 않아 미구현</b>입니다. 대신 첫 입력(클릭·스크롤·키)이 들어오는 순간 멈춘 지점부터 이어재생하는 폴백으로 처리했습니다.</p>
                 <p style="margin-top:10px"><b>· 나만의 규칙:</b> 모든 주석에 <code>@동작 · @주의 · @확장 · @필수</code> 태그, CSS는 BEM 네이밍, 과제 지정 경로(<code>/script</code>)와 개인 기능(<code>/js</code>) 분리, 페이지 공통 요소(헤더·드로어·오버레이·미니 LP)는 한 곳에서 관리.</p>
                 <p style="margin-top:10px"><b>· 데이터 직접 구성:</b> 시간표는 실제 수업 구글시트 데이터를 옮겨 22주치 배열로 정리했고, 사진·영상·음원도 직접 고르고 폴더 규칙(<code>media/README.md</code>)을 세워 정리했습니다.</p>
             </div>
