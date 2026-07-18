@@ -468,14 +468,20 @@ function initGlobe() {
         renderer.render(scene, camera);
     }
     animate();
-    window.addEventListener('resize', () => { w = layer.clientWidth; h = layer.clientHeight; camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h); });
+    window.addEventListener('resize', () => { w = layer.clientWidth; h = layer.clientHeight; camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h); reveal(); });
 
     // @동작 스크롤에 따라 지구본을 위로 올림 → 끝까지 내리면 전체가 보임 (도시 열림 상태에선 CSS가 담당)
     function reveal() {
         const cityOpen = phGal.classList.contains('city-open');
-        // @동작 스크롤 내리면 타이틀을 왼쪽으로 비켜 지구본과 겹침 방지
-        phGal.classList.toggle('head-aside', window.scrollY > 40 && !cityOpen);
+        const mobile = window.innerWidth <= 768;
+        // @동작 모바일: 페이지 스크롤 자체를 잠금 + 타이틀 비켜나기(head-aside) 모션 없음
+        document.body.style.overflow = mobile ? 'hidden' : '';
+        phGal.classList.toggle('head-aside', !mobile && window.scrollY > 40 && !cityOpen);
         if (cityOpen) return;
+        if (mobile) {
+            layer.style.transform = 'translateY(36vh) scale(0.62)';
+            return;
+        }
         const max = document.documentElement.scrollHeight - window.innerHeight;
         const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
         // @동작 확대 없이 위로 이동만 → 끝까지 내리면 지구본 전체가 보임

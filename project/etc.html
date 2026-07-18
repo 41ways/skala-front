@@ -114,7 +114,7 @@
 
             <article class="spec">
                 <div class="spec__head"><span class="spec__no">02</span><h3 class="spec__title">나의 소개 — &lt;ul&gt; / &lt;ol&gt; / &lt;dl&gt;</h3><span class="spec__badge spec__badge--met">충족</span></div>
-                <p class="spec__where"><b>myProfile.html</b> · &lt;ol&gt; 155줄, &lt;dl&gt; 216줄 / 좋아하는 음식 64~146줄</p>
+                <p class="spec__where"><b>myProfile.html</b> · &lt;ol&gt; 155줄, &lt;dl&gt; 218줄 / 좋아하는 음식 64~146줄</p>
                 <pre class="spec__code"><code>&lt;!-- 올해 할 일 --&gt;      &lt;ol class="goals__track" data-track&gt; … (155줄)
 &lt;!-- 나를 설명하는 단어 --&gt; &lt;dl&gt;&lt;dt&gt;끈기&lt;/dt&gt;&lt;dd&gt;…&lt;/dd&gt;&lt;/dl&gt; (216줄)</code></pre>
                 <p class="spec__note">올해 할 일은 &lt;ol&gt;(도넛 그래프 카드), 나를 설명하는 단어는 &lt;dl&gt;(앞뒤로 뒤집히는 플립 카드)로 시맨틱 태그를 그대로 썼습니다.<br><b>참고:</b> "좋아하는 음식"만 &lt;ul&gt; 대신, 스크롤 위치에 따라 영상이 감기는 &lt;video&gt;(스크롤 스크러빙)로 바꿨습니다.</p>
@@ -122,7 +122,7 @@
 
             <article class="spec">
                 <div class="spec__head"><span class="spec__no">03</span><h3 class="spec__title">나의 강의 일정 — table / thead / tbody / 셀 병합</h3><span class="spec__badge spec__badge--met">충족</span></div>
-                <p class="spec__where"><b>myClass.html</b> · table 76줄, thead 78줄, tbody 88줄, rowspan 91·109줄, colspan 105줄 / 동적 생성 210줄</p>
+                <p class="spec__where"><b>myClass.html</b> · table 77줄, thead 79줄, tbody 89줄, rowspan 92·110줄, colspan 106줄 / 동적 생성 211줄</p>
                 <pre class="spec__code"><code>&lt;td class="cl-g__lunch" colspan="5"&gt;🍱 점심시간&lt;/td&gt;   (105줄)
 &lt;td … rowspan="3"&gt; … &lt;/td&gt;                          (오전 3칸 병합)
 function renderWeek(idx){ … }  // 22주치 표를 동적 렌더 (210줄)</code></pre>
@@ -153,7 +153,7 @@ function renderWeek(idx){ … }  // 22주치 표를 동적 렌더 (210줄)</code
 
             <article class="spec">
                 <div class="spec__head"><span class="spec__no">06</span><h3 class="spec__title">회원가입 결과 — 이동 + 제출값 표시</h3><span class="spec__badge spec__badge--plus">발전</span></div>
-                <p class="spec__where"><b>signUpResult.html</b> · 제출정보 영역 59줄, 파싱 스크립트 120줄</p>
+                <p class="spec__where"><b>signUpResult.html</b> · 제출정보 영역 60줄, 파싱 스크립트 123줄</p>
                 <pre class="spec__code"><code>const p = new URLSearchParams(location.search);  // GET 쿼리 읽기 (120줄)
 // userId·이메일·이름·주소·관심분야 등을 &lt;dl&gt;로 렌더 → 제출한 정보 표시</code></pre>
                 <p class="spec__note">회원가입 버튼을 누르면 method=get이라 입력값이 URL 뒤에 쿼리로 붙어 결과 페이지로 넘어갑니다.<br><b>발전:</b> 넘어온 URL의 쿼리스트링을 URLSearchParams로 읽어, 사용자가 입력한 값(성별·관심분야는 코드값을 한글로 변환)을 "제출한 정보"로 정리해 보여줍니다.</p>
@@ -197,7 +197,7 @@ function renderWeek(idx){ … }  // 22주치 표를 동적 렌더 (210줄)</code
 
             <article class="spec">
                 <div class="spec__head"><span class="spec__no">10</span><h3 class="spec__title">미션2 — 박스 모델(가운데 정렬 · 카드 · 표)</h3><span class="spec__badge spec__badge--met">충족</span> <span class="spec__badge spec__badge--note">참고</span></div>
-                <p class="spec__where"><b>css/style.css</b> · 중앙정렬 max-width+margin(예 signup-form 1134줄), 카드 .info-card, 표 .cl-g</p>
+                <p class="spec__where"><b>css/style.css</b> · 중앙정렬 max-width+margin(예 signup-form 1128줄), 카드 .info-card, 표 .cl-g</p>
                 <pre class="spec__code"><code>.signup-form { max-width: 680px; margin: 0 auto; }   // 가운데 정렬
 .info-card { border-top:…; padding:…; }               // 리뷰 카드형
 .cl-g th / .cl-g__subj td { … }                        // 깔끔한 표</code></pre>
@@ -206,7 +206,7 @@ function renderWeek(idx){ … }  // 22주치 표를 동적 렌더 (210줄)</code
 
             <article class="spec">
                 <div class="spec__head"><span class="spec__no">11</span><h3 class="spec__title">미션3 — 가독성 높은 회원가입 폼</h3><span class="spec__badge spec__badge--met">충족</span></div>
-                <p class="spec__where"><b>css/style.css</b> · 입력창 1198줄, fieldset 1142줄, 버튼 1307줄</p>
+                <p class="spec__where"><b>css/style.css</b> · 입력창 1192줄, fieldset 1136줄, 버튼 1301줄</p>
                 <pre class="spec__code"><code>.signup-form input/select/textarea { padding:14px 18px; font-size:15px; } (입력창 크기)
 .signup-form__group { border:1px solid #FFFFFF33; border-radius:16px; }    (fieldset)
 .btn--primary { … 골드 그라데이션 … border-radius:999px; }                  (버튼)</code></pre>
@@ -287,7 +287,7 @@ import { getWeather } from './weatherAPI.js';          (6줄)
                 <p><b>· 코드 가독성:</b> 코드마다 <code>@동작 · @주의 · @확장 · @필수</code> 같은 주석 태그를 달아, 이 코드가 무엇을 하고 과제 필수 요소가 어디인지 바로 보이게 했습니다. CSS 클래스는 BEM(block__element--modifier) 규칙으로 지어 구조를 명확히 했습니다.</p>
                 <p style="margin-top:10px"><b>· 사용성:</b> 미니게임·날씨·가방에 <b>열기/닫기(토글) 버튼</b>과 결과 영역을 둬서 다루기 쉽게 했고, 모든 페이지의 메뉴바·헤더·오버레이 메뉴를 똑같이 통일했습니다.</p>
                 <p style="margin-top:10px"><b>· 공통 UX·접근성:</b> 어느 페이지에서든 우하단 <b>미니 LP 플레이어</b>로 음악을 이어 재생/일시정지할 수 있고, 영상 페이지는 <b>가로 스크롤바</b>로 필름을 넘겨봅니다. 키보드 사용자를 위한 본문 바로가기(skip-link), 스크린리더용 설명(aria-label), 움직임 최소화 설정 대응(prefers-reduced-motion)까지 넣어 접근성도 챙겼습니다.</p>
-                <p style="margin-top:10px"><b>· 미디어 정리:</b> <code>media/</code> 폴더를 페이지별(home·profile·album·photos·videos·music·holiday)로 정리하고, 파일 추가 규칙을 <code>media/README.md</code>에 적어놨습니다.</p>
+                <p style="margin-top:10px"><b>· 미디어 정리:</b> <code>media/</code> 폴더를 페이지별(home·profile·album·photos·videos·music)로 정리하고, 파일 추가 규칙을 <code>media/README.md</code>에 적어놨습니다.</p>
             </div>
         </section>
 

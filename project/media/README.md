@@ -5,8 +5,11 @@
 
 ```
 media/
-├─ home/            홈(index.html) 4분할 메뉴 아이콘
-│                   idx-profile.svg / idx-class.svg / idx-album.svg / idx-holiday.svg
+├─ (루트)           홈(index.html) 4분할 메뉴 배경 영상
+│                   Greetings.mp4 / Time.mp4 / Taking photo.mp4 / Holiday.mp4
+│
+├─ home/
+│  └─ bag/          내 가방 아이템 사진 (laptop·airpods·tumbler·charger·pen·notepad …)
 │
 ├─ profile/         소개(myProfile.html)
 │  ├─ food/         좋아하는 음식 영상 (burger·food2·coke1·coke2·strawberry1·strawberry2)
@@ -21,12 +24,8 @@ media/
 ├─ videos/          영상 갤러리(myVideo.html) — 스톡 영상
 │  └─ thumbs/       각 영상의 썸네일 이미지 (파일명은 영상과 동일, 확장자만 .jpg)
 │
-├─ music/           음악(myMusic.html) — 앨범별 폴더. 폴더 안에 커버(jpg) + 곡(mp3)
-│  └─ <앨범명>/     예) "Starry Eyed/Starry Eyed.jpg" + 곡 mp3들
-│
-└─ holiday/         (현재 페이지에 연결 안 된 여행 소재 보관)
-   ├─ photos/       trip-cebu / trip-hokkaido / trip-lijiang 사진
-   └─ songs/        trip-song-*.wav
+└─ music/           음악(myMusic.html) — 앨범별 폴더. 폴더 안에 커버(jpg) + 곡(mp3)
+   └─ <앨범명>/     예) "Starry Eyed/Starry Eyed.jpg" + 곡 mp3들
 ```
 
 ## 파일 추가 예시

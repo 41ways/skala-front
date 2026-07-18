@@ -120,7 +120,23 @@
       + '.mc__vrange::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#c6a582;cursor:pointer;}'
       + '.mc__vrange::-moz-range-thumb{width:12px;height:12px;border:none;border-radius:50%;background:#c6a582;cursor:pointer;}'
       + '.mc__vrange::-moz-range-progress{height:4px;border-radius:4px;background:#c6a582;}'
-      + '.mc__vrange::-moz-range-track{height:4px;border-radius:4px;background:#ffffff33;}';
+      + '.mc__vrange::-moz-range-track{height:4px;border-radius:4px;background:#ffffff33;}'
+      + '.mc__closebtn{display:none;}'
+      // @동작 모바일(≤768): 디스크 위치 고정(패널이 위로 안 밀게) + 얇은 패널(제목+컨트롤만)
+      //        진행바·앨범명 숨김, 음량은 스피커 버튼을 눌러야 슬라이더 표시, ✕ 닫기 버튼 제공
+      + '@media (max-width:768px){'
+      + '.mc{right:12px;bottom:18px;align-items:flex-end;}'
+      + '.mc__disc{width:62px;height:62px;}'
+      + '.mc__label{width:36px;height:36px;}'
+      + '.mc:hover .mc__panel,.mc:focus-within .mc__panel{max-width:calc(100vw - 104px);flex-wrap:wrap;row-gap:6px;padding:8px 10px;}'
+      + '.mc__album{display:none;}'
+      + '.mc__bar{display:none;}'
+      + '.mc__meta{min-width:0;max-width:calc(100vw - 160px);}'
+      + '.mc__btn{width:29px;height:29px;}'
+      + '.mc__closebtn{display:inline-flex;}'
+      + '.mc__vol .mc__vrange{display:none;width:56px;}'
+      + '.mc__vol.is-open .mc__vrange{display:block;}'
+      + '}';
     var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
     var I = {
@@ -156,6 +172,7 @@
       +     '<button class="mc__btn mc__mute" type="button" aria-label="음소거">' + I.vol + '</button>'
       +     '<input class="mc__vrange" type="range" min="0" max="1" step="0.01" value="1" aria-label="음량">'
       +   '</div>'
+      +   '<button class="mc__btn mc__closebtn" type="button" aria-label="재생바 닫기">&#10005;</button>'
       + '</div>';
     document.body.appendChild(box);
 
@@ -190,7 +207,16 @@
         vrange.style.setProperty('--fill', userVol * 100 + '%');   // @동작 볼륨 위치까지 왼쪽 채움 색
     }
     vrange.addEventListener('input', function () { userVol = parseFloat(vrange.value); muted = false; applyVol(); localStorage.setItem('skalaVol', userVol); });
-    muteBtn.addEventListener('click', function () { muted = !muted; applyVol(); });
+    muteBtn.addEventListener('click', function () {
+        // @동작 모바일: 스피커 버튼은 음량 슬라이더 열기/닫기 (음소거 대신)
+        if (window.innerWidth <= 768) { muteBtn.parentElement.classList.toggle('is-open'); return; }
+        muted = !muted; applyVol();
+    });
+    // @동작 ✕ 닫기(모바일): 패널 접기 — 포커스를 풀어 focus-within 해제
+    var closeBtn = box.querySelector('.mc__closebtn');
+    if (closeBtn) closeBtn.addEventListener('click', function () {
+        setTimeout(function () { if (document.activeElement && box.contains(document.activeElement)) document.activeElement.blur(); }, 0);
+    });
     applyVol();   // 초기 채움 반영
     function fadeIn() {
         clearInterval(fadeTimer);
