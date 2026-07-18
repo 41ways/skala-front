@@ -138,17 +138,17 @@ if (backdrop) backdrop.addEventListener('click', () => toggleNav(false));
 
 // --- @데이터 영상 프레임 (실제 파일/설명으로 교체 가능) ---
 const FRAMES = [
-    { src: 'media/videos/12181420_3840_2160_25fps.mp4',    poster: 'media/videos/thumbs/12181420_3840_2160_25fps.jpg',    title: '이층버스',      place: '런던',   desc: '빨간 이층버스가 회색 거리를 가르며 지나갔다.' },
-    { src: 'media/videos/12529314_1080_1920_60fps.mp4',    poster: 'media/videos/thumbs/12529314_1080_1920_60fps.jpg',    title: '5번가의 아침',  place: '뉴욕',   desc: '노란 택시들이 마천루 사이 교차로를 가득 메웠다.' },
-    { src: 'media/videos/13412984_3840_2160_25fps.mp4',    poster: 'media/videos/thumbs/13412984_3840_2160_25fps.jpg',    title: '도톤보리의 밤', place: '오사카', desc: '간판 불빛이 좁은 골목을 대낮처럼 밝혔다.' },
-    { src: 'media/videos/14676300_3840_2160_24fps.mp4',    poster: 'media/videos/thumbs/14676300_3840_2160_24fps.jpg',    title: '야자수 해변',   place: '브라질', desc: '에메랄드빛 바다와 야자수가 끝없이 늘어섰다.' },
-    { src: 'media/videos/14747418_2560_1440_30fps.mp4',    poster: 'media/videos/thumbs/14747418_2560_1440_30fps.jpg',    title: '가로수길 카페', place: '파리',   desc: '노천 테이블마다 느긋한 오후가 흘렀다.' },
-    { src: 'media/videos/14823568_3840_2160_30fps.mp4',    poster: 'media/videos/thumbs/14823568_3840_2160_30fps.jpg',    title: '바닷가 산책로', place: '제주',   desc: '바다를 옆에 두고 둘이 나란히 걸었다.' },
-    { src: 'media/videos/16204013_2560_1440_30fps.mp4',    poster: 'media/videos/thumbs/16204013_2560_1440_30fps.jpg',    title: '도시의 밤',     place: '야경',   desc: '언덕 위에서 내려다본 도시가 불빛으로 흘렀다.' },
-    { src: 'media/videos/18509264-hd_1080_1920_30fps.mp4', poster: 'media/videos/thumbs/18509264-hd_1080_1920_30fps.jpg', title: '범선의 일몰',   place: '항해',   desc: '돛이 부풀고, 수평선 너머로 해가 내려앉았다.' },
-    { src: 'media/videos/20186336-hd_1920_1080_60fps.mp4', poster: 'media/videos/thumbs/20186336-hd_1920_1080_60fps.jpg', title: '오페라하우스',  place: '시드니', desc: '조개 지붕 너머로 하버 브리지가 나란히 섰다.' },
-    { src: 'media/videos/6769788-uhd_3840_2160_24fps.mp4', poster: 'media/videos/thumbs/6769788-uhd_3840_2160_24fps.jpg', title: '에스프레소 한 잔', place: '카페', desc: '크레마가 잔을 채우던 짧고 진한 순간.' },
-    { src: 'media/videos/7039149-uhd_3840_2160_25fps.mp4', poster: 'media/videos/thumbs/7039149-uhd_3840_2160_25fps.jpg', title: '펍의 저녁',     place: '런던',   desc: '버거와 맥주 한 잔으로 마무리한 하루.' },
+    { src: 'media/videos/reel1.mp4',    poster: 'media/videos/thumbs/reel1.jpg',    title: '이층버스',      place: '런던',   desc: '빨간 이층버스가 회색 거리를 가르며 지나갔다.' },
+    { src: 'media/videos/reel2.mp4',    poster: 'media/videos/thumbs/reel2.jpg',    title: '5번가의 아침',  place: '뉴욕',   desc: '노란 택시들이 마천루 사이 교차로를 가득 메웠다.' },
+    { src: 'media/videos/reel3.mp4',    poster: 'media/videos/thumbs/reel3.jpg',    title: '도톤보리의 밤', place: '오사카', desc: '간판 불빛이 좁은 골목을 대낮처럼 밝혔다.' },
+    { src: 'media/videos/reel4.mp4',    poster: 'media/videos/thumbs/reel4.jpg',    title: '야자수 해변',   place: '브라질', desc: '에메랄드빛 바다와 야자수가 끝없이 늘어섰다.' },
+    { src: 'media/videos/reel5.mp4',    poster: 'media/videos/thumbs/reel5.jpg',    title: '가로수길 카페', place: '파리',   desc: '노천 테이블마다 느긋한 오후가 흘렀다.' },
+    { src: 'media/videos/reel6.mp4',    poster: 'media/videos/thumbs/reel6.jpg',    title: '바닷가 산책로', place: '제주',   desc: '바다를 옆에 두고 둘이 나란히 걸었다.' },
+    { src: 'media/videos/reel7.mp4',    poster: 'media/videos/thumbs/reel7.jpg',    title: '도시의 밤',     place: '야경',   desc: '언덕 위에서 내려다본 도시가 불빛으로 흘렀다.' },
+    { src: 'media/videos/reel8.mp4', poster: 'media/videos/thumbs/reel8.jpg', title: '범선의 일몰',   place: '항해',   desc: '돛이 부풀고, 수평선 너머로 해가 내려앉았다.' },
+    { src: 'media/videos/reel9.mp4', poster: 'media/videos/thumbs/reel9.jpg', title: '오페라하우스',  place: '시드니', desc: '조개 지붕 너머로 하버 브리지가 나란히 섰다.' },
+    { src: 'media/videos/reel10.mp4', poster: 'media/videos/thumbs/reel10.jpg', title: '에스프레소 한 잔', place: '카페', desc: '크레마가 잔을 채우던 짧고 진한 순간.' },
+    { src: 'media/videos/reel11.mp4', poster: 'media/videos/thumbs/reel11.jpg', title: '펍의 저녁',     place: '런던',   desc: '버거와 맥주 한 잔으로 마무리한 하루.' },
 ];
 
 // --- @동작 필름 스트립 렌더 (원활한 무한 흐름을 위해 두 벌 복제) ---
