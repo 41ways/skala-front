@@ -1486,9 +1486,14 @@ body.page-login .login-form__submit:hover {
 .result__links a:hover { color: #ffffff; }
 /* @동작 미션2 박스모델: 콘텐츠를 감싸 가운데 정렬(넓은 화면에서만 최대폭 제한, 기존 디자인 영향 최소) */
 .container { width: 100%; max-width: 1200px; margin: 0 auto; }
-/* @동작 홈으로 돌아가기 버튼 */
-.result__home { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; padding: 12px 24px; border-radius: 999px; background: var(--accent); color: #17140f; font-weight: 700; font-size: 15px; text-decoration: none; transition: background 0.2s ease, transform 0.2s ease; }
-.result__home:hover { background: #e0c8a1; transform: translateY(-1px); }
+/* @주의 배경이 있는 섹션(히어로 베이지·회원가입 그라데이션)은 컨테이너 폭에 갇히면 양옆이 잘려 보임
+   → 화면 전체 폭으로 확장(full-bleed). 콘텐츠 정렬은 섹션 내부 규칙이 그대로 담당 */
+.container > .hero, .container > .signup { width: 100vw; margin-left: calc(50% - 50vw); }
+body { overflow-x: clip; }   /* full-bleed(100vw)로 인한 미세 가로 스크롤 방지 */
+/* @동작 홈으로 돌아가기: 뒤로가기 버튼과 같은 깔끔한 스타일 (테두리·배경 없음, 화살표 + 글자) */
+.result__home { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; color: var(--ink); font-weight: 700; font-size: 17px; text-decoration: none; transition: color 0.2s ease, transform 0.2s ease; }
+.result__home svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.result__home:hover { color: var(--accent); transform: translateX(-4px); }
 
 /* @동작 제출한 정보 표시(회원가입 GET 값) */
 .result__data { display: grid; gap: 10px; }
