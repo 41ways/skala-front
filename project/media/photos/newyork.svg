@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" preserveAspectRatio="xMidYMid slice">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#20364a"/><stop offset="100%" stop-color="#0b1420"/></linearGradient></defs>
-  <rect width="900" height="1200" fill="url(#g)"/><rect x="60" y="400" width="70" height="760" fill="#8fb4d4" opacity="0.16"/><rect x="155" y="513" width="70" height="647" fill="#8fb4d4" opacity="0.16"/><rect x="250" y="626" width="70" height="534" fill="#8fb4d4" opacity="0.16"/><rect x="345" y="479" width="70" height="681" fill="#8fb4d4" opacity="0.16"/><rect x="440" y="592" width="70" height="568" fill="#8fb4d4" opacity="0.16"/><rect x="535" y="445" width="70" height="715" fill="#8fb4d4" opacity="0.16"/><rect x="630" y="558" width="70" height="602" fill="#8fb4d4" opacity="0.16"/><rect x="725" y="411" width="70" height="749" fill="#8fb4d4" opacity="0.16"/><rect x="820" y="524" width="70" height="636" fill="#8fb4d4" opacity="0.16"/>
-  <text x="50%" y="90%" fill="#ffffff" font-family="Georgia, serif" font-size="70" font-weight="700" text-anchor="middle" opacity="0.9">NEW YORK</text>
-</svg>

@@ -22,8 +22,8 @@
     <nav class="nav" id="nav" aria-label="주요 메뉴">
         <ul class="nav__list" id="navList">
             <li><a class="nav__link" href="myProfile.html">소개</a></li>
+            <li><a class="nav__link" href="myTrip.html">앨범</a></li>
             <li><a class="nav__link" href="myHoliday.html">휴일계획</a></li>
-            <li><a class="nav__link" href="myTrip.html">여행앨범</a></li>
             <li><a class="nav__link" href="login.html">로그인</a></li>
             <li><a class="nav__link" href="signUp.html">회원가입</a></li>
         </ul>
@@ -38,8 +38,8 @@
         <button class="nav__drawer-close" id="navDrawerClose" type="button" aria-label="메뉴 닫기">&#10005;</button>
         <ul class="nav__drawer-list">
             <li><a href="myProfile.html">소개</a></li>
+            <li><a href="myTrip.html">앨범</a></li>
             <li><a href="myHoliday.html">휴일계획</a></li>
-            <li><a href="myTrip.html">여행앨범</a></li>
             <li><a href="login.html">로그인</a></li>
             <li><a href="signUp.html">회원가입</a></li>
         </ul>
@@ -49,7 +49,8 @@
         <header class="cl-hero">
             <p class="cl-hero__eyebrow">SCHEDULE</p>
             <h1 class="cl-hero__title">시간표</h1>
-            <p class="cl-hero__lead">SKALA · <strong>4반</strong> 주차별 시간표 (2026.07 – 12)</p>
+            <p class="cl-hero__lead">주차별 시간표 (2026.07 – 12)</p>
+            <p class="cl-hero__by">SKALA 4기 4반 기준</p>
             <ul class="cl-legend" aria-label="표 범례">
                 <li><span class="cl-badge cl-badge--special">특강</span></li>
                 <li><span class="cl-badge cl-badge--eval">평가</span></li>
@@ -144,8 +145,8 @@
                 <li><a href="index.html"><span class="n">00</span> 홈 <span class="en">Hello, world!</span></a></li>
                 <li><a href="myProfile.html"><span class="n">01</span> 소개 <span class="en">Profile</span></a></li>
                 <li><a href="myClass.html"><span class="n">02</span> 시간표 <span class="en">Class</span></a></li>
-                <li><a href="myHoliday.html"><span class="n">03</span> 휴일계획 <span class="en">Holiday</span></a></li>
-                <li><a href="myTrip.html"><span class="n">04</span> 여행앨범 <span class="en">Trip</span></a></li>
+                <li><a href="myTrip.html"><span class="n">03</span> 앨범 <span class="en">Album</span></a></li>
+                <li><a href="myHoliday.html"><span class="n">04</span> 휴일계획 <span class="en">Holiday</span></a></li>
             </ol>
         </nav>
         <div class="overlay-foot">
@@ -238,6 +239,13 @@ function renderWeek(idx) {
     document.getElementById('wkPrev').disabled = (idx===0);
     document.getElementById('wkNext').disabled = (idx===WEEKS.length-1);
     [...menu.children].forEach(li => { const on = (+li.dataset.idx===idx); li.classList.toggle('is-sel', on); li.setAttribute('aria-selected', on ? 'true' : 'false'); });
+    // @동작 주차 전환 모션: 넘긴 방향에 맞춰 표가 슬라이드+페이드로 들어옴
+    const grid = document.getElementById('clGrid');
+    if (grid) {
+        const dir = idx > current ? 34 : idx < current ? -34 : 0;
+        grid.style.setProperty('--cl-dir', dir + 'px');
+        grid.classList.remove('cl-swap'); void grid.offsetWidth; grid.classList.add('cl-swap');
+    }
     current = idx;
 }
 

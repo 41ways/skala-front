@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" preserveAspectRatio="xMidYMid slice">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#2a1533"/><stop offset="100%" stop-color="#0d0a14"/></linearGradient></defs>
-  <rect width="900" height="1200" fill="url(#g)"/><rect x="80" y="300" width="70" height="500" fill="#ff5ca8" opacity="0.18"/><rect x="230" y="437" width="70" height="410" fill="#ff5ca8" opacity="0.18"/><rect x="380" y="574" width="70" height="320" fill="#ff5ca8" opacity="0.18"/><rect x="530" y="311" width="70" height="230" fill="#ff5ca8" opacity="0.18"/><rect x="680" y="448" width="70" height="440" fill="#ff5ca8" opacity="0.18"/><rect x="830" y="585" width="70" height="350" fill="#ff5ca8" opacity="0.18"/><circle cx="700" cy="260" r="90" fill="#5ad1ff" opacity="0.25"/>
-  <text x="50%" y="90%" fill="#ffffff" font-family="Georgia, serif" font-size="70" font-weight="700" text-anchor="middle" opacity="0.9">TOKYO</text>
-</svg>

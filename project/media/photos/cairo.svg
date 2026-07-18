@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" preserveAspectRatio="xMidYMid slice">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#c9a05a"/><stop offset="100%" stop-color="#5a3f1f"/></linearGradient></defs>
-  <rect width="900" height="1200" fill="url(#g)"/><polygon points="450,360 640,760 260,760" fill="#3a2810" opacity="0.55"/><circle cx="720" cy="300" r="70" fill="#fff2c8" opacity="0.6"/>
-  <text x="50%" y="90%" fill="#ffffff" font-family="Georgia, serif" font-size="70" font-weight="700" text-anchor="middle" opacity="0.9">CAIRO</text>
-</svg>

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="한결의 여행앨범 — 사진·영상·음악·기타">
+    <meta name="description" content="한결의 앨범 — 사진·영상·음악·기타">
     <meta name="author" content="한결">
-    <title>여행앨범 | 한결</title>
+    <title>앨범 | 한결</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nanum+Brush+Script&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
@@ -49,49 +49,43 @@
         <!-- @동작 배경: 버튼에 hover하면 그 카테고리 대표 이미지로 크로스페이드. 평소엔 다크 그라데이션 -->
         <!-- @확장 실제 이미지 교체: 아래 4개 파일(bg-photo/music/video/etc)만 네 사진으로 바꾸면 됨 -->
         <div class="tg__stage">
-            <img class="tg__bg" data-bg="photo" src="media/trip/bg-photo.svg" alt="" aria-hidden="true">
-            <img class="tg__bg" data-bg="music" src="media/trip/bg-music.svg" alt="" aria-hidden="true">
-            <img class="tg__bg" data-bg="video" src="media/trip/bg-video.svg" alt="" aria-hidden="true">
-            <img class="tg__bg" data-bg="etc"   src="media/trip/bg-etc.svg"   alt="" aria-hidden="true">
+            <img class="tg__bg" data-bg="photo" src="media/album/covers/photo.jpg" alt="" aria-hidden="true">
+            <img class="tg__bg" data-bg="music" src="media/album/covers/music.jpg" alt="" aria-hidden="true">
+            <img class="tg__bg" data-bg="video" src="media/album/covers/video.jpg" alt="" aria-hidden="true">
+            <img class="tg__bg" data-bg="etc"   src="media/album/covers/etc.jpg"   alt="" aria-hidden="true">
             <span class="tg__scrim" aria-hidden="true"></span>
         </div>
 
         <!-- @동작 앨범 종류 선택: 사진 / 음악 / 영상 / 기타 (누르면 넘어갈 화면은 추후 연결) -->
-        <section class="tg-pick">
-            <p class="tg-pick__eyebrow">TRAVEL ALBUM</p>
-            <h1 class="tg-pick__title">무엇을 담아볼까요?</h1>
-            <p class="tg-pick__lead">종류에 마우스를 올리면 배경이 바뀌어요.</p>
-
+        <!-- @동작 텍스트 없이 사진 버튼만 가운데 정렬. hover하면 그 사진이 그대로 배경에 크로스페이드 -->
+        <section class="tg-pick tg-pick--photos">
+            <span class="tg-pick__album" aria-hidden="true">ALBUM</span>
             <nav class="tg-pick__grid" id="tgPick" aria-label="앨범 종류">
-                <button type="button" class="tg-tile" data-cat="photo">
-                    <span class="tg-tile__icon" aria-hidden="true">🖼️</span>
-                    <span class="tg-tile__label">사진</span>
-                    <span class="tg-tile__en">PHOTO</span>
+                <button type="button" class="tg-tile" data-cat="photo" aria-label="사진">
+                    <img class="tg-tile__img" src="media/album/covers/photo.jpg" alt="사진">
+                    <span class="tg-tile__cap" aria-hidden="true">PHOTO</span>
                 </button>
-                <button type="button" class="tg-tile" data-cat="music">
-                    <span class="tg-tile__icon" aria-hidden="true">🎵</span>
-                    <span class="tg-tile__label">음악</span>
-                    <span class="tg-tile__en">MUSIC</span>
+                <button type="button" class="tg-tile" data-cat="music" aria-label="음악">
+                    <img class="tg-tile__img" src="media/album/covers/music.jpg" alt="음악">
+                    <span class="tg-tile__cap" aria-hidden="true">MUSIC</span>
                 </button>
-                <button type="button" class="tg-tile" data-cat="video">
-                    <span class="tg-tile__icon" aria-hidden="true">🎬</span>
-                    <span class="tg-tile__label">영상</span>
-                    <span class="tg-tile__en">VIDEO</span>
+                <button type="button" class="tg-tile" data-cat="video" aria-label="영상">
+                    <img class="tg-tile__img" src="media/album/covers/video.jpg" alt="영상">
+                    <span class="tg-tile__cap" aria-hidden="true">VIDEO</span>
                 </button>
-                <button type="button" class="tg-tile" data-cat="etc">
-                    <span class="tg-tile__icon" aria-hidden="true">✦</span>
-                    <span class="tg-tile__label">기타</span>
-                    <span class="tg-tile__en">ETC</span>
+                <button type="button" class="tg-tile" data-cat="etc" aria-label="기타">
+                    <img class="tg-tile__img" src="media/album/covers/etc.jpg" alt="기타">
+                    <span class="tg-tile__cap" aria-hidden="true">ETC.</span>
                 </button>
             </nav>
         </section>
 
         <!-- @주의 과제 필수 요소(다음 화면에서 사용 예정): 영상 video/source · 음악 audio/source -->
-        <video id="tgVideo" hidden muted playsinline preload="none" poster="media/trip/video1_poster.jpg">
-            <source src="media/trip/video1.mp4" type="video/mp4">
+        <video id="tgVideo" hidden muted playsinline preload="none" poster="media/album/sample/video1_poster.jpg">
+            <source src="media/album/sample/video1.mp4" type="video/mp4">
         </video>
         <audio id="tgAudio" preload="none" hidden>
-            <source src="media/trip/track1.mp3" type="audio/mpeg">
+            <source src="media/album/sample/track1.mp3" type="audio/mpeg">
         </audio>
     </main>
 
@@ -105,8 +99,8 @@
                 <li><a href="index.html"><span class="n">00</span> 홈 <span class="en">Hello, world!</span></a></li>
                 <li><a href="myProfile.html"><span class="n">01</span> 소개 <span class="en">Profile</span></a></li>
                 <li><a href="myClass.html"><span class="n">02</span> 시간표 <span class="en">Class</span></a></li>
-                <li><a href="myHoliday.html"><span class="n">03</span> 휴일계획 <span class="en">Holiday</span></a></li>
-                <li><a href="myTrip.html"><span class="n">04</span> 여행앨범 <span class="en">Trip</span></a></li>
+                <li><a href="myTrip.html"><span class="n">03</span> 앨범 <span class="en">Album</span></a></li>
+                <li><a href="myHoliday.html"><span class="n">04</span> 휴일계획 <span class="en">Holiday</span></a></li>
             </ol>
         </nav>
         <div class="overlay-foot">
@@ -121,7 +115,7 @@
 
     <script>
 // ==========================================================================
-// 여행앨범 - 헤더/햄버거 + 종류 선택(사진/영상/음악/기타)
+// 앨범 - 헤더/햄버거 + 종류 선택(사진/영상/음악/기타)
 // ==========================================================================
 const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 40);
 window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
@@ -151,8 +145,7 @@ document.querySelectorAll('.tg-tile').forEach((tile) => {
     tile.addEventListener('focus', () => setBg(cat));
     // --- @동작 클릭 → 해당 종류 화면으로 이동 (음악=myMusic.html 완성, 나머지는 추후 연결) ---
     tile.addEventListener('click', () => {
-        const pages = { music: 'myMusic.html', photo: 'myPhotos.html' };
-        // @확장 TODO: video/etc 페이지 완성 시 위 매핑에 추가
+        const pages = { music: 'myMusic.html', photo: 'myPhotos.html', video: 'myVideo.html', etc: 'etc.html' };
         if (pages[cat]) { location.href = pages[cat]; return; }
         console.log('선택한 종류(준비 중):', cat);
     });

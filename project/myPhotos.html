@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="한결의 여행 사진 — 지구본 & 사진첩">
+    <meta name="description" content="한결의 여행 사진 — 지구본에서 도시를 골라보는 갤러리">
     <meta name="author" content="한결">
-    <title>사진 · 지구본 & 사진첩 | 한결</title>
+    <title>사진 · 갤러리 | 한결</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nanum+Brush+Script&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
@@ -23,9 +23,10 @@
         <ul class="nav__list" id="navList">
             <li><a class="nav__link" href="myProfile.html">소개</a></li>
             <li><a class="nav__link" href="myClass.html">시간표</a></li>
+            <li><a class="nav__link" href="myTrip.html">앨범</a></li>
             <li><a class="nav__link" href="myHoliday.html">휴일계획</a></li>
-            <li><a class="nav__link" href="myTrip.html">여행앨범</a></li>
             <li><a class="nav__link" href="login.html">로그인</a></li>
+            <li><a class="nav__link" href="signUp.html">회원가입</a></li>
         </ul>
         <button class="nav__burger" id="navBurger" aria-label="메뉴 열기" aria-expanded="false">
             <span></span><span></span><span></span>
@@ -39,71 +40,67 @@
         <ul class="nav__drawer-list">
             <li><a href="myProfile.html">소개</a></li>
             <li><a href="myClass.html">시간표</a></li>
+            <li><a href="myTrip.html">앨범</a></li>
             <li><a href="myHoliday.html">휴일계획</a></li>
-            <li><a href="myTrip.html">여행앨범</a></li>
             <li><a href="login.html">로그인</a></li>
+            <li><a href="signUp.html">회원가입</a></li>
         </ul>
     </aside>
 
-    <main class="ph" id="main">
-        <header class="ph-hero">
-            <p class="ph-hero__eyebrow">PHOTO ATLAS</p>
-            <h1 class="ph-hero__title">사진</h1>
-            <p class="ph-hero__lead">지구본에서 위치로, 사진첩에서 한 장씩 — 사진을 누르면 그날의 이야기가 나와요.</p>
-            <div class="ph-toggle" role="tablist" aria-label="보기 전환">
-                <button type="button" class="ph-toggle__btn is-active" data-view="globe" role="tab">🌐 지구본</button>
-                <button type="button" class="ph-toggle__btn" data-view="album" role="tab">📖 사진첩</button>
-            </div>
-        </header>
-
-        <!-- 지구본 뷰 -->
-        <section class="ph-globe" id="phGlobe" aria-label="지구본">
-            <div class="ph-globe__canvas" id="globeCanvas"></div>
-            <p class="ph-globe__hint" id="globeHint">드래그로 돌리고, 핀을 눌러보세요</p>
-        </section>
-
-        <!-- 사진첩 뷰 -->
-        <section class="ph-album" id="phAlbum" hidden aria-label="사진첩">
-            <button type="button" class="ph-album__nav ph-album__nav--prev" id="albPrev" aria-label="이전 사진">‹</button>
-            <div class="book" id="book">
-                <div class="book__page book__page--left">
-                    <img class="book__photo" id="bookPhoto" src="" alt="여행 사진">
-                </div>
-                <div class="book__page book__page--right">
-                    <div class="book__note">
-                        <span class="book__seal">한결</span>
-                        <h2 class="book__title" id="bookTitle"></h2>
-                        <p class="book__meta" id="bookMeta"></p>
-                        <p class="book__desc" id="bookDesc"></p>
-                        <span class="book__more">사진을 누르면 더 자세히 →</span>
-                    </div>
-                </div>
-                <span class="book__spine" aria-hidden="true"></span>
-            </div>
-            <button type="button" class="ph-album__nav ph-album__nav--next" id="albNext" aria-label="다음 사진">›</button>
-            <p class="ph-album__caption" id="albCaption"></p>
-        </section>
+    <!-- @동작 지구본에서 도시 클릭 → 지구본이 내려가며 확대, 윗 공간에 그 도시 사진이 오빗으로 등장 -->
+    <main class="ph-gal" id="phGal">
+        <div class="globe-layer" id="globeLayer">
+            <div class="globe-labels" id="globeLabels"></div>
+        </div>
+        <div class="orbit-layer" id="orbitLayer">
+            <div class="orbit" id="orbit"><!-- 사진 아이템은 JS가 생성 --></div>
+        </div>
+        <div class="city-title">
+            <p class="city-title__place" id="cityPlace"></p>
+            <h2 class="city-title__name" id="cityName"></h2>
+        </div>
+        <div class="ph-gal__overlay" id="main">
+            <header class="ph-gal__head">
+                <p class="ph-hero__eyebrow">&nbsp;&nbsp;PHOTO ATLAS</p>
+                <h1 class="ph-gal__title">사진</h1>
+                <p class="ph-gal__hint">지구본을 돌려 보고, 도시 핀을 누르면 그곳의 사진이 펼쳐져요</p>
+            </header>
+        </div>
     </main>
+    <!-- @동작 스크롤 여백: 끝까지 내리면 지구본 전체가 보이도록 -->
+    <div class="ph-scroll-spacer" aria-hidden="true"></div>
 
-    <!-- 사진 상세 모달 (지도/사진첩 공통) -->
-    <div class="ph-modal" id="phModal" hidden role="dialog" aria-modal="true" aria-label="사진 상세">
-        <div class="ph-modal__backdrop" data-close></div>
-        <div class="ph-modal__card">
-            <button type="button" class="ph-modal__close" id="modalClose" aria-label="닫기">&#10005;</button>
-            <div class="ph-modal__imgwrap"><img class="ph-modal__img" id="modalImg" src="" alt=""></div>
-            <div class="ph-modal__body">
-                <p class="ph-modal__loc" id="modalLoc"></p>
-                <h2 class="ph-modal__title" id="modalTitle"></h2>
-                <p class="ph-modal__meta" id="modalMeta"></p>
-                <p class="ph-modal__desc" id="modalDesc"></p>
+    <!-- @동작 사진 클릭 시 떠오르는 큰 사진(인화지 테두리) + 앞뒤로 넘김 -->
+    <div class="geo-pop" id="geoPop" hidden role="dialog" aria-modal="true" aria-label="여행 사진">
+        <div class="geo-pop__backdrop" data-close></div>
+        <div class="geo-pop__card">
+            <button type="button" class="geo-pop__close" id="geoClose" aria-label="닫기">&#10005;</button>
+            <figure class="geo-pop__frame">
+                <img class="geo-pop__img" id="geoImg" src="" alt="">
+                <figcaption class="geo-pop__cap">
+                    <span class="geo-pop__place" id="geoPlace"></span>
+                    <strong class="geo-pop__title" id="geoTitle"></strong>
+                    <span class="geo-pop__date" id="geoDate"></span>
+                    <p class="geo-pop__desc" id="geoDesc"></p>
+                </figcaption>
+            </figure>
+            <div class="geo-pop__nav">
+                <button type="button" class="geo-pop__arrow" id="geoPrev" aria-label="이전 사진">&#8249;</button>
+                <span class="geo-pop__info" id="geoInfo"></span>
+                <button type="button" class="geo-pop__arrow" id="geoNext" aria-label="다음 사진">&#8250;</button>
             </div>
         </div>
     </div>
 
+    <!-- @동작 앨범으로 돌아가기 (아이콘만) -->
+    <a class="album-back" href="myTrip.html" aria-label="앨범으로 돌아가기">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 L8 12 L15 19"></path></svg>
+        <span class="album-back__text">뒤로가기</span>
+    </a>
+
     <!-- ATELIER 포팅킷: 풀스크린 오버레이 메뉴 (데스크톱 MENU 버튼으로 열림) -->
     <div class="overlay-menu" id="overlayMenu" role="dialog" aria-modal="true" aria-label="사이트 메뉴">
         <div class="overlay-top">
-            <span class="om-brand">Hangyeol</span>
             <button class="overlay-close" id="overlayClose" type="button" aria-label="메뉴 닫기">Close <span aria-hidden="true">&#10005;</span></button>
         </div>
         <nav class="overlay-nav" aria-label="주요 메뉴">
@@ -111,8 +108,8 @@
                 <li><a href="index.html"><span class="n">00</span> 홈 <span class="en">Hello, world!</span></a></li>
                 <li><a href="myProfile.html"><span class="n">01</span> 소개 <span class="en">Profile</span></a></li>
                 <li><a href="myClass.html"><span class="n">02</span> 시간표 <span class="en">Class</span></a></li>
-                <li><a href="myHoliday.html"><span class="n">03</span> 휴일계획 <span class="en">Holiday</span></a></li>
-                <li><a href="myTrip.html"><span class="n">04</span> 여행앨범 <span class="en">Trip</span></a></li>
+                <li><a href="myTrip.html"><span class="n">03</span> 앨범 <span class="en">Album</span></a></li>
+                <li><a href="myHoliday.html"><span class="n">04</span> 휴일계획 <span class="en">Holiday</span></a></li>
             </ol>
         </nav>
         <div class="overlay-foot">
@@ -121,225 +118,394 @@
         </div>
     </div>
 
-    <a class="totop" href="#main" id="totop" aria-label="맨 위로">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15 L12 8 L19 15"></path></svg>
-    </a>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
 // ==========================================================================
-// 사진 페이지 - 헤더/햄버거 + 지구본(three.js) + 사진첩 + 상세 모달
+// 사진 페이지 - 지구본(도시 핀) + 도시 선택 시 지구본 하강·확대 + 사진 오빗
+// @주의 대륙 마스크는 data URI로 임베드 → file:// 에서도 getImageData 동작
 // ==========================================================================
+
+// --- @동작 헤더 축소 / 햄버거 드로어 ---
 const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 40);
 window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
-
 const burger = document.getElementById('navBurger');
 const backdrop = document.getElementById('navBackdrop');
-const toggleNav = (open) => {
-    document.body.classList.toggle('nav--open', open);
-    burger.setAttribute('aria-expanded', open);
-    const sw = window.innerWidth - document.documentElement.clientWidth;
-    document.body.style.paddingRight = open ? sw + 'px' : '';
-    document.body.style.overflow = open ? 'hidden' : '';
-};
+const toggleNav = (open) => { document.body.classList.toggle('nav--open', open); burger.setAttribute('aria-expanded', open); };
 if (burger) burger.addEventListener('click', () => toggleNav(!document.body.classList.contains('nav--open')));
 if (backdrop) backdrop.addEventListener('click', () => toggleNav(false));
 
-// --- @데이터 여행 사진 (위경도 + 이야기). 실제 사진/글로 교체 가능 ---
-const PHOTOS = [
-    { city: '도쿄', cityEn: 'TOKYO', lat: 35.68, lon: 139.65, date: '2026.03', title: '네온의 밤',
-      img: 'media/photos/tokyo.svg',
-      desc: '골목마다 <b>간판 불빛</b>이 쏟아지던 밤. 비 온 뒤라 바닥까지 <mark>네온이 번졌다</mark>.' },
-    { city: '파리', cityEn: 'PARIS', lat: 48.85, lon: 2.35, date: '2025.09', title: '센강의 오후',
-      img: 'media/photos/paris.svg',
-      desc: '강변에 앉아 <b>크루아상</b> 하나. <i>느리게 흐르는</i> 오후가 좋았다.' },
-    { city: '뉴욕', cityEn: 'NEW YORK', lat: 40.71, lon: -74.00, date: '2025.06', title: '마천루 사이',
-      img: 'media/photos/newyork.svg',
-      desc: '고개를 <b>한참</b> 젖혀야 하늘이 보였다. 도시가 <mark>수직으로</mark> 자란 곳.' },
-    { city: '제주', cityEn: 'JEJU', lat: 33.50, lon: 126.53, date: '2026.01', title: '겨울 바다',
-      img: 'media/photos/jeju.svg',
-      desc: '바람은 찼지만 <b>파도 소리</b>가 따뜻했다. <mark>귤</mark> 한 봉지와 함께.' },
-    { city: '시드니', cityEn: 'SYDNEY', lat: -33.87, lon: 151.21, date: '2025.12', title: '하버의 아침',
-      img: 'media/photos/sydney.svg',
-      desc: '한여름의 <b>크리스마스</b>. 하버 브리지 위로 해가 <i>일찍</i> 떴다.' },
-    { city: '카이로', cityEn: 'CAIRO', lat: 30.04, lon: 31.24, date: '2025.04', title: '사막의 끝',
-      img: 'media/photos/cairo.svg',
-      desc: '지평선 끝에 <b>피라미드</b>. 모래바람 너머로 <mark>수천 년</mark>이 서 있었다.' },
+const rand = (s) => { const x = Math.sin(s * 999.13) * 43758.5; return x - Math.floor(x); };
+
+// --- @데이터 도시별 앨범 (lat/lon = 핀 위치, photos = 오빗 사진) ---
+const ALBUMS = [
+    { country: '일본', city: '오사카', lat: 34.69, lon: 135.5, photos: [
+        { img: 'media/photos/japan1.jpg', title: '교토 히가시야마', date: '2026.03', desc: '기모노 입고 걷던 돌길' },
+        { img: 'media/photos/japan2.jpg', title: '교토 전경', date: '2026.03', desc: '기와지붕 너머 교토 시내' },
+        { img: 'media/photos/japan3.jpg', title: '신세카이', date: '2026.03', desc: '츠텐카쿠와 네온 간판' },
+        { img: 'media/photos/japan4.jpg', title: '시텐노지', date: '2026.03', desc: '푸른 하늘의 붉은 오층탑' },
+        { img: 'media/photos/japan5.jpg', title: '아사쿠사', date: '2026.03', desc: '센소지 붉은 등과 인파' },
+        { img: 'media/photos/japan6.jpg', title: '오사카성', date: '2026.03', desc: '초록 지붕의 천수각' } ] },
+    { country: '한국', city: '제주', lat: 33.5, lon: 126.53, photos: [
+        { img: 'media/photos/jeju1.jpg', title: '주상절리', date: '2026.01', desc: '파도에 깎인 육각 기둥' },
+        { img: 'media/photos/jeju2.jpg', title: '돌하르방', date: '2026.01', desc: '꽃으로 단장한 하르방' },
+        { img: 'media/photos/jeju3.jpg', title: '올레길 바다', date: '2026.01', desc: '절벽 따라 이어진 쪽빛 바다' },
+        { img: 'media/photos/jeju4.jpg', title: '돌하르방 무리', date: '2026.01', desc: '줄지어 선 현무암 하르방' },
+        { img: 'media/photos/jeju5.jpg', title: '마을 풍경', date: '2026.01', desc: '밭담 너머 바다와 마을' },
+        { img: 'media/photos/jeju6.jpg', title: '초가와 돌담', date: '2026.01', desc: '초가지붕과 검은 돌담' },
+        { img: 'media/photos/jeju7.jpg', title: '민속마을', date: '2026.01', desc: '귤 익어가는 초가 마당' } ] },
+    { country: '미국', city: '뉴욕', lat: 40.71, lon: -74.0, photos: [
+        { img: 'media/photos/newyork1.jpg', title: '시청 지구', date: '2025.06', desc: '고전 건축과 노란 택시' },
+        { img: 'media/photos/newyork2.jpg', title: '미드타운', date: '2025.06', desc: '빼곡한 마천루' },
+        { img: 'media/photos/newyork3.jpg', title: '펜스 너머 스카이라인', date: '2025.06', desc: '철망 사이 맨해튼' },
+        { img: 'media/photos/newyork4.jpg', title: '엠파이어 스테이트', date: '2025.06', desc: '우뚝 선 마천루' },
+        { img: 'media/photos/newyork5.jpg', title: '다운타운 거리', date: '2025.06', desc: '신호등 너머 원 WTC' },
+        { img: 'media/photos/newyork6.jpg', title: '이스트강 노을', date: '2025.06', desc: '노을 진 스카이라인' } ] },
+    { country: '캐나다', city: '밴쿠버', lat: 49.28, lon: -123.12, photos: [
+        { img: 'media/photos/canada1.jpg', title: '밴쿠버 스카이라인', date: '2025.10', desc: '물 건너 다운타운' },
+        { img: 'media/photos/canada2.jpg', title: '캐나다 플레이스', date: '2025.10', desc: '흰 돛 지붕의 항구' },
+        { img: 'media/photos/canada3.jpg', title: '폴스크릭 노을', date: '2025.10', desc: '노을 물든 사이언스 월드' },
+        { img: 'media/photos/canada4.jpg', title: '콜하버의 가을', date: '2025.10', desc: '물에 비친 단풍' },
+        { img: 'media/photos/canada5.jpg', title: '설산과 도시', date: '2025.10', desc: '설산 아래 다운타운' },
+        { img: 'media/photos/canada6.jpg', title: '항구의 저녁', date: '2025.10', desc: '노을 속 돛단배' } ] },
+    { country: '영국', city: '런던', lat: 51.51, lon: -0.13, photos: [
+        { img: 'media/photos/london1.jpg', title: '거킨 빌딩', date: '2025.08', desc: '벽돌 건물 위 거킨' },
+        { img: 'media/photos/london2.jpg', title: '타워브리지', date: '2025.08', desc: '푸른 강철의 다리' },
+        { img: 'media/photos/london3.jpg', title: '타워브리지의 밤', date: '2025.08', desc: '불빛 켜진 다리' },
+        { img: 'media/photos/london4.jpg', title: '빅벤', date: '2025.08', desc: '금빛 장식의 시계탑' },
+        { img: 'media/photos/london5.jpg', title: '국회의사당', date: '2025.08', desc: '템스강과 웨스트민스터' },
+        { img: 'media/photos/london6.jpg', title: '시티 금융가', date: '2025.08', desc: '유리 마천루의 시티' },
+        { img: 'media/photos/london7.jpg', title: '리젠트 스트리트', date: '2025.08', desc: '비 젖은 곡선 거리' },
+        { img: 'media/photos/london8.jpg', title: '옥스퍼드 서커스', date: '2025.08', desc: '블랙캡과 빨간 버스' },
+        { img: 'media/photos/london9.jpg', title: '빅벤과 버스', date: '2025.08', desc: '스치는 이층버스' } ] },
+    { country: '프랑스', city: '파리', lat: 48.85, lon: 2.35, photos: [
+        { img: 'media/photos/paris1.jpg', title: '에펠탑 아래', date: '2025.09', desc: '올려다본 철골' },
+        { img: 'media/photos/paris2.jpg', title: '오페라 가르니에', date: '2025.09', desc: '밤비 내린 극장' },
+        { img: 'media/photos/paris3.jpg', title: '파리의 지붕들', date: '2025.09', desc: '지붕 너머 에펠탑' },
+        { img: 'media/photos/paris4.jpg', title: '루브르 피라미드', date: '2025.09', desc: '광장의 유리 피라미드' },
+        { img: 'media/photos/paris5.jpg', title: '아치 너머 루브르', date: '2025.09', desc: '아치 사이 실루엣' },
+        { img: 'media/photos/paris6.jpg', title: '가을의 에펠탑', date: '2025.09', desc: '단풍 사이 에펠탑' },
+        { img: 'media/photos/paris7.jpg', title: '세강의 노을', date: '2025.09', desc: '강 위에 내린 노을' } ] },
+    { country: '브라질', city: '리우', lat: -22.91, lon: -43.17, photos: [
+        { img: 'media/photos/rio1.jpg', title: '슈가로프', date: '2025.02', desc: '야자수 사이 봉우리' },
+        { img: 'media/photos/rio2.jpg', title: '코르코바두', date: '2025.02', desc: '도시를 안은 예수상' },
+        { img: 'media/photos/rio3.jpg', title: '보타포구 만', date: '2025.02', desc: '만과 슈가로프' },
+        { img: 'media/photos/rio4.jpg', title: '해변의 도시', date: '2025.02', desc: '해안 따라 늘어선 도시' },
+        { img: 'media/photos/rio5.jpg', title: '이파네마', date: '2025.02', desc: '햇살 쏟아진 거리' } ] },
+    { country: '이집트', city: '카이로', lat: 30.04, lon: 31.24, photos: [
+        { img: 'media/photos/kairo1.jpg', title: '기자 피라미드', date: '2025.04', desc: '도로 끝의 피라미드' },
+        { img: 'media/photos/kairo2.jpg', title: '카이로 시가지', date: '2025.04', desc: '지평선까지 흙빛 건물' },
+        { img: 'media/photos/kairo3.jpg', title: '술탄 하산 모스크', date: '2025.04', desc: '미나렛과 돔' },
+        { img: 'media/photos/kairo4.jpg', title: '올드 카이로', date: '2025.04', desc: '하늘 가른 첨탑' } ] },
+    { country: '호주', city: '시드니', lat: -33.87, lon: 151.21, photos: [
+        { img: 'media/photos/sydney1.jpg', title: '하버의 갈매기', date: '2025.12', desc: '관람차 앞 갈매기' },
+        { img: 'media/photos/sydney2.jpg', title: '하버브리지의 밤', date: '2025.12', desc: '물결에 번진 불빛' },
+        { img: 'media/photos/sydney3.jpg', title: '하버브리지와 오페라', date: '2025.12', desc: '나란한 다리와 지붕' },
+        { img: 'media/photos/sydney4.jpg', title: '항구의 요트', date: '2025.12', desc: '요트 사이 하버브리지' },
+        { img: 'media/photos/sydney5.jpg', title: '오페라하우스', date: '2025.12', desc: '하얗게 빛나는 조개 지붕' } ] },
 ];
 
-// --- @동작 상세 모달 (지도 핀·사진첩 공통) ---
-const phModal = document.getElementById('phModal');
-function openDetail(p) {
-    document.getElementById('modalImg').src = p.img;
-    document.getElementById('modalImg').alt = p.city + ' ' + p.title;
-    document.getElementById('modalLoc').textContent = p.city + ' · ' + p.cityEn;
-    document.getElementById('modalTitle').textContent = p.title;
-    document.getElementById('modalMeta').textContent = p.date;
-    document.getElementById('modalDesc').innerHTML = p.desc;
-    phModal.hidden = false;
-    document.body.style.overflow = 'hidden';
+// --- @동작 사진 팝업 (현재 도시 사진들 안에서 앞뒤로) ---
+const geoPop = document.getElementById('geoPop');
+let currentPhotos = [], popIdx = 0, currentCity = '';
+function renderPop() {
+    const p = currentPhotos[popIdx];
+    document.getElementById('geoImg').src = p.img;
+    document.getElementById('geoImg').alt = currentCity + ' ' + p.title;
+    document.getElementById('geoPlace').textContent = currentCity;
+    document.getElementById('geoTitle').textContent = p.title;
+    document.getElementById('geoDate').textContent = p.date;
+    document.getElementById('geoDesc').innerHTML = p.desc;
+    document.getElementById('geoInfo').textContent = (popIdx + 1) + ' / ' + currentPhotos.length;
 }
-function closeDetail() { phModal.hidden = true; document.body.style.overflow = ''; }
-document.getElementById('modalClose').addEventListener('click', closeDetail);
-phModal.querySelector('[data-close]').addEventListener('click', closeDetail);
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDetail(); });
+function openPop(i) { popIdx = i; renderPop(); geoPop.hidden = false; requestAnimationFrame(() => geoPop.classList.add('is-open')); }
+function closePop() { geoPop.classList.remove('is-open'); setTimeout(() => { geoPop.hidden = true; }, 320); }
+document.getElementById('geoClose').addEventListener('click', closePop);
+geoPop.querySelector('[data-close]').addEventListener('click', closePop);
+document.getElementById('geoPrev').addEventListener('click', () => { popIdx = (popIdx - 1 + currentPhotos.length) % currentPhotos.length; renderPop(); });
+document.getElementById('geoNext').addEventListener('click', () => { popIdx = (popIdx + 1) % currentPhotos.length; renderPop(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !geoPop.hidden) closePop(); });
 
-// --- @동작 뷰 전환 (지구본 / 사진첩) ---
-const globeSec = document.getElementById('phGlobe');
-const albumSec = document.getElementById('phAlbum');
-let globeInited = false;
-document.querySelectorAll('.ph-toggle__btn').forEach((b) => {
-    b.addEventListener('click', () => {
-        const v = b.dataset.view;
-        document.querySelectorAll('.ph-toggle__btn').forEach((x) => x.classList.toggle('is-active', x === b));
-        globeSec.hidden = v !== 'globe';
-        albumSec.hidden = v !== 'album';
-        if (v === 'album') renderAlbum();
-        if (v === 'globe' && !globeInited && window.THREE) { initGlobe(); globeInited = true; }
-    });
+// --- @동작 도시 사진 오빗 (CSS 3D) ---
+const orbitEl = document.getElementById('orbit');
+const orbitLayer = document.getElementById('orbitLayer');
+let cells = [], orbRot = 0, orbTarget = 0, orbDrag = false, orbMoved = false, orbLastX = 0, orbP = 1150;
+function buildOrbit(photos) {
+    orbitEl.innerHTML = '';
+    // @주의 링 중심을 카메라 깊이(perspective)에 맞춰 두면 회전축이 뷰어를 지남 → 나를 중심으로 회전
+    orbP = window.innerWidth < 760 ? 820 : 1150;
+    orbitLayer.style.perspective = orbP + 'px';
+    const N0 = photos.length;
+    // 사진이 적은 도시는 링을 반복 배치로 채워 항상 3장 이상 보이도록 (총 ≥9개 → 간격 ≤40°)
+    const reps = Math.max(1, Math.ceil(9 / N0));
+    const total = N0 * reps;
+    // 반지름을 키우면 사진이 멀어져 더 작고 촘촘하게 보임
+    const rBase = Math.max(560, Math.min(orbP * 0.64, window.innerWidth * 0.46));
+    cells = [];
+    for (let k = 0; k < total; k++) {
+        const src = photos[k % N0];
+        const baseAngle = (k / total) * 360;
+        const yOff = (rand(k + 1) - 0.5) * 60;
+        const tilt = (rand(k + 4) - 0.5) * 8;
+        const radius = rBase + (rand(k + 7) - 0.5) * 50;
+        const btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'orbit__item';
+        btn.setAttribute('aria-label', src.title);
+        const img = document.createElement('img');
+        img.src = src.img; img.alt = src.title;
+        btn.appendChild(img);
+        btn.dataset.idx = k % N0;                          // 원본 사진 인덱스(상세 팝업용)
+        // translateZ(-radius): 사진이 나(중심)를 바라보며 둘러쌈
+        btn.style.transform = 'rotateY(' + baseAngle + 'deg) translateZ(-' + radius + 'px) translateY(' + yOff + 'px) rotateZ(' + tilt + 'deg)';
+        orbitEl.appendChild(btn);
+        cells.push({ el: btn, baseAngle });
+    }
+    orbRot = 0; orbTarget = 0;
+}
+// @주의 setPointerCapture는 사진 버튼의 클릭을 가로채므로 사용하지 않음 (window에서 드래그 추적)
+orbitLayer.addEventListener('wheel', (e) => { e.preventDefault(); orbTarget += e.deltaY * 0.11; }, { passive: false });
+orbitLayer.addEventListener('pointerdown', (e) => { orbDrag = true; orbMoved = false; orbLastX = e.clientX; });
+window.addEventListener('pointermove', (e) => { if (!orbDrag) return; const dx = e.clientX - orbLastX; orbLastX = e.clientX; if (Math.abs(dx) > 3) orbMoved = true; orbTarget -= dx * 0.24; });
+window.addEventListener('pointerup', (e) => {
+    if (!orbDrag) return;
+    orbDrag = false;
+    if (orbMoved) return;                                  // 드래그면 클릭 취소
+    const it = e.target.closest ? e.target.closest('.orbit__item') : null;
+    if (it) openPop(+it.dataset.idx);                      // 사진 클릭 → 상세화면
 });
+const DEG = Math.PI / 180;
+function orbitLoop() {
+    requestAnimationFrame(orbitLoop);
+    if (!document.getElementById('phGal').classList.contains('city-open')) return;
+    if (!orbDrag) orbTarget += 0.04;
+    orbRot += (orbTarget - orbRot) * 0.08;
+    // 링 중심을 카메라(z=perspective)에 두고 그 축으로 회전 → 뷰어 중심 회전
+    orbitEl.style.transform = 'translateZ(' + orbP + 'px) rotateY(' + orbRot + 'deg)';
+    cells.forEach((c) => {
+        const f = Math.cos((c.baseAngle + orbRot) * DEG);   // 1=정면 .. 0=옆 .. -1=뒤(가림)
+        const o = Math.max(0, Math.min(1, (f - 0.12) / 0.5));
+        c.el.style.opacity = o.toFixed(3);
+        c.el.style.filter = 'brightness(' + (0.78 + o * 0.27).toFixed(3) + ')';
+        c.el.style.zIndex = Math.round(f * 100);
+        c.el.style.pointerEvents = f > 0.5 ? 'auto' : 'none';
+    });
+}
+requestAnimationFrame(orbitLoop);
 
-// --- @동작 사진첩(책 펼침) ---
-let albIdx = 0;
-const bookEl = document.getElementById('book');
-function renderAlbum() {
-    const p = PHOTOS[albIdx];
-    document.getElementById('bookPhoto').src = p.img;
-    document.getElementById('bookPhoto').alt = p.city + ' ' + p.title;
-    document.getElementById('bookTitle').textContent = p.title;
-    document.getElementById('bookMeta').textContent = p.city + ' · ' + p.date;
-    document.getElementById('bookDesc').innerHTML = p.desc;
-    document.getElementById('albCaption').textContent = p.cityEn + '  ·  ' + (albIdx + 1) + ' / ' + PHOTOS.length;
+// --- @동작 도시 선택 / 닫기 ---
+const phGal = document.getElementById('phGal');
+const hintEl = document.querySelector('.ph-gal__hint');
+const HINT_DEFAULT = hintEl.textContent;
+function selectCity(i) {
+    const a = ALBUMS[i];
+    currentPhotos = a.photos; currentCity = a.country + ' · ' + a.city;
+    buildOrbit(a.photos);
+    document.getElementById('cityPlace').textContent = a.country;
+    document.getElementById('cityName').textContent = a.city;
+    hintEl.textContent = '사진을 누르면 크게 · 다른 곳을 누르면 지구본으로';
+    phGal.classList.add('city-open');
+    document.getElementById('globeLayer').style.transform = '';   // 인라인 제거 → CSS(city-open) 하강 적용
+    if (window.__globeSelect) window.__globeSelect(i);
 }
-function flipTo(next) {
-    bookEl.classList.add('is-turning');
-    setTimeout(() => { albIdx = (next + PHOTOS.length) % PHOTOS.length; renderAlbum(); bookEl.classList.remove('is-turning'); }, 220);
+function closeCity() {
+    if (!phGal.classList.contains('city-open')) return;
+    phGal.classList.remove('city-open');
+    hintEl.textContent = HINT_DEFAULT;
+    if (window.__globeReset) window.__globeReset();
+    if (window.__globeReveal) window.__globeReveal();   // 스크롤 위치에 맞춰 지구본 위치 복원
 }
-document.getElementById('albPrev').addEventListener('click', () => flipTo(albIdx - 1));
-document.getElementById('albNext').addEventListener('click', () => flipTo(albIdx + 1));
-document.getElementById('bookPhoto').addEventListener('click', () => openDetail(PHOTOS[albIdx]));
+window.__selectCity = selectCity;
 
-// --- @동작 지구본 (three.js): 펼쳐지며 등장 → 위치 핀 → 드래그/자동회전 → 핀 클릭 상세 ---
-function latLonToVec3(lat, lon, r) {
-    const phi = (90 - lat) * Math.PI / 180;
-    const theta = (lon + 180) * Math.PI / 180;
-    return new THREE.Vector3(
-        -r * Math.sin(phi) * Math.cos(theta),
-        r * Math.cos(phi),
-        r * Math.sin(phi) * Math.sin(theta)
-    );
-}
+// --- @동작 지구본 (three.js, 텍스처 업로드 없이 점으로 대륙) ---
+const MASK = 'data:image/png;base64,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';
 function initGlobe() {
-    const container = document.getElementById('globeCanvas');
-    const hint = document.getElementById('globeHint');
-    if (!window.THREE) { hint.textContent = '지구본을 불러오지 못했어요 (인터넷 연결 필요)'; return; }
-
-    let w = container.clientWidth, h = container.clientHeight;
+    const layer = document.getElementById('globeLayer');
+    const labelWrap = document.getElementById('globeLabels');
+    if (!window.THREE) { return; }
+    let w = layer.clientWidth, h = layer.clientHeight;
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
-    camera.position.z = 3.2;
+    const camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 100);
+    camera.position.z = 3.8;
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(w, h);
-    container.appendChild(renderer.domElement);
+    layer.appendChild(renderer.domElement);
 
-    const group = new THREE.Group();
-    scene.add(group);
-    const R = 1;
-    group.add(new THREE.Mesh(new THREE.SphereGeometry(R, 48, 48), new THREE.MeshBasicMaterial({ color: 0x17140f })));
-    group.add(new THREE.Mesh(new THREE.SphereGeometry(R * 1.002, 36, 24), new THREE.MeshBasicMaterial({ color: 0xc6a582, wireframe: true, transparent: true, opacity: 0.16 })));
-    group.add(new THREE.Mesh(new THREE.SphereGeometry(R * 1.08, 48, 48), new THREE.MeshBasicMaterial({ color: 0xc6a582, transparent: true, opacity: 0.05, side: THREE.BackSide })));
+    const group = new THREE.Group(); scene.add(group);
+    group.add(new THREE.Mesh(new THREE.SphereGeometry(0.995, 48, 48), new THREE.MeshBasicMaterial({ color: 0x0a1626 })));
+    group.add(new THREE.Mesh(new THREE.SphereGeometry(1.002, 24, 18), new THREE.MeshBasicMaterial({ color: 0x1b3b5a, wireframe: true, transparent: true, opacity: 0.22 })));
+    const atmo = new THREE.Mesh(new THREE.SphereGeometry(1.14, 48, 48), new THREE.MeshBasicMaterial({ color: 0x2f74d0, transparent: true, opacity: 0.05, side: THREE.BackSide }));
+    scene.add(atmo);
 
+    function latLonToVec3(lat, lon, r) {
+        const phi = (90 - lat) * Math.PI / 180, theta = (lon + 180) * Math.PI / 180;
+        return new THREE.Vector3(-r * Math.sin(phi) * Math.cos(theta), r * Math.cos(phi), r * Math.sin(phi) * Math.sin(theta));
+    }
+
+    // 대륙 점 찍기 (마스크 data URI에서 샘플링)
+    const im = new Image();
+    im.onload = function () {
+        const cw = im.width, ch = im.height;
+        const cv = document.createElement('canvas'); cv.width = cw; cv.height = ch;
+        const cx = cv.getContext('2d'); cx.drawImage(im, 0, 0);
+        let data; try { data = cx.getImageData(0, 0, cw, ch).data; } catch (e) { data = null; }
+        if (!data) return;
+        const pos = [];
+        for (let lat = -84; lat <= 84; lat += 1.5) {
+            for (let lon = -180; lon < 180; lon += 1.5) {
+                const u = (lon + 180) / 360, v = (90 - lat) / 180;
+                const px = Math.min(cw - 1, Math.floor(u * cw)), py = Math.min(ch - 1, Math.floor(v * ch));
+                if (data[(py * cw + px) * 4] > 90) {
+                    const p = latLonToVec3(lat + (Math.random() - 0.5) * 1.1, lon + (Math.random() - 0.5) * 1.1, 1.008);
+                    pos.push(p.x, p.y, p.z);
+                }
+            }
+        }
+        const g = new THREE.BufferGeometry();
+        g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+        group.add(new THREE.Points(g, new THREE.PointsMaterial({ color: 0xf0dfb4, size: 0.02, sizeAttenuation: true })));
+    };
+    im.src = MASK;
+
+    // 핀 + 라벨
     const pins = [];
-    PHOTOS.forEach((p) => {
-        const pin = new THREE.Mesh(new THREE.SphereGeometry(0.03, 16, 16), new THREE.MeshBasicMaterial({ color: 0xf0d9ae }));
-        pin.position.copy(latLonToVec3(p.lat, p.lon, R * 1.02));
-        pin.userData = { photo: p };
-        pin.scale.set(0, 0, 0);
-        group.add(pin);
-        pins.push(pin);
+    ALBUMS.forEach((a, i) => {
+        const pos = latLonToVec3(a.lat, a.lon, 1.02);
+        const pin = new THREE.Mesh(new THREE.SphereGeometry(0.024, 14, 14), new THREE.MeshBasicMaterial({ color: 0xffd76a }));
+        pin.position.copy(pos); pin.userData = { i }; group.add(pin);
+        const halo = new THREE.Mesh(new THREE.SphereGeometry(0.05, 16, 16), new THREE.MeshBasicMaterial({ color: 0xffd76a, transparent: true, opacity: 0.25 }));
+        halo.position.copy(pos); group.add(halo);
+        const el = document.createElement('button'); el.className = 'globe-label'; el.type = 'button'; el.textContent = a.city;
+        el.addEventListener('click', (e) => { e.stopPropagation(); selectCity(i); });
+        // @동작 라벨/핀 hover 시 해당 핀 강조 (겹친 도시 구분)
+        el.addEventListener('mouseenter', () => { hoverIndex = i; });
+        el.addEventListener('mouseleave', () => { if (hoverIndex === i) hoverIndex = -1; });
+        labelWrap.appendChild(el);
+        pins.push({ mesh: pin, halo: halo, el: el, i: i });
     });
 
-    // 상호작용: 드래그 회전 / 클릭(핀) 상세
-    const el = renderer.domElement;
-    let dragging = false, moved = false, lastX = 0, lastY = 0;
-    el.style.touchAction = 'none';
-    el.addEventListener('pointerdown', (e) => { dragging = true; moved = false; lastX = e.clientX; lastY = e.clientY; el.setPointerCapture(e.pointerId); });
-    el.addEventListener('pointermove', (e) => {
-        if (!dragging) return;
-        const dx = e.clientX - lastX, dy = e.clientY - lastY;
-        if (Math.abs(dx) + Math.abs(dy) > 4) moved = true;
-        lastX = e.clientX; lastY = e.clientY;
+    // @동작 선택된 도시 표시 핀 (깜빡임 + 레이더 링)
+    const selMarker = document.createElement('div');
+    selMarker.className = 'city-pin'; selMarker.hidden = true;
+    selMarker.innerHTML = '<span class="city-pin__ring"></span><span class="city-pin__ring city-pin__ring--2"></span><span class="city-pin__dot"></span>';
+    labelWrap.appendChild(selMarker);
+
+    // 상호작용: 드래그 회전(닫힘 상태), 핀 클릭
+    let autoRot = true, dragging = false, moved = false, lastX = 0, lastY = 0, focusing = false, hoverIndex = -1, selectedIndex = -1;
+    const targetQuat = new THREE.Quaternion();
+    layer.addEventListener('pointerdown', (e) => { if (focusing || e.target.closest('.globe-label')) return; dragging = true; moved = false; lastX = e.clientX; lastY = e.clientY; layer.setPointerCapture(e.pointerId); });
+    layer.addEventListener('pointermove', (e) => {
+        if (!dragging || focusing) return;
+        const dx = e.clientX - lastX, dy = e.clientY - lastY; lastX = e.clientX; lastY = e.clientY;
+        if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
         group.rotation.y += dx * 0.005;
-        group.rotation.x = Math.max(-1.2, Math.min(1.2, group.rotation.x + dy * 0.005));
+        group.rotation.x = Math.max(-1.1, Math.min(1.1, group.rotation.x + dy * 0.005));
     });
-    el.addEventListener('pointerup', (e) => {
+    layer.addEventListener('pointerup', (e) => {
+        if (e.target.closest('.globe-label')) return;   // 라벨(도시이름) 클릭은 라벨 핸들러가 처리
         dragging = false;
+        if (focusing) { closeCity(); return; }   // 도시 열림 상태에서 배경(지구본) 클릭 → 뒤로가기
         if (moved) return;
-        const rect = el.getBoundingClientRect();
-        const mouse = new THREE.Vector2(((e.clientX - rect.left) / rect.width) * 2 - 1, -((e.clientY - rect.top) / rect.height) * 2 + 1);
-        const ray = new THREE.Raycaster();
-        ray.setFromCamera(mouse, camera);
-        const hit = ray.intersectObjects(pins)[0];
-        if (hit) openDetail(hit.object.userData.photo);
+        const rect = layer.getBoundingClientRect();
+        const m = new THREE.Vector2(((e.clientX - rect.left) / rect.width) * 2 - 1, -((e.clientY - rect.top) / rect.height) * 2 + 1);
+        const ray = new THREE.Raycaster(); ray.setFromCamera(m, camera);
+        const hit = ray.intersectObjects(pins.map((p) => p.mesh))[0];
+        if (hit) selectCity(hit.object.userData.i);
     });
 
-    // 등장(펼쳐지며) + 핀 팝인
-    const t0 = performance.now();
-    function animate(now) {
+    window.__globeSelect = function (i) {
+        focusing = true; autoRot = false; selectedIndex = i;
+        const d = latLonToVec3(ALBUMS[i].lat, ALBUMS[i].lon, 1).normalize();
+        // 위쪽으로 정렬 → 많이 내려간 지구본의 '보이는 상단'에 그 도시가 오게 됨
+        const TOP = new THREE.Vector3(0, 0.82, 0.57).normalize();
+        targetQuat.setFromUnitVectors(d, TOP);
+    };
+    window.__globeReset = function () { focusing = false; autoRot = true; selectedIndex = -1; };
+
+    const proj = new THREE.Vector3(), wp = new THREE.Vector3();
+    function animate() {
         requestAnimationFrame(animate);
-        const t = Math.min((now - t0) / 1200, 1);
-        const e = 1 - Math.pow(1 - t, 3);
-        group.scale.setScalar(Math.max(0.0001, e));
-        pins.forEach((pin, i) => {
-            const pt = Math.min(Math.max((t - 0.55 - i * 0.05) / 0.3, 0), 1);
-            pin.scale.setScalar(pt);
+        const t = performance.now() * 0.001;
+        if (autoRot && !dragging) group.rotation.y += 0.0016;
+        if (focusing) group.quaternion.slerp(targetQuat, 0.09);
+        pins.forEach((p) => {
+            const hovered = p.i === hoverIndex;
+            const sel = focusing && p.i === selectedIndex;
+            const b = Math.sin(t * 2.2 + p.i * 1.3) * 0.5 + 0.5;   // 0..1
+            if (focusing) {
+                // 도시 열림: 선택 도시만 강조, 나머지는 흐리게
+                p.halo.material.opacity = sel ? (0.35 + b * 0.35) : 0;
+                p.halo.scale.setScalar(sel ? (1.4 + b * 0.9) : 1);
+                p.mesh.scale.setScalar(sel ? 2.4 : 0.55);
+                p.mesh.material.color.setHex(sel ? 0xffffff : 0x7a6c46);
+            } else {
+                // 닫힘: 모든 핀 레이더 핑 + hover 강조
+                p.halo.scale.setScalar((hovered ? 1.5 : 1) + b * 0.7);
+                p.halo.material.opacity = (hovered ? 0.5 : 0.36) * (1 - b) + (hovered ? 0.15 : 0);
+                p.mesh.scale.setScalar(hovered ? 2 : 1);
+                p.mesh.material.color.setHex(hovered ? 0xffffff : 0xffd76a);
+            }
+            p.mesh.getWorldPosition(wp);
+            proj.copy(wp).project(camera);
+            const x = (proj.x * 0.5 + 0.5) * w, y = (-proj.y * 0.5 + 0.5) * h;
+            const normal = wp.clone().sub(group.position).normalize();
+            const toCam = camera.position.clone().sub(wp).normalize();
+            const front = normal.dot(toCam) > 0.1;
+            const lw = p.el.offsetWidth || 90, lh = p.el.offsetHeight || 34;
+            const fits = (x - lw / 2 > 6) && (x + lw / 2 < w - 6) && (y - lh * 1.7 > 6) && (y < h - 8);
+            const show = front && fits && !focusing;
+            p.el.style.opacity = show ? '1' : '0';
+            p.el.style.pointerEvents = show ? 'auto' : 'none';
+            p.el.style.left = x + 'px'; p.el.style.top = y + 'px';
         });
-        if (!dragging) group.rotation.y += 0.0016;
+        // @동작 선택 도시 위에 깜빡이는 표시 핀 배치
+        if (focusing && selectedIndex >= 0) {
+            pins[selectedIndex].mesh.getWorldPosition(wp);
+            proj.copy(wp).project(camera);
+            selMarker.style.left = ((proj.x * 0.5 + 0.5) * w) + 'px';
+            selMarker.style.top = ((-proj.y * 0.5 + 0.5) * h) + 'px';
+            selMarker.hidden = false;
+        } else { selMarker.hidden = true; }
         renderer.render(scene, camera);
     }
-    requestAnimationFrame(animate);
+    animate();
+    window.addEventListener('resize', () => { w = layer.clientWidth; h = layer.clientHeight; camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h); });
 
-    window.addEventListener('resize', () => {
-        w = container.clientWidth; h = container.clientHeight;
-        camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h);
-    });
+    // @동작 스크롤에 따라 지구본을 위로 올림 → 끝까지 내리면 전체가 보임 (도시 열림 상태에선 CSS가 담당)
+    function reveal() {
+        const cityOpen = phGal.classList.contains('city-open');
+        // @동작 스크롤 내리면 타이틀을 왼쪽으로 비켜 지구본과 겹침 방지
+        phGal.classList.toggle('head-aside', window.scrollY > 40 && !cityOpen);
+        if (cityOpen) return;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+        // @동작 확대 없이 위로 이동만 → 끝까지 내리면 지구본 전체가 보임
+        layer.style.transform = 'translateY(' + ((1 - p) * 26).toFixed(2) + 'vh) scale(0.9)';
+    }
+    window.__globeReveal = reveal;
+    window.addEventListener('scroll', reveal, { passive: true });
+    reveal();
 }
+window.addEventListener('load', initGlobe);
 
-// 기본 뷰(지구본) 초기화
-window.addEventListener('load', () => { if (window.THREE) { initGlobe(); globeInited = true; }
-    else { document.getElementById('globeHint').textContent = '지구본을 불러오지 못했어요 (인터넷 연결 필요)'; } });
-    
-// ===== ATELIER 포팅킷: 커스텀 커서 + 오버레이 메뉴 + 스크롤 프로그레스 (IIFE, 기존 코드와 충돌 없음) =====
+// ===== ATELIER 포팅킷: 커스텀 커서 + 오버레이 메뉴 + 스크롤 프로그레스 (IIFE) =====
 (function () {
     'use strict';
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var finePointer  = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
     function initCursor() {
         if (!finePointer || reduceMotion) return;
         var dot = document.createElement('div'), ring = document.createElement('div');
         dot.className = 'cursor-dot'; ring.className = 'cursor-ring';
         document.body.append(dot, ring);
         var mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
-        document.addEventListener('mousemove', function (e) {
-            mx = e.clientX; my = e.clientY;
-            dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
-        });
-        (function loop() {
-            rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
-            ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
-            requestAnimationFrame(loop);
-        })();
-        var hoverSel = 'a, button, select, input, textarea, label, .split-panel, .tg-tile, .pass__ticket, .flip, .goal-card, .cl-nav__toggle';
+        document.addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)'; });
+        (function l() { rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16; ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)'; requestAnimationFrame(l); })();
+        var hoverSel = 'a, button, select, input, textarea, label, .orbit__item, .globe-label';
         document.addEventListener('mouseover', function (e) { if (e.target.closest(hoverSel)) ring.classList.add('is-hover'); });
         document.addEventListener('mouseout', function (e) { if (e.target.closest(hoverSel)) ring.classList.remove('is-hover'); });
     }
-
     function initOverlayMenu() {
-        var menu = document.getElementById('overlayMenu');
-        var openBtn = document.getElementById('menuBtn');
-        var closeBtn = document.getElementById('overlayClose');
+        var menu = document.getElementById('overlayMenu'), openBtn = document.getElementById('menuBtn'), closeBtn = document.getElementById('overlayClose');
         if (!menu || !openBtn) return;
         var open = function () { menu.classList.add('is-open'); document.body.classList.add('menu-open'); openBtn.setAttribute('aria-expanded', 'true'); };
         var close = function () { menu.classList.remove('is-open'); document.body.classList.remove('menu-open'); openBtn.setAttribute('aria-expanded', 'false'); };
@@ -348,30 +514,21 @@ window.addEventListener('load', () => { if (window.THREE) { initGlobe(); globeIn
         menu.querySelectorAll('.overlay-nav a').forEach(function (a) { a.addEventListener('click', close); });
         document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
     }
-
     function initProgress() {
         var bar = document.querySelector('.scroll-progress');
         if (!bar) return;
-        var onScroll = function () {
-            var h = document.documentElement;
-            var max = h.scrollHeight - h.clientHeight;
-            bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
-        };
-        document.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
+        var handler = function () { var d = document.documentElement; var max = d.scrollHeight - d.clientHeight; bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%'; };
+        document.addEventListener('scroll', handler, { passive: true }); handler();
     }
-
     var boot = function () { initCursor(); initOverlayMenu(); initProgress(); };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
 
-    
-// ===== 드로어 닫기(X) 버튼 → 배경 클릭과 동일하게 닫힘 =====
+// ===== 드로어 닫기(X) 버튼 =====
 (function () {
     var c = document.getElementById('navDrawerClose'), b = document.getElementById('navBackdrop');
     if (c && b) c.addEventListener('click', function () { b.click(); });
 })();
-
     </script>
     <script defer src="js/music-continue.js"></script>
 </body>

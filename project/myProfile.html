@@ -25,8 +25,8 @@
     <nav class="nav" id="nav" aria-label="주요 메뉴">
         <ul class="nav__list" id="navList">
             <li><a class="nav__link" href="myClass.html">시간표</a></li>
+            <li><a class="nav__link" href="myTrip.html">앨범</a></li>
             <li><a class="nav__link" href="myHoliday.html">휴일계획</a></li>
-            <li><a class="nav__link" href="myTrip.html">여행앨범</a></li>
             <li><a class="nav__link" href="login.html">로그인</a></li>
             <li><a class="nav__link" href="signUp.html">회원가입</a></li>
         </ul>
@@ -43,8 +43,8 @@
         <button class="nav__drawer-close" id="navDrawerClose" type="button" aria-label="메뉴 닫기">&#10005;</button>
         <ul class="nav__drawer-list">
             <li><a href="myClass.html">시간표</a></li>
+            <li><a href="myTrip.html">앨범</a></li>
             <li><a href="myHoliday.html">휴일계획</a></li>
-            <li><a href="myTrip.html">여행앨범</a></li>
             <li><a href="login.html">로그인</a></li>
             <li><a href="signUp.html">회원가입</a></li>
         </ul>
@@ -59,19 +59,19 @@
             <p class="hero__scroll" aria-hidden="true">Scroll ↓</p>
         </header>
 
-        <!-- @섹션 좋아하는 음식: 시그니처 버거 / 음식1 — 같은 패턴(seq), 미디어만 다름 -->
+        <!-- @섹션 좋아하는 음식: 햄버거 / 음식1 — 같은 패턴(seq), 미디어만 다름 -->
         <!-- @확장 음식 추가: 아래 section 블록 복사 후 미디어·문구·좌우(seq--left/right)만 교체 -->
-        <section class="seq seq--right" id="seq" aria-label="시그니처 버거">
+        <section class="seq seq--right" id="seq" aria-label="햄버거">
             <div class="seq__pin">
                 <div class="seq__copy" data-copy>
-                    <p class="seq__eyebrow">SIGNATURE · 좋아하는 음식</p>
-                    <h2 class="seq__title">시그니처 버거</h2>
-                    <p class="seq__desc">스크롤에 따라 천천히 담아냅니다.</p>
+                    <p class="seq__eyebrow">01 · 좋아하는 음식</p>
+                    <h2 class="seq__title">햄버거</h2>
+                    <p class="seq__desc">균형 잡힌 3대 영양소</p>
                 </div>
                 <!-- @동작 data-scrub="tail": 끝 구간을 슬로우로 늘려 파티클이 화면 밖까지 흐름 -->
                 <video class="seq__media" data-scrub="tail" muted playsinline preload="auto">
-                    <source src="media/food2.webm" type="video/webm">
-                    <source src="media/food2.mp4" type="video/mp4">
+                    <source src="media/profile/food/food2.webm" type="video/webm">
+                    <source src="media/profile/food/food2.mp4" type="video/mp4">
                 </video>
             </div>
         </section>
@@ -79,14 +79,68 @@
         <section class="seq seq--left" id="food1" aria-label="음식1">
             <div class="seq__pin">
                 <div class="seq__copy" data-copy>
-                    <p class="seq__eyebrow">02 · 좋아하는 음식</p>
-                    <h2 class="seq__title">음식1</h2>
-                    <p class="seq__desc">가장 자주 찾는 최애 메뉴. 맛으로 하루를 기억하게 하는 음식입니다.</p>
+                    <p class="seq__eyebrow">01 · 좋아하는 음식</p>
+                    <h2 class="seq__title">햄버거</h2>
+                    <p class="seq__desc">가장 자주 찾는 최애 메뉴. <br> 다양한 맛과 합리적인 가격, 그리고 간편함</p>
                 </div>
                 <!-- @동작 data-scrub="hold": 끝에 도달하면 멈춘 채 유지(루프 안 함) -->
                 <video class="seq__media" data-scrub="hold" muted playsinline preload="auto">
-                    <source src="media/burger.webm" type="video/webm">
-                    <source src="media/burger.mp4" type="video/mp4">
+                    <source src="media/profile/food/burger.webm" type="video/webm">
+                    <source src="media/profile/food/burger.mp4" type="video/mp4">
+                </video>
+            </div>
+        </section>
+
+        <!-- @확장 콜라 세트 (오른쪽/왼쪽 한 짝) -->
+        <section class="seq seq--right" id="food2" aria-label="콜라">
+            <div class="seq__pin">
+                <div class="seq__copy" data-copy>
+                    <p class="seq__eyebrow">01 · 좋아하는 음식</p>
+                    <h2 class="seq__title">콜라</h2>
+                    <p class="seq__desc">톡 쏘는 탄산의 짜릿함</p>
+                </div>
+                <video class="seq__media" data-scrub="tail" muted playsinline preload="auto">
+                    <source src="media/profile/food/coke1.mp4" type="video/mp4">
+                </video>
+            </div>
+        </section>
+
+        <section class="seq seq--left" id="food3" aria-label="콜라">
+            <div class="seq__pin">
+                <div class="seq__copy" data-copy>
+                    <p class="seq__eyebrow">01 · 좋아하는 음식</p>
+                    <h2 class="seq__title">콜라</h2>
+                    <p class="seq__desc">기름진 음식엔 역시 시원한 콜라 한 잔. <br> 언제 마셔도 물리지 않는 최고의 조합</p>
+                </div>
+                <video class="seq__media" data-scrub="hold" muted playsinline preload="auto">
+                    <source src="media/profile/food/coke2.mp4" type="video/mp4">
+                </video>
+            </div>
+        </section>
+
+        <!-- @확장 딸기 세트 (오른쪽/왼쪽 한 짝) -->
+        <section class="seq seq--right" id="food4" aria-label="딸기">
+            <div class="seq__pin">
+                <div class="seq__copy" data-copy>
+                    <p class="seq__eyebrow">01 · 좋아하는 음식</p>
+                    <h2 class="seq__title">딸기</h2>
+                    <p class="seq__desc">새콤달콤 상큼한 한 입</p>
+                </div>
+                <video class="seq__media" data-scrub="tail" muted playsinline preload="auto">
+                    <source src="media/profile/food/strawberry1.mp4" type="video/mp4">
+                </video>
+            </div>
+        </section>
+
+        <section class="seq seq--left" id="food5" aria-label="딸기">
+            <div class="seq__pin">
+                <div class="seq__copy" data-copy>
+                    <p class="seq__eyebrow">01 · 좋아하는 음식</p>
+                    <h2 class="seq__title">딸기</h2>
+                    <p class="seq__desc">향긋하고 달콤한 제철 과일의 왕. <br> 보기만 해도 기분 좋아지는 새빨간 색감</p>
+                </div>
+                <video class="seq__media" data-scrub="hold" muted playsinline preload="auto">
+                    <source src="media/profile/food/strawberry2.mp4" type="video/mp4">
                 </video>
             </div>
         </section>
@@ -94,12 +148,12 @@
         <!-- 할 일: 도넛 링이 스크롤에 따라 차오르고 되감기며 목표를 순차 표시 -->
         <section class="goals" id="goals" aria-label="올해 할 일">
             <div class="goals__pin">
-                <p class="goals__eyebrow">03 · 올해 할 일</p>
+                <p class="goals__eyebrow">02 · 올해 할 일</p>
                 <!-- @동작 track: JS가 스크롤 구간에 따라 위로 밀어 다음 카드 표시 -->
                 <!-- @확장 할 일 추가: goal-card 블록 복사 + data-pct 지정 + JS goals 배열에 항목 추가 -->
                 <!-- @주의 과제 필수 요소: 올해 할 일 <ol> -->
                 <ol class="goals__track" data-track>
-                    <li class="goal-card" data-card data-pct="60">
+                    <li class="goal-card" data-card data-pct="40">
                         <figure class="goal-card__donut">
                             <svg class="donut__svg" viewBox="0 0 200 200" aria-hidden="true">
                                 <circle class="donut__track" cx="100" cy="100" r="92"></circle>
@@ -107,21 +161,22 @@
                             </svg>
                             <figcaption class="donut__center">
                                 <span class="donut__pct" data-pct-label>0%</span>
-                                <b class="donut__name">할일1</b>
+                                <b class="donut__name">스펙업</b>
+                                <span class="donut__hint">🖱️ 마우스를 올리면 세부사항이 보여요</span>
                             </figcaption>
                         </figure>
-                        <!-- @동작 hover 시 오른쪽으로 펼쳐지는 상세 -->
+                        <!-- @동작 hover 시 오른쪽으로 펼쳐지는 상세 (상태별 모션: 진행중=회전화살표 / 완료=체크 / 준비중=회전점) -->
                         <div class="goal-card__info">
-                            <h3 class="goal-card__title">할일1</h3>
+                            <h3 class="goal-card__title">스펙업</h3>
                             <ul class="goal-card__detail">
-                                <li>세부 내용 1 — 구체적인 실행 항목</li>
-                                <li>세부 내용 2 — 진행 상황 메모</li>
-                                <li>세부 내용 3 — 다음 단계</li>
+                                <li><span class="gs__name">SKALA 수료  </span><span class="gs__st"><span class="gs gs--progress" aria-hidden="true"></span><span class="gs__label">진행 중</span></span></li>
+                                <li><span class="gs__name">자격증 취득  </span><span class="gs__st"><span class="gs gs--ready" aria-hidden="true"></span><span class="gs__label">준비 중</span></span></li>
+                                <li><span class="gs__name">외국어 공부  </span><span class="gs__st"><span class="gs gs--progress" aria-hidden="true"></span><span class="gs__label">진행 중</span></span></li>
                             </ul>
                         </div>
                     </li>
 
-                    <li class="goal-card" data-card data-pct="25">
+                    <li class="goal-card" data-card data-pct="55">
                         <figure class="goal-card__donut">
                             <svg class="donut__svg" viewBox="0 0 200 200" aria-hidden="true">
                                 <circle class="donut__track" cx="100" cy="100" r="92"></circle>
@@ -129,14 +184,18 @@
                             </svg>
                             <figcaption class="donut__center">
                                 <span class="donut__pct" data-pct-label>0%</span>
-                                <b class="donut__name">할일2</b>
+                                <b class="donut__name">개인 관리</b>
+                                <span class="donut__hint">🖱️ 마우스를 올리면 세부사항이 보여요</span>
                             </figcaption>
                         </figure>
                         <div class="goal-card__info">
-                            <h3 class="goal-card__title">할일2</h3>
+                            <h3 class="goal-card__title">개인 관리</h3>
                             <ul class="goal-card__detail">
-                                <li>세부 내용 1 — 구체적인 실행 항목</li>
-                                <li>세부 내용 2 — 진행 상황 메모</li>
+                                <li><span class="gs__name">체지방 10% 감량  </span><span class="gs__st"><span class="gs gs--done" aria-hidden="true"></span><span class="gs__label"> 완료 </span></span></li>
+                                <li><span class="gs__name">골격근 10% 증가  </span><span class="gs__st"><span class="gs gs--progress" aria-hidden="true"></span><span class="gs__label">진행 중</span></span></li>
+                                <li><span class="gs__name">유산소 병행</span><span class="gs__st"><span class="gs gs--ready" aria-hidden="true"></span><span class="gs__label">준비 중</span></span></li>
+                                <li><span class="gs__name">식단 관리  </span><span class="gs__st"><span class="gs gs--ready" aria-hidden="true"></span><span class="gs__label">준비 중</span></span></li>
+                                <li><span class="gs__name">영양소 균형 맞추기  </span><span class="gs__st"><span class="gs gs--progress" aria-hidden="true"></span><span class="gs__label">진행 중</span></span></li>
                             </ul>
                         </div>
                     </li>
@@ -153,23 +212,23 @@
             <div class="flip-grid reveal">
                 <div class="flip">
                     <div class="flip__inner">
-                        <div class="flip__front" style="background-image:url('media/word1.svg')"></div>
+                        <div class="flip__front" style="background-image:url('media/profile/words/word-run.jpg')"></div>
                         <div class="flip__back">
                             <!-- @주의 과제 필수 요소: 용어-설명 <dl> -->
                             <dl>
-                                <dt class="flip__term">단어1</dt>
-                                <dd class="flip__desc">단어1에 대한 설명입니다. 나를 대표하는 첫 번째 키워드입니다.</dd>
+                                <dt class="flip__term">끈기</dt>
+                                <dd class="flip__desc"><span class="flip__pos">「명사」</span> 쉽게 단념하지 아니하고 끈질기게 견디어 나가는 기운.</dd>
                             </dl>
                         </div>
                     </div>
                 </div>
                 <div class="flip">
                     <div class="flip__inner">
-                        <div class="flip__front" style="background-image:url('media/word1.svg')"></div>
+                        <div class="flip__front" style="background-image:url('media/profile/words/word-smile.jpg')"></div>
                         <div class="flip__back">
                             <dl>
-                                <dt class="flip__term">단어2</dt>
-                                <dd class="flip__desc">단어2에 대한 설명입니다. 나를 대표하는 두 번째 키워드입니다.</dd>
+                                <dt class="flip__term">낙관</dt>
+                                <dd class="flip__desc"><span class="flip__pos">「명사」</span> 앞으로의 일 따위가 잘되어 갈 것으로 여김.</dd>
                             </dl>
                         </div>
                     </div>
@@ -193,8 +252,8 @@
                 <li><a href="index.html"><span class="n">00</span> 홈 <span class="en">Hello, world!</span></a></li>
                 <li><a href="myProfile.html"><span class="n">01</span> 소개 <span class="en">Profile</span></a></li>
                 <li><a href="myClass.html"><span class="n">02</span> 시간표 <span class="en">Class</span></a></li>
-                <li><a href="myHoliday.html"><span class="n">03</span> 휴일계획 <span class="en">Holiday</span></a></li>
-                <li><a href="myTrip.html"><span class="n">04</span> 여행앨범 <span class="en">Trip</span></a></li>
+                <li><a href="myTrip.html"><span class="n">03</span> 앨범 <span class="en">Album</span></a></li>
+                <li><a href="myHoliday.html"><span class="n">04</span> 휴일계획 <span class="en">Holiday</span></a></li>
             </ol>
         </nav>
         <div class="overlay-foot">
@@ -250,46 +309,47 @@ const goalsSection = document.getElementById('goals');
 const track = document.querySelector('[data-track]');
 const cards = [...document.querySelectorAll('[data-card]')];
 
-// @값 한 카드 사이클 내 비율: 차오름 40% → 멈춤 35% → 슬라이드 전환 25%
+// @값 카드 전환(슬라이드) 타이밍: 구간 앞 75%는 그 카드에 머무르고, 이후 25%에서 다음 카드로 슬라이드
 const FILL = 0.4, HOLD = 0.35;
-const hitDone = new Set();   // 카드별 글로우 1회 기록
+const filled = new Set();   // 자동 차오름을 1회만 트리거
 
 cards.forEach((c) => {
     const ring = c.querySelector('[data-ring]');
     ring.addEventListener('animationend', () => ring.classList.remove('is-hit'));
 });
 
+// @동작 % 숫자 카운트업 (링이 CSS 트랜지션으로 차오르는 동안 함께 증가)
+function countUp(label, target) {
+    const t0 = performance.now(), dur = 1000;
+    (function step(now) {
+        const k = Math.min(1, (now - t0) / dur);
+        const e = 1 - Math.pow(1 - k, 3);   // easeOutCubic
+        label.textContent = Math.round(e * target) + '%';
+        if (k < 1) requestAnimationFrame(step);
+    })(performance.now());
+}
+
 function updateGoals() {
     if (!goalsSection || !track) return;
+    // @주의 섹션이 화면 상단에 '실제로 도달'했을 때만 채움 → 화면 밖에서 미리 차버리는 문제 방지(할일1도 스크롤 시 차오름)
+    const engaged = goalsSection.getBoundingClientRect().top <= 1;
     const p = progressOf(goalsSection);
     const seg = 1 / cards.length;
     const idx = Math.min(cards.length - 1, Math.floor(p / seg));
     const local = (p - idx * seg) / seg;
 
-    // @동작 링 채움: 차오름(0→1) → 멈춤(1 유지, 스크롤해도 안 움직임) → 전환(1 유지)
-    let ratio, inHold = false;
-    if (local < FILL) ratio = local / FILL;
-    else { ratio = 1; inHold = local < FILL + HOLD; }
-
-    // 현재 카드의 링/숫자 갱신 (이전 카드는 꽉 찬 채, 다음 카드는 빈 채 유지)
+    // @동작 스크롤 스크럽 X → 그 카드 구간에 '도달하면' 링이 달성률까지 자동으로 차오름(CSS 트랜지션)
     cards.forEach((card, i) => {
         const ring = card.querySelector('[data-ring]');
         const label = card.querySelector('[data-pct-label]');
         const pct = +card.dataset.pct;
-        let r = i < idx ? 1 : i > idx ? 0 : ratio;
-        ring.style.strokeDashoffset = CIRC - (r * pct / 100) * CIRC;
-        label.textContent = Math.round(r * pct) + '%';
-        // @동작 달성 순간 글로우 (카드마다 1회)
-        if (i === idx && ratio === 1 && !hitDone.has(i)) {
-            hitDone.add(i);
-            ring.classList.add('is-hit');
-        }
+        const full = engaged && i <= idx;   // 도달한/지난 카드 = 꽉 참, 이후/미도달 = 빈 채
+        ring.style.strokeDashoffset = CIRC - (full ? pct / 100 : 0) * CIRC;
+        if (full && !filled.has(i)) { filled.add(i); ring.classList.add('is-hit'); countUp(label, pct); }
+        else if (!full && filled.has(i)) { filled.delete(i); label.textContent = '0%'; }
     });
-    // 카드가 처음부터 다시 차오를 수 있게, 그 카드 구간 밖(이전)으로 나가면 리셋
-    if (idx === 0 && local < FILL) hitDone.delete(1);
-    if (local < 0.02) hitDone.delete(0);
 
-    // @동작 전환 구간(FILL+HOLD 이후)에만 트랙이 다음 카드로 슬라이드
+    // @동작 카드 전환: 구간 후반부에만 트랙이 다음 카드로 슬라이드 (채움과 분리)
     const slide = local <= FILL + HOLD ? 0 : (local - FILL - HOLD) / (1 - FILL - HOLD);
     track.style.transform = `translateY(${-(idx + slide) * 100}vh)`;
 }

@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" preserveAspectRatio="xMidYMid slice">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#caa878"/><stop offset="100%" stop-color="#5a4630"/></linearGradient></defs>
-  <rect width="900" height="1200" fill="url(#g)"/><polygon points="450,300 500,750 400,750" fill="#3a2c1c" opacity="0.5"/><rect x="430" y="740" width="40" height="120" fill="#3a2c1c" opacity="0.5"/>
-  <text x="50%" y="90%" fill="#ffffff" font-family="Georgia, serif" font-size="70" font-weight="700" text-anchor="middle" opacity="0.9">PARIS</text>
-</svg>

@@ -11,7 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nanum+Brush+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="has-overlay">
+    <div class="scroll-progress" aria-hidden="true"></div>
     <a class="skip-link" href="#main">본문 바로가기</a>
 
     <a class="brand" id="brand" href="index.html" aria-label="처음 화면으로">
@@ -22,60 +23,91 @@
         <ul class="nav__list" id="navList">
             <li><a class="nav__link" href="myProfile.html">소개</a></li>
             <li><a class="nav__link" href="myClass.html">시간표</a></li>
+            <li><a class="nav__link" href="myTrip.html">앨범</a></li>
             <li><a class="nav__link" href="myHoliday.html">휴일계획</a></li>
-            <li><a class="nav__link" href="myTrip.html">여행앨범</a></li>
             <li><a class="nav__link" href="login.html">로그인</a></li>
             <li><a class="nav__link" href="signUp.html">회원가입</a></li>
         </ul>
         <button class="nav__burger" id="navBurger" aria-label="메뉴 열기" aria-expanded="false">
             <span></span><span></span><span></span>
         </button>
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="메뉴 열기" aria-expanded="false">Menu <span class="bars" aria-hidden="true"><i></i><i></i></span></button>
     </nav>
 
     <div class="nav__backdrop" id="navBackdrop"></div>
     <aside class="nav__drawer" id="navDrawer" aria-label="모바일 메뉴">
+        <button class="nav__drawer-close" id="navDrawerClose" type="button" aria-label="메뉴 닫기">&#10005;</button>
         <ul class="nav__drawer-list">
             <li><a href="myProfile.html">소개</a></li>
             <li><a href="myClass.html">시간표</a></li>
+            <li><a href="myTrip.html">앨범</a></li>
             <li><a href="myHoliday.html">휴일계획</a></li>
-            <li><a href="myTrip.html">여행앨범</a></li>
             <li><a href="login.html">로그인</a></li>
             <li><a href="signUp.html">회원가입</a></li>
         </ul>
     </aside>
 
     <main id="main">
+        <div class="container">
         <header class="hero">
             <p class="hero__eyebrow">WELCOME</p>
             <h1 class="hero__title">🎉 회원가입을 진심으로 축하합니다!</h1>
-            <p class="hero__lead">SKALA-FRONT 회원이 되신 것을 환영합니다.</p>
+            <p class="hero__lead">SKALA-FRONT 회원이 되신 것을 환영해요.</p>
         </header>
 
         <section class="result reveal" aria-label="회원가입 결과">
+            <!-- @동작 회원가입(form method="get")에서 넘어온 값을 URL 쿼리에서 읽어 표시 -->
+            <div class="result__block" id="submittedBlock" hidden>
+                <h2 class="result__title">제출한 정보</h2>
+                <dl class="result__data" id="submittedData"></dl>
+            </div>
+
             <div class="result__block">
                 <h2 class="result__title">안내 사항</h2>
                 <ul class="result__list">
-                    <li>입력하신 이메일 주소로 가입 확인 메일이 발송되었습니다.</li>
+                    <li>입력하신 이메일 주소로 가입 확인 메일이 발송되었어요.</li>
                     <li>보안을 위해 첫 로그인 후 비밀번호를 다시 한번 확인해 주세요.</li>
-                    <li>작성하신 프로필 정보는 마이페이지에서 언제든지 수정이 가능합니다.</li>
+                    <li>작성하신 프로필 정보는 마이페이지에서 언제든지 수정할 수 있어요.</li>
                 </ul>
             </div>
 
             <div class="result__block">
                 <h2 class="result__title">이동하기</h2>
-                <p class="result__desc">아래 링크를 클릭하면 이전에 작성한 다른 페이지로 이동할 수 있습니다.</p>
+                <p class="result__desc">아래 링크를 누르면 이전에 작성한 다른 페이지로 이동할 수 있어요.</p>
                 <ul class="result__links">
                     <li><a href="myProfile.html">👤 나의 프로필 보기</a></li>
                     <li><a href="myClass.html">🗓️ 나의 수업 시간표 보기</a></li>
                     <li><a href="myHoliday.html">🏖️ 나의 휴일 계획 보기</a></li>
                 </ul>
+                <a class="result__home" href="index.html">🏠 홈으로 돌아가기</a>
             </div>
         </section>
+            </div>
     </main>
 
     <footer class="footer">
         <address class="footer__meta">작성: 한결 · <time datetime="2026-07">2026년 7월</time></address>
     </footer>
+
+    <!-- ATELIER 포팅킷: 풀스크린 오버레이 메뉴 (데스크톱 MENU 버튼으로 열림) -->
+    <div class="overlay-menu" id="overlayMenu" role="dialog" aria-modal="true" aria-label="사이트 메뉴">
+        <div class="overlay-top">
+            <button class="overlay-close" id="overlayClose" type="button" aria-label="메뉴 닫기">Close <span aria-hidden="true">&#10005;</span></button>
+        </div>
+        <nav class="overlay-nav" aria-label="주요 메뉴">
+            <ol>
+                <li><a href="index.html"><span class="n">00</span> 홈 <span class="en">Hello, world!</span></a></li>
+                <li><a href="myProfile.html"><span class="n">01</span> 소개 <span class="en">Profile</span></a></li>
+                <li><a href="myClass.html"><span class="n">02</span> 시간표 <span class="en">Class</span></a></li>
+                <li><a href="myTrip.html"><span class="n">03</span> 앨범 <span class="en">Album</span></a></li>
+                <li><a href="myHoliday.html"><span class="n">04</span> 휴일계획 <span class="en">Holiday</span></a></li>
+            </ol>
+        </nav>
+        <div class="overlay-foot">
+            <span><a href="login.html">로그인</a> &middot; <a href="signUp.html">회원가입</a></span>
+            <span>&copy; 2026 한결</span>
+        </div>
+    </div>
 
     <a class="totop" href="#main" id="totop" aria-label="맨 위로">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15 L12 8 L19 15"></path></svg>
@@ -85,6 +117,36 @@
 // ==========================================================================
 // 회원가입결과 페이지 - 헤더/스크롤 인터랙션 (signUp.html과 동일 로직 재사용)
 // ==========================================================================
+
+// @동작 회원가입 폼(method="get")에서 넘어온 값을 URL 쿼리스트링에서 읽어 화면에 표시
+(function () {
+    const p = new URLSearchParams(location.search);
+    const block = document.getElementById('submittedBlock');
+    const dl = document.getElementById('submittedData');
+    if (!block || !dl) return;
+
+    const GENDER = { male: '남성', female: '여성', none: '선택안함' };
+    const INTEREST = { frontend: '웹 프론트엔드', uiux: 'UI/UX 디자인', backend: '백엔드 & 데이터베이스', cloud: '클라우드 & 인프라' };
+    const rows = [];
+    const add = (label, val) => { if (val) rows.push([label, val]); };
+
+    add('아이디', p.get('userId'));
+    const emailId = p.get('emailId');
+    if (emailId) add('이메일', emailId + '@' + (p.get('emailDomain') || ''));
+    add('이름', p.get('fullName'));
+    add('주소', [p.get('zipCode'), p.get('addr1'), p.get('addr2')].filter(Boolean).join(' '));
+    add('생년월일', p.get('birthDate'));
+    add('성별', GENDER[p.get('gender')] || p.get('gender'));
+    add('관심 분야', p.getAll('interest').map(v => INTEREST[v] || v).join(', '));
+    add('가입 경로', p.get('joinPath'));
+    add('가입일', p.get('joinDate'));
+    add('자기소개', p.get('introduce'));
+
+    if (!rows.length) return;   // 쿼리 없이 직접 접속하면 표시 안 함
+    const esc = (s) => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+    dl.innerHTML = rows.map(r => '<div class="result__row"><dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd></div>').join('');
+    block.hidden = false;
+})();
 
 const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 40);
 
@@ -110,6 +172,68 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
+
+// ===== ATELIER 포팅킷: 커스텀 커서 + 오버레이 메뉴 + 스크롤 프로그레스 (IIFE, 기존 코드와 충돌 없음) =====
+(function () {
+    'use strict';
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var finePointer  = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    function initCursor() {
+        if (!finePointer || reduceMotion) return;
+        var dot = document.createElement('div'), ring = document.createElement('div');
+        dot.className = 'cursor-dot'; ring.className = 'cursor-ring';
+        document.body.append(dot, ring);
+        var mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
+        document.addEventListener('mousemove', function (e) {
+            mx = e.clientX; my = e.clientY;
+            dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+        });
+        (function loop() {
+            rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
+            ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
+            requestAnimationFrame(loop);
+        })();
+        var hoverSel = 'a, button, select, input, textarea, label, .split-panel, .tg-tile, .pass__ticket, .flip, .goal-card, .cl-nav__toggle';
+        document.addEventListener('mouseover', function (e) { if (e.target.closest(hoverSel)) ring.classList.add('is-hover'); });
+        document.addEventListener('mouseout', function (e) { if (e.target.closest(hoverSel)) ring.classList.remove('is-hover'); });
+    }
+
+    function initOverlayMenu() {
+        var menu = document.getElementById('overlayMenu');
+        var openBtn = document.getElementById('menuBtn');
+        var closeBtn = document.getElementById('overlayClose');
+        if (!menu || !openBtn) return;
+        var open = function () { menu.classList.add('is-open'); document.body.classList.add('menu-open'); openBtn.setAttribute('aria-expanded', 'true'); };
+        var close = function () { menu.classList.remove('is-open'); document.body.classList.remove('menu-open'); openBtn.setAttribute('aria-expanded', 'false'); };
+        openBtn.addEventListener('click', open);
+        if (closeBtn) closeBtn.addEventListener('click', close);
+        menu.querySelectorAll('.overlay-nav a').forEach(function (a) { a.addEventListener('click', close); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    }
+
+    function initProgress() {
+        var bar = document.querySelector('.scroll-progress');
+        if (!bar) return;
+        var onScroll = function () {
+            var h = document.documentElement;
+            var max = h.scrollHeight - h.clientHeight;
+            bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+        };
+        document.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    }
+
+    var boot = function () { initCursor(); initOverlayMenu(); initProgress(); };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+
+    
+// ===== 드로어 닫기(X) 버튼 → 배경 클릭과 동일하게 닫힘 =====
+(function () {
+    var c = document.getElementById('navDrawerClose'), b = document.getElementById('navBackdrop');
+    if (c && b) c.addEventListener('click', function () { b.click(); });
+})();
     </script>
     <script defer src="js/music-continue.js"></script>
 </body>

@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" preserveAspectRatio="xMidYMid slice">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#2f6b5a"/><stop offset="100%" stop-color="#123a30"/></linearGradient></defs>
-  <rect width="900" height="1200" fill="url(#g)"/><circle cx="640" cy="300" r="80" fill="#ffe6a8" opacity="0.5"/><path d="M0 820 Q450 760 900 820 L900 1200 L0 1200 Z" fill="#0d2a24" opacity="0.6"/>
-  <text x="50%" y="90%" fill="#ffffff" font-family="Georgia, serif" font-size="70" font-weight="700" text-anchor="middle" opacity="0.9">JEJU</text>
-</svg>

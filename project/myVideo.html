@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="한결의 여행 영상 — 필름 릴로 재생하는 갤러리">
+    <meta name="author" content="한결">
+    <title>영상 · 필름 | 한결</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nanum+Brush+Script&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-class has-overlay">
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">본문 바로가기</a>
+
+    <a class="brand" id="brand" href="index.html" aria-label="처음 화면으로">
+        <span class="brand__hello">Hello, world!&nbsp;</span><span class="brand__name"> I'm 한결</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="주요 메뉴">
+        <ul class="nav__list" id="navList">
+            <li><a class="nav__link" href="myProfile.html">소개</a></li>
+            <li><a class="nav__link" href="myClass.html">시간표</a></li>
+            <li><a class="nav__link" href="myTrip.html">앨범</a></li>
+            <li><a class="nav__link" href="myHoliday.html">휴일계획</a></li>
+            <li><a class="nav__link" href="login.html">로그인</a></li>
+            <li><a class="nav__link" href="signUp.html">회원가입</a></li>
+        </ul>
+        <button class="nav__burger" id="navBurger" aria-label="메뉴 열기" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="메뉴 열기" aria-expanded="false">Menu <span class="bars" aria-hidden="true"><i></i><i></i></span></button>
+    </nav>
+
+    <div class="nav__backdrop" id="navBackdrop"></div>
+    <aside class="nav__drawer" id="navDrawer" aria-label="모바일 메뉴">
+        <button class="nav__drawer-close" id="navDrawerClose" type="button" aria-label="메뉴 닫기">&#10005;</button>
+        <ul class="nav__drawer-list">
+            <li><a href="myProfile.html">소개</a></li>
+            <li><a href="myClass.html">시간표</a></li>
+            <li><a href="myTrip.html">앨범</a></li>
+            <li><a href="myHoliday.html">휴일계획</a></li>
+            <li><a href="login.html">로그인</a></li>
+            <li><a href="signUp.html">회원가입</a></li>
+        </ul>
+    </aside>
+
+    <!-- @동작 필름 릴(배경 회전) + 필름 스트립(자동 흐름) + 프레임 클릭 시 재생 -->
+    <main class="vid" id="main">
+        <div class="reel-bg reel-bg--a" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="11"/>
+                <circle cx="50" cy="21" r="8"/><circle cx="50" cy="79" r="8"/><circle cx="21" cy="50" r="8"/><circle cx="79" cy="50" r="8"/>
+                <circle cx="30" cy="30" r="6"/><circle cx="70" cy="30" r="6"/><circle cx="30" cy="70" r="6"/><circle cx="70" cy="70" r="6"/>
+            </svg>
+        </div>
+        <div class="reel-bg reel-bg--b" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="11"/>
+                <circle cx="50" cy="21" r="8"/><circle cx="50" cy="79" r="8"/><circle cx="21" cy="50" r="8"/><circle cx="79" cy="50" r="8"/>
+                <circle cx="30" cy="30" r="6"/><circle cx="70" cy="30" r="6"/><circle cx="30" cy="70" r="6"/><circle cx="70" cy="70" r="6"/>
+            </svg>
+        </div>
+
+        <header class="vid-hero">
+            <p class="vid-hero__eyebrow">ON FILM</p>
+            <h1 class="vid-hero__title">영상</h1>
+            <p class="vid-hero__lead">필름이 흐르는 프레임을 눌러 영상을 재생해 보세요</p>
+        </header>
+
+        <section class="film" aria-label="필름 스트립">
+            <div class="film__perf" aria-hidden="true"></div>
+            <div class="film__viewport">
+                <div class="film__track" id="filmTrack"><!-- 프레임은 JS가 생성 --></div>
+            </div>
+            <div class="film__perf" aria-hidden="true"></div>
+        </section>
+    </main>
+
+    <!-- @동작 영상 재생 라이트박스(프로젝터) -->
+    <div class="reel-pop" id="reelPop" hidden role="dialog" aria-modal="true" aria-label="영상 재생">
+        <div class="reel-pop__backdrop" data-close></div>
+        <div class="reel-pop__stage">
+            <video class="reel-pop__video" id="reelVideo" controls playsinline preload="metadata"></video>
+            <div class="reel-pop__bar">
+                <div class="reel-pop__meta"><strong id="reelTitle"></strong><span id="reelPlace"></span></div>
+                <button type="button" class="reel-pop__close" id="reelClose" aria-label="닫기">&#10005;</button>
+            </div>
+            <p class="reel-pop__desc" id="reelDesc"></p>
+        </div>
+    </div>
+
+    <!-- @동작 앨범으로 돌아가기 (아이콘만) -->
+    <a class="album-back" href="myTrip.html" aria-label="앨범으로 돌아가기">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 L8 12 L15 19"></path></svg>
+        <span class="album-back__text">뒤로가기</span>
+    </a>
+
+    <!-- ATELIER 포팅킷: 풀스크린 오버레이 메뉴 (데스크톱 MENU 버튼으로 열림) -->
+    <div class="overlay-menu" id="overlayMenu" role="dialog" aria-modal="true" aria-label="사이트 메뉴">
+        <div class="overlay-top">
+            <button class="overlay-close" id="overlayClose" type="button" aria-label="메뉴 닫기">Close <span aria-hidden="true">&#10005;</span></button>
+        </div>
+        <nav class="overlay-nav" aria-label="주요 메뉴">
+            <ol>
+                <li><a href="index.html"><span class="n">00</span> 홈 <span class="en">Hello, world!</span></a></li>
+                <li><a href="myProfile.html"><span class="n">01</span> 소개 <span class="en">Profile</span></a></li>
+                <li><a href="myClass.html"><span class="n">02</span> 시간표 <span class="en">Class</span></a></li>
+                <li><a href="myTrip.html"><span class="n">03</span> 앨범 <span class="en">Album</span></a></li>
+                <li><a href="myHoliday.html"><span class="n">04</span> 휴일계획 <span class="en">Holiday</span></a></li>
+            </ol>
+        </nav>
+        <div class="overlay-foot">
+            <span><a href="login.html">로그인</a> &middot; <a href="signUp.html">회원가입</a></span>
+            <span>&copy; 2026 한결</span>
+        </div>
+    </div>
+
+    <a class="totop" href="#main" id="totop" aria-label="맨 위로">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15 L12 8 L19 15"></path></svg>
+    </a>
+
+    <script>
+// ==========================================================================
+// 영상 페이지 - 헤더/햄버거 + 필름 스트립(자동 흐름) + 프레임 클릭 재생
+// ==========================================================================
+
+// --- @동작 헤더 축소 / 햄버거 드로어 ---
+const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 40);
+window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+const burger = document.getElementById('navBurger');
+const backdrop = document.getElementById('navBackdrop');
+const toggleNav = (open) => { document.body.classList.toggle('nav--open', open); burger.setAttribute('aria-expanded', open); };
+if (burger) burger.addEventListener('click', () => toggleNav(!document.body.classList.contains('nav--open')));
+if (backdrop) backdrop.addEventListener('click', () => toggleNav(false));
+
+// --- @데이터 영상 프레임 (실제 파일/설명으로 교체 가능) ---
+const FRAMES = [
+    { src: 'media/videos/12181420_3840_2160_25fps.mp4',    poster: 'media/videos/thumbs/12181420_3840_2160_25fps.jpg',    title: '이층버스',      place: '런던',   desc: '빨간 이층버스가 회색 거리를 가르며 지나갔다.' },
+    { src: 'media/videos/12529314_1080_1920_60fps.mp4',    poster: 'media/videos/thumbs/12529314_1080_1920_60fps.jpg',    title: '5번가의 아침',  place: '뉴욕',   desc: '노란 택시들이 마천루 사이 교차로를 가득 메웠다.' },
+    { src: 'media/videos/13412984_3840_2160_25fps.mp4',    poster: 'media/videos/thumbs/13412984_3840_2160_25fps.jpg',    title: '도톤보리의 밤', place: '오사카', desc: '간판 불빛이 좁은 골목을 대낮처럼 밝혔다.' },
+    { src: 'media/videos/14676300_3840_2160_24fps.mp4',    poster: 'media/videos/thumbs/14676300_3840_2160_24fps.jpg',    title: '야자수 해변',   place: '브라질', desc: '에메랄드빛 바다와 야자수가 끝없이 늘어섰다.' },
+    { src: 'media/videos/14747418_2560_1440_30fps.mp4',    poster: 'media/videos/thumbs/14747418_2560_1440_30fps.jpg',    title: '가로수길 카페', place: '파리',   desc: '노천 테이블마다 느긋한 오후가 흘렀다.' },
+    { src: 'media/videos/14823568_3840_2160_30fps.mp4',    poster: 'media/videos/thumbs/14823568_3840_2160_30fps.jpg',    title: '바닷가 산책로', place: '제주',   desc: '바다를 옆에 두고 둘이 나란히 걸었다.' },
+    { src: 'media/videos/16204013_2560_1440_30fps.mp4',    poster: 'media/videos/thumbs/16204013_2560_1440_30fps.jpg',    title: '도시의 밤',     place: '야경',   desc: '언덕 위에서 내려다본 도시가 불빛으로 흘렀다.' },
+    { src: 'media/videos/18509264-hd_1080_1920_30fps.mp4', poster: 'media/videos/thumbs/18509264-hd_1080_1920_30fps.jpg', title: '범선의 일몰',   place: '항해',   desc: '돛이 부풀고, 수평선 너머로 해가 내려앉았다.' },
+    { src: 'media/videos/20186336-hd_1920_1080_60fps.mp4', poster: 'media/videos/thumbs/20186336-hd_1920_1080_60fps.jpg', title: '오페라하우스',  place: '시드니', desc: '조개 지붕 너머로 하버 브리지가 나란히 섰다.' },
+    { src: 'media/videos/6769788-uhd_3840_2160_24fps.mp4', poster: 'media/videos/thumbs/6769788-uhd_3840_2160_24fps.jpg', title: '에스프레소 한 잔', place: '카페', desc: '크레마가 잔을 채우던 짧고 진한 순간.' },
+    { src: 'media/videos/7039149-uhd_3840_2160_25fps.mp4', poster: 'media/videos/thumbs/7039149-uhd_3840_2160_25fps.jpg', title: '펍의 저녁',     place: '런던',   desc: '버거와 맥주 한 잔으로 마무리한 하루.' },
+];
+
+// --- @동작 필름 스트립 렌더 (원활한 무한 흐름을 위해 두 벌 복제) ---
+const PLAY_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+function frameHTML(f) {
+    return '<button class="frame" type="button" data-src="' + f.src + '" data-title="' + f.title + '" data-place="' + f.place + '" data-desc="' + f.desc + '">'
+        + '<img src="' + f.poster + '" alt="' + f.title + '" loading="lazy">'
+        + '<span class="frame__play">' + PLAY_SVG + '</span>'
+        + '<span class="frame__cap"><span class="frame__title">' + f.title + '</span><span class="frame__place">' + f.place + '</span></span>'
+        + '</button>';
+}
+const track = document.getElementById('filmTrack');
+const half = FRAMES.map(frameHTML).join('');
+track.innerHTML = half + half;
+
+// --- @동작 필름 릴 자동 이동(옆으로 계속). 프레임이 두 벌이라 절반 지점에서 되돌려 매끄럽게 루프.
+//     휠·드래그로 직접 넘기면 잠깐 멈췄다가 다시 자동 이동 ---
+const filmVp = document.querySelector('.film__viewport');
+let filmPauseUntil = 0;
+['wheel', 'pointerdown', 'touchstart'].forEach((ev) => filmVp.addEventListener(ev, () => { filmPauseUntil = Date.now() + 1600; }, { passive: true }));
+(function filmRoll() {
+    if (Date.now() > filmPauseUntil && filmVp.scrollWidth > filmVp.clientWidth) {
+        filmVp.scrollLeft += 0.6;
+        const halfW = filmVp.scrollWidth / 2;
+        if (filmVp.scrollLeft >= halfW) filmVp.scrollLeft -= halfW;
+    }
+    requestAnimationFrame(filmRoll);
+})();
+
+// --- @동작 프레임 클릭 → 라이트박스에서 재생 ---
+const reelPop = document.getElementById('reelPop');
+const reelVideo = document.getElementById('reelVideo');
+function openReel(src, title, place, desc) {
+    reelVideo.src = src;
+    document.getElementById('reelTitle').textContent = title;
+    document.getElementById('reelPlace').textContent = place;
+    document.getElementById('reelDesc').textContent = desc || '';
+    reelPop.hidden = false;
+    requestAnimationFrame(() => reelPop.classList.add('is-open'));
+    reelVideo.play().catch(() => {});
+}
+function closeReel() {
+    reelPop.classList.remove('is-open');
+    reelVideo.pause();
+    setTimeout(() => { reelPop.hidden = true; reelVideo.removeAttribute('src'); reelVideo.load(); }, 320);
+}
+track.addEventListener('click', (e) => {
+    const btn = e.target.closest('.frame');
+    if (!btn) return;
+    openReel(btn.dataset.src, btn.dataset.title, btn.dataset.place, btn.dataset.desc);
+});
+document.getElementById('reelClose').addEventListener('click', closeReel);
+reelPop.querySelector('[data-close]').addEventListener('click', closeReel);
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !reelPop.hidden) closeReel(); });
+
+// ===== ATELIER 포팅킷: 커스텀 커서 + 오버레이 메뉴 + 스크롤 프로그레스 (IIFE) =====
+(function () {
+    'use strict';
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var finePointer  = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    function initCursor() {
+        if (!finePointer || reduceMotion) return;
+        var dot = document.createElement('div'), ring = document.createElement('div');
+        dot.className = 'cursor-dot'; ring.className = 'cursor-ring';
+        document.body.append(dot, ring);
+        var mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
+        document.addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)'; });
+        (function l() { rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16; ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)'; requestAnimationFrame(l); })();
+        var hoverSel = 'a, button, select, input, textarea, label, .frame';
+        document.addEventListener('mouseover', function (e) { if (e.target.closest(hoverSel)) ring.classList.add('is-hover'); });
+        document.addEventListener('mouseout', function (e) { if (e.target.closest(hoverSel)) ring.classList.remove('is-hover'); });
+    }
+    function initOverlayMenu() {
+        var menu = document.getElementById('overlayMenu'), openBtn = document.getElementById('menuBtn'), closeBtn = document.getElementById('overlayClose');
+        if (!menu || !openBtn) return;
+        var open = function () { menu.classList.add('is-open'); document.body.classList.add('menu-open'); openBtn.setAttribute('aria-expanded', 'true'); };
+        var close = function () { menu.classList.remove('is-open'); document.body.classList.remove('menu-open'); openBtn.setAttribute('aria-expanded', 'false'); };
+        openBtn.addEventListener('click', open);
+        if (closeBtn) closeBtn.addEventListener('click', close);
+        menu.querySelectorAll('.overlay-nav a').forEach(function (a) { a.addEventListener('click', close); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    }
+    function initProgress() {
+        var bar = document.querySelector('.scroll-progress');
+        if (!bar) return;
+        var handler = function () { var d = document.documentElement; var max = d.scrollHeight - d.clientHeight; bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%'; };
+        document.addEventListener('scroll', handler, { passive: true }); handler();
+    }
+    var boot = function () { initCursor(); initOverlayMenu(); initProgress(); };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+
+// ===== 드로어 닫기(X) 버튼 =====
+(function () {
+    var c = document.getElementById('navDrawerClose'), b = document.getElementById('navBackdrop');
+    if (c && b) c.addEventListener('click', function () { b.click(); });
+})();
+    </script>
+    <script defer src="js/music-continue.js"></script>
+</body>
+</html>
