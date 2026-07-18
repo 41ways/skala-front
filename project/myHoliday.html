@@ -275,10 +275,13 @@ function setActive(i) {
 
 // @주의 hover 없는 터치기기: 첫 탭=그 티켓 앞으로 / 이미 앞이면 탑승 (데스크톱은 hover로 이미 앞이라 바로 탑승)
 function pickOrBoard(i) { if (i !== active) setActive(i); else board(i); }
+// @동작 모바일(터치): 제목은 '고르기'만, 찢기(탑승)는 티켓을 직접 눌러야 함
+//       (터치는 탭 한 번에 mouseenter+click이 연달아 와서 제목 탭만으로 찢기는 것 방지)
+const touchMode = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches || window.innerWidth <= 860;
 titleBtns.forEach((b, i) => {
     b.addEventListener('mouseenter', () => setActive(i));
     b.addEventListener('focus', () => setActive(i));
-    b.addEventListener('click', () => pickOrBoard(i));
+    b.addEventListener('click', () => { if (touchMode()) setActive(i); else pickOrBoard(i); });
 });
 // @동작 오른쪽 날짜로도 덱을 넘길 수 있음: hover=그 티켓 앞으로, click=선택/탑승
 const dateItems = [...datesEl.querySelectorAll('.hdk__date')];

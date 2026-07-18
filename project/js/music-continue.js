@@ -122,20 +122,25 @@
       + '.mc__vrange::-moz-range-progress{height:4px;border-radius:4px;background:#c6a582;}'
       + '.mc__vrange::-moz-range-track{height:4px;border-radius:4px;background:#ffffff33;}'
       + '.mc__closebtn{display:none;}'
-      // @동작 모바일(≤768): 디스크 위치 고정(패널이 위로 안 밀게) + 얇은 패널(제목+컨트롤만)
-      //        진행바·앨범명 숨김, 음량은 스피커 버튼을 눌러야 슬라이더 표시, ✕ 닫기 버튼 제공
+      // @동작 모바일(≤768): LP 탭 = 패널 열기(mc--open 클래스), 재생/정지는 패널 버튼으로.
+      //        디스크 위치 고정 + 얇은 패널(제목+컨트롤만), 진행바·앨범명 숨김,
+      //        음량은 스피커 버튼으로 슬라이더 토글, ✕ 닫기는 패널 우상단.
       + '@media (max-width:768px){'
       + '.mc{right:12px;bottom:18px;align-items:flex-end;}'
       + '.mc__disc{width:62px;height:62px;}'
       + '.mc__label{width:36px;height:36px;}'
-      + '.mc:hover .mc__panel,.mc:focus-within .mc__panel{max-width:calc(100vw - 104px);flex-wrap:wrap;row-gap:6px;padding:8px 10px;}'
+      // @주의 모바일 브라우저는 탭 후 :hover가 남아 패널이 다시 열림 → hover/focus 무력화, mc--open으로만 여닫음
+      + '.mc:hover .mc__panel,.mc:focus-within .mc__panel{max-width:0;opacity:0;padding:0;margin-right:0;}'
+      + '.mc.mc--open .mc__panel{max-width:calc(100vw - 104px);opacity:1;flex-wrap:wrap;row-gap:6px;padding:8px 30px 8px 10px;margin-right:12px;position:relative;overflow:visible;}'
       + '.mc__album{display:none;}'
       + '.mc__bar{display:none;}'
-      + '.mc__meta{min-width:0;max-width:calc(100vw - 160px);}'
+      + '.mc__meta{min-width:0;max-width:calc(100vw - 190px);}'
       + '.mc__btn{width:29px;height:29px;}'
-      + '.mc__closebtn{display:inline-flex;}'
-      + '.mc__vol .mc__vrange{display:none;width:56px;}'
-      + '.mc__vol.is-open .mc__vrange{display:block;}'
+      + '.mc__closebtn{display:inline-flex;position:absolute;top:2px;right:2px;width:26px;height:26px;font-size:12px;}'
+      // @동작 음량: 스피커 버튼 위로 세로 슬라이더(재생바 위로 넘어감), 조절 후 자동 닫힘
+      + '.mc__vol{position:relative;}'
+      + '.mc__vol .mc__vrange{display:none;}'
+      + '.mc__vol.is-open .mc__vrange{display:block;position:absolute;left:50%;bottom:calc(100% + 40px);width:68px;transform:translateX(-50%) rotate(-90deg);}'
       + '}';
     var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
@@ -206,15 +211,27 @@
         muteBtn.innerHTML = (muted || userVol === 0) ? I.mute : I.vol;
         vrange.style.setProperty('--fill', userVol * 100 + '%');   // @동작 볼륨 위치까지 왼쪽 채움 색
     }
-    vrange.addEventListener('input', function () { userVol = parseFloat(vrange.value); muted = false; applyVol(); localStorage.setItem('skalaVol', userVol); });
+    vrange.addEventListener('input', function () {
+        userVol = parseFloat(vrange.value); muted = false; applyVol(); localStorage.setItem('skalaVol', userVol);
+        // @동작 모바일: 조절 멈추고 1.2초 뒤 세로 음량바 자동 닫힘
+        if (window.innerWidth <= 768) {
+            clearTimeout(vrange._auto);
+            vrange._auto = setTimeout(function () { vrange.parentElement.classList.remove('is-open'); }, 1200);
+        }
+    });
+    vrange.addEventListener('change', function () {
+        if (window.innerWidth <= 768) { clearTimeout(vrange._auto); vrange.parentElement.classList.remove('is-open'); }
+    });
     muteBtn.addEventListener('click', function () {
         // @동작 모바일: 스피커 버튼은 음량 슬라이더 열기/닫기 (음소거 대신)
         if (window.innerWidth <= 768) { muteBtn.parentElement.classList.toggle('is-open'); return; }
         muted = !muted; applyVol();
     });
-    // @동작 ✕ 닫기(모바일): 패널 접기 — 포커스를 풀어 focus-within 해제
+    // @동작 ✕ 닫기(모바일): 패널 접기 — mc--open 해제 + 포커스 해제(focus-within 방지)
     var closeBtn = box.querySelector('.mc__closebtn');
     if (closeBtn) closeBtn.addEventListener('click', function () {
+        box.classList.remove('mc--open');
+        box.querySelector('.mc__vol').classList.remove('is-open');
         setTimeout(function () { if (document.activeElement && box.contains(document.activeElement)) document.activeElement.blur(); }, 0);
     });
     applyVol();   // 초기 채움 반영
@@ -293,9 +310,10 @@
     toggle.addEventListener('click', togglePlay);
     var discBtn = box.querySelector('.mc__disc');
     if (discBtn) discBtn.addEventListener('click', function () {
+        // @동작 모바일: LP 탭 = 재생바 열기만 (재생/정지는 패널의 ▶ 버튼으로, 닫기는 ✕)
+        if (window.innerWidth <= 768) { box.classList.add('mc--open'); return; }
         togglePlay();
-        // @동작 디스크 클릭 후 잠시 뒤 포커스 해제 → focus-within으로 펼쳐진 재생바(패널)가 접힘.
-        //       (마우스를 올려두면 hover로 계속 펼쳐진 채 유지)
+        // @동작 데스크톱: 클릭 후 잠시 뒤 포커스 해제 → focus-within으로 펼쳐진 재생바가 접힘
         clearTimeout(discBtn._collapse);
         discBtn._collapse = setTimeout(function () { discBtn.blur(); }, 1800);
     });
